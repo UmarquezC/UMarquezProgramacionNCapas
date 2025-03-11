@@ -681,5 +681,61 @@ namespace PL
             int IdUsuario = Convert.ToInt32(Console.ReadLine());
             BL.Usuario.DeleteLINQ(IdUsuario);
         }
+
+        //******CARGAMASIVA
+        public static ML.Result CargaMasiva()
+        {
+            ML.Result result = new ML.Result();
+            Console.WriteLine("Entrando a carga masiva");
+            string ruta = @"C:\Users\digis\OneDrive\Documents\UrielMarquezCruz\CargaMasiva.txt";
+
+            try
+            {
+                StreamReader streamReader = new StreamReader(ruta); //streamreader permite leer el archivo 
+                string fila = "";
+                streamReader.ReadLine();//Ignora la primera linea
+                while ((fila = streamReader.ReadLine()) != null)
+                {
+                    string[] valores = fila.Split('|');
+
+                    ML.Usuario usuario = new ML.Usuario();
+                    usuario.Rol = new ML.Rol();
+                    usuario.Direccion = new ML.Direccion();
+                    usuario.Direccion.Colonia = new ML.Colonia();
+
+                    usuario.Nombre = valores[0];
+                    usuario.ApellidoPaterno = valores[1];
+                    usuario.Email = valores[2];
+                    usuario.UserName = valores[3];
+                    usuario.ApellidoMaterno = valores[4];
+                    usuario.Password = valores[5];
+                    usuario.FechaNacimiento = valores[6];
+                    usuario.Sexo = valores[7];
+                    usuario.Telefono = valores[8];
+                    usuario.Celular = valores[9];
+                    usuario.Estatus = Convert.ToBoolean(valores[10]);
+                    usuario.Curp = valores[11];
+
+                    usuario.Rol.IdRol = Convert.ToInt32(valores[12]);
+                    usuario.Direccion.Calle = valores[13];
+                    usuario.Direccion.NumeroInteriror = valores[14];
+                    usuario.Direccion.NumeroExterior = valores[15];
+                    usuario.Direccion.Colonia.IdColonia = Convert.ToInt32(valores[16]);
+
+
+                    BL.Usuario.AddEF(usuario);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+        }
     }
 }
