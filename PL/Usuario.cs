@@ -681,5 +681,9 @@ namespace PL
             int IdUsuario = Convert.ToInt32(Console.ReadLine());
             BL.Usuario.DeleteLINQ(IdUsuario);
         }
+
+        //CARGA MASIVA
+        
+
     }
 }
