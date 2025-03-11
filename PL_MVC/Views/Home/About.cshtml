@@ -1,0 +1,130 @@
+﻿<main>
+    <div class="stan">
+        <div class="gorro">
+            <div class="bola"></div>
+            <div class="borderojo"></div>
+        </div>
+
+
+        <div class="ojoizquierdo">
+            <div class="pupila" id="canvas"></div>
+        </div>
+
+        <div class="ojoderecho">
+            <div class="pupila" id="canvas"></div>
+        </div>
+
+        <div class="boca">
+
+        </div>
+
+    </div>
+</main>
+
+
+<style>
+    main {
+        background-color: #27445D;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stan {
+        position: absolute;
+        height: 300px;
+        width: 300px;
+        background-color: #FFCDB2;
+        border-radius: 50%;
+        border: 2px solid black;
+    }
+
+    .gorro {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 40%;
+        background-color: #0056b3;
+        border-start-end-radius: 200px;
+        border-start-start-radius: 200px;
+        border: 2px solid black;
+    }
+
+    .bola {
+        position: relative;
+        top: -20px;
+        left: 40%;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        background-color: red;
+        border: 2px solid black;
+    }
+
+    .borderojo {
+        position: absolute;
+        width: 100%;
+        height: 20%;
+        top: 100px;
+        background-color: red;
+    }
+
+    .ojoizquierdo {
+        position: absolute;
+        width: 100px;
+        height: 80px;
+        top: 45%;
+        left: 20%;
+        background-color: white;
+        border-radius: 50%;
+        transform: rotate(120deg);
+    }
+
+    .ojoderecho {
+        position: absolute;
+        width: 100px;
+        height: 80px;
+        top: 45%;
+        right: 20%;
+        background-color: white;
+        border-radius: 50%;
+        transform: rotate(60deg);
+    }
+
+    .pupila {
+        background-color: black;
+        border-radius: 50%;
+        height: 15px;
+        width: 15px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: 0.1s
+    }
+
+    .boca {
+        position: absolute;
+        top: 85%;
+        left: 45%;
+        width: 30px;
+        height: 2px;
+        background-color: black;
+       
+    }
+</style>
+
+@*<script type="text/javascript">
+
+    let pupila = document.querySelector(".pupila");
+    
+
+    document.onmousemove = (e) => {
+        let x = e.clientX * 100 / window.innerWidth + "%";
+        let y = e.clientY * 100 / window.innerHeight + "%";
+
+        pupila.style.left = x; 
+        pupila.style.top = y;
+    }
+</script>*@

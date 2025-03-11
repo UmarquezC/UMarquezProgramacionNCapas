@@ -1,0 +1,88 @@
+﻿body {
+    background-image: url('https://i.pinimg.com/originals/b8/2f/28/b82f28a7e9c8fcb3868d3d94652c107c.gif');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    
+    font-family: "Pixelify Sans", sans-serif;
+}
+
+
+h2{
+    font-size: 32px;
+    font-weight: 800;
+}
+
+main {
+    height: 100%;
+    margin-top: 20px;
+}
+
+fieldset {
+    background-color: #52525298;
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 10px;
+    
+}
+
+.usuario {
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.direccion {
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+input {
+    border-radius: 8px;
+    
+}
+
+.error {
+    background-color: #A31D1D;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px;
+    
+}
+
+.error:empty{
+    display: none;
+}
+
+.cambiarboton{
+    display: flex;
+    justify-content: center;
+}
+
+.user{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 20px;
+    align-items:center;
+}
+
+.boximg{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.boximg, .input {
+    display: flex;
+    margin: 10px 0;
+}
+
+img{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+}
