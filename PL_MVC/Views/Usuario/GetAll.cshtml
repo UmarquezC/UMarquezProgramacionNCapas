@@ -4,7 +4,15 @@
 @{
     ViewBag.Title = "GetAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var errores = ViewBag.Errores;
 }
+
+@if (errores != null)
+{
+    ML.Usuario usuario = new ML.Usuario();
+    @Html.Partial("~/Views/Usuario/_Modal.cshtml", usuario);
+}
+
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -39,7 +47,7 @@
                 </div>
 
             </div>
-            
+
             <div class="col" style=" margin-top: 10px; display: flex; align-content: center; justify-content: center;">
                 <button type="submit" class="btn btn-outline-dark">Buscar </button>
             </div>
@@ -49,6 +57,31 @@
 
 </div>
 
+<div class="container mt-4">
+    @using (Html.BeginForm("CargaMasiva", "Usuario", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    {
+        <details>
+            <summary>Carga Masiva <i class="bi bi-archive-fill"></i> </summary>
+            <div class="wrapper">
+                <div class="input-file">
+                    <input type="file" name="Excel" />
+                </div>
+                <div class="boton">
+                    @if (Session["RutaExcel"] != null)
+                    {                                                
+                        <button type="submit" class="btn btn-outline-dark">Insertar</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-outline-dark">Validar</button>
+                    }
+                </div>
+            </div>
+        </details>
+    }
+</div>
+
+
 
 <div class="up">
     <h2>Usuarios</h2>
@@ -57,8 +90,6 @@
 
 @if (Model.Usuarios.Count > 0)
 {
-
-
     <div class="table-responsive" id="table">
         <table class="table table-striped  table-bordered">
             <thead>

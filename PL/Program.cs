@@ -39,9 +39,7 @@ namespace PL
 
             //uario.DeleteLINQ();
 
-
-            //*****CARGAMASIVA
-            //Usuario.CargaMasiva();
+            Usuario.CargaMasiva();
 
         }
     }
