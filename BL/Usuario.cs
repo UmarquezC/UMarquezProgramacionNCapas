@@ -3,6 +3,7 @@ using ML;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -1168,5 +1169,177 @@ namespace BL
             return result;
         }
 
+
+        //CARGA MASIVA CON OLEDB
+        public static ML.Result LeerExcel(string cadeConexion)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (OleDbConnection context = new OleDbConnection(cadeConexion))
+                {
+                    string query = "SELECT * FROM [Hoja1$]";
+                    using (OleDbCommand cmd = new OleDbCommand())
+                    {
+                        cmd.CommandText = query;
+                        cmd.Connection = context;
+
+                        OleDbDataAdapter adapter = new OleDbDataAdapter();
+                        adapter.SelectCommand = cmd;
+                        DataTable tablaUsuario = new DataTable();
+                        adapter.Fill(tablaUsuario);
+
+                        if (tablaUsuario.Rows.Count > 0)
+                        {
+                            result.Objects = new List<object>();
+
+                            foreach (DataRow row in tablaUsuario.Rows)
+                            {
+                                ML.Usuario usuario = new ML.Usuario();
+                                usuario.Rol = new ML.Rol();
+                                usuario.Direccion = new ML.Direccion();
+                                usuario.Direccion.Colonia = new ML.Colonia();
+
+                                usuario.Nombre = row[0].ToString();
+                                usuario.ApellidoPaterno = row[1].ToString();
+                                usuario.Email = row[2].ToString();
+                                usuario.UserName = row[3].ToString();
+                                usuario.ApellidoMaterno = row[4].ToString();
+                                usuario.Password = row[5].ToString();
+                                usuario.FechaNacimiento = row[6].ToString();
+                                usuario.Sexo = row[7].ToString();
+                                usuario.Telefono = row[8].ToString();
+                                usuario.Celular = row[9].ToString();
+                                usuario.Estatus = Convert.ToBoolean(row[10]);
+                                usuario.Curp = row[11].ToString();
+                                usuario.Rol.IdRol = Convert.ToInt32(row[12]);
+                                usuario.Direccion.Calle = row[13].ToString();
+                                usuario.Direccion.NumeroInteriror = row[14].ToString();
+                                usuario.Direccion.NumeroExterior = row[15].ToString();
+                                usuario.Direccion.Colonia.IdColonia = Convert.ToInt32(row[16]);
+
+                                result.Objects.Add(usuario);
+                            }
+                            result.Success = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+        }
+
+        //VALIDAR EXCEL
+        public static ML.ResultExcel ValidarExcel(List<object> registros) // result.Objects Lee el excel
+        {
+            ML.ResultExcel result = new ML.ResultExcel();
+
+            result.Errores = new List<object>();
+
+            int contador = 1;
+
+            foreach (ML.Usuario usuario in registros)
+            {
+                ML.ResultExcel errorRegistro = new ML.ResultExcel();
+
+                errorRegistro.NumeroRegistro = contador;
+                if (usuario.Nombre.Length > 50 || usuario.Nombre == "" || usuario.Nombre == null)
+                {
+                    errorRegistro.ErrorMessage += "El campo nombre es incorrecta, porque es demasiado largo o esta vacio";
+                }
+
+                if (usuario.ApellidoPaterno.Length > 50 || usuario.ApellidoPaterno == "" || usuario.ApellidoPaterno == null)
+                {
+                    errorRegistro.ErrorMessage += "EL campo apellido paterno es incorrecto,porque es demasiado largo o esta vacio";
+                }
+
+                if (usuario.Email.Length > 50 || usuario.Email == "" || usuario.Email == null)
+                {
+                    errorRegistro.ErrorMessage += "El campo email es incorrecto, porque es demasiado largo o esta vacio ";
+                }
+
+                if (usuario.UserName.Length > 50 || usuario.UserName == "" || usuario.UserName == null)
+                {
+                    errorRegistro.ErrorMessage = "El campo username es incorrecto, porque es demasiado largo o esta vacio";
+                }
+
+                if (usuario.ApellidoMaterno.Length > 50 || usuario.ApellidoMaterno == "" || usuario.ApellidoMaterno == null)
+                {
+                    errorRegistro.ErrorMessage += "El campo apellido materno es incorrecto, porque es demasiado largo o esta vacio";
+                }
+
+                if (usuario.Password.Length < 8 || usuario.Password == "" || usuario.Password == null)
+                {
+                    errorRegistro.ErrorMessage += "El campo contraseña es incorrecto, tienen que tener 8 caracteres o esta vacia";
+                }
+
+                if (usuario.FechaNacimiento.Length > 26 || usuario.FechaNacimiento == "" || usuario.FechaNacimiento == null)
+                {
+                    errorRegistro.ErrorMessage += "El campo fecha es incorrecto, porque es demasiado largo o esta vacio";
+                }
+
+                if(usuario.Sexo.Length > 1 || usuario.Sexo == "" || usuario.Sexo == null)
+                {
+                    errorRegistro.ErrorMessage += "El campo sexo es incorecto, porque es demasiado largo o esta vacio";
+                }
+
+                if(usuario.Telefono.Length > 10 || usuario.Telefono == "" || usuario.Telefono == null )
+                {
+                    errorRegistro.ErrorMessage += "El campo telefono es incorrecto, porque esta muy largo o esta vacio";
+                }
+
+                if (usuario.Celular.Length > 10 || usuario.Celular == "" || usuario.Celular == null )
+                {
+                    errorRegistro.ErrorMessage += "El campo celular es incorrecto, porque esta muy largo o esta vacio";
+                }
+
+                if (usuario.Curp.Length > 16  || usuario.Curp == "" || usuario.Curp == null)
+                {
+                    errorRegistro.ErrorMessage += "el campo CURP es incorrecto, porque es demasiado largo o esta vacio";
+                }
+
+                if (usuario.Rol.IdRol > 3 || usuario.Rol.IdRol == 0)
+                {
+                    errorRegistro.ErrorMessage += "El IdRol es superior a 3 o esta vacio";
+                }
+
+                if (usuario.Direccion.Calle.Length > 50 || usuario.Direccion.Calle == "" || usuario.Direccion.Calle == null)
+                {
+                    errorRegistro.ErrorMessage += "La calle esta muy larga o esta vacia";
+                }
+
+                if (usuario.Direccion.NumeroInteriror.Length > 50)
+                {
+                    errorRegistro.ErrorMessage += "El campo numero interior es incorrecto, porque esta muy largo o esta vacio";
+                }
+
+                if (usuario.Direccion.NumeroExterior.Length > 50 || usuario.Direccion.NumeroExterior == "" || usuario.Direccion.NumeroExterior == null)
+                {
+                    errorRegistro.ErrorMessage += "El campo  numero exterior es incorrecto, porque es muy largo o esta vacio";
+                }
+
+                if(usuario.Direccion.Colonia.IdColonia == 0)
+                {
+                    errorRegistro.ErrorMessage += "El Id Rol esta vacio";
+                }
+                //Aquie esta mal
+                if (errorRegistro.ErrorMessage != null)
+                {
+                    result.Errores.Add(errorRegistro);
+                }
+
+                contador++;
+
+            }
+
+            return result;
+        }
     }
 }
