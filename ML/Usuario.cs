@@ -78,6 +78,9 @@ namespace ML
         public string Curp { get; set; }
         public byte[] Imagen { get; set; }
         //public int IdRol {  get; set; }
+
+        //Agregar lo de la imagen para poder usarlo con JS
+        public string ImagenBase64 { get; set; }
         public ML.Rol Rol { get; set; }
         public ML.Direccion Direccion { get; set; }
         public List<Object> Usuarios { get; set; }

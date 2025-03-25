@@ -1,0 +1,236 @@
+﻿
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetAll</h2>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" onclick="Form()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Agregar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+        <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
+    </svg>
+
+</button>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Formulario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input hidden id="IdUsuario" />
+
+
+
+                    <div class="col">
+                        <img style="height:100px; width:100px; border-radius:50%;" id="show" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-image-icon-default-avatar-profile-icon-social-media-user-vector-image-209162840.jpg" alt="Alternate Text" />
+                        <div class="input">
+                            <input class="form-control" type="file" accept="png, jpg, jpeg" name="inptFileImagen" id="inptFileImagen" onchange="validarImagen(), visualizarImg(this)" />
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <label>Nombre: </label>
+                        <input type="text" id="inptNombre" onkeypress="soloLetras(event)" />
+                        <span class="error"></span>
+                    </div>
+
+                    <div class="col">
+                        <label>Apellido Paterno: </label>
+                        <input type="text" id="inptApellidoPaterno" onkeypress="soloLetras(event)" />
+                        <span class="error"></span>
+                    </div>
+
+                    <div class="col">
+                        <label>Apellido Materno: </label>
+                        <input type="text" id="inpApellidoMaterno" />
+                        <span class="error"></span>
+                    </div>
+
+                    <div class="col">
+                        <label>Nombre de Usuario</label>
+                        <input type="text" id="inptUserName" />
+                        <span class="error"></span>
+                    </div>
+
+                    <div class="col">
+                        <label>Correo Electronico</label>
+                        <input type="email" id="inptEmail" />
+                        <span class="error"></span>
+                    </div>
+
+                    <div class="col">
+                        <label>Fecha de Nacimiento</label>
+                        <input type="text" class="input-group mb-3 " id="datepicker" name="FechaNacimiento" />
+                    </div>
+
+                    <div class="col">
+                        <label>Genero: </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Hombre
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Mujer
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="col">
+                        <label>Telefono: </label>
+                        <input type="tel" id="inptTelefono" />
+                        <span class="error"></span>
+
+                    </div>
+
+                    <div class="col">
+                        <label>Celular: </label>
+                        <input type="tel" id="inptCelular" />
+                        <span class="error"></span>
+                    </div>
+
+                    <input type="hidden" name="Estatus" value="true" />
+
+                    <div class="col">
+                        <label>CURP: </label>
+                        <input type="text" id="inptCurp" />
+                        <span id="resultado"></span>
+                    </div>
+
+                    <div class="col">
+                        <label>Contraseña: </label>
+                        <input type="password" id="inptPassword" />
+                        <span class="error"></span>
+
+                        <div class="col">
+                            <label class="row" for="password-confirm">Confirmar Contraseña </label>
+                            <input name="password-confirm" onblur="comparar(this)" id="pass" />
+                            <span class="error"></span>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <label for="ddlRol">Rol: </label>
+                        <select id="ddlRol">
+                            <option></option>
+                        </select>
+                    </div>
+
+                    @*Dirección*@
+
+                    <div class="col">
+                        <label>Calle: </label>
+                        <input type="text" id="inptCalle" />
+                    </div>
+
+                    <div class="col">
+                        <label>Numero Interior: </label>
+                        <input type="text" id="inptNumeroInterior" />
+                    </div>
+
+                    <div class="col">
+                        <label>Numero Exterior: </label>
+                        <input type="text" id="inptNumeroInterior" />
+                    </div>
+
+                    <div class="col">
+                        <label for="ddlEstado">Selecciona un Estado: </label>
+                        <select id="ddlEstado" onchange="MunicipioGetByEstado()">
+                            <option></option>
+                        </select>
+
+                    </div>
+
+                    <div class="col">
+                        <label for="ddlMunicipio">Selecciona un Municipio: </label>
+                        <select id="ddlMunicipio" onchange="ColoniaGetAllByMunicipio()">
+                            <option>Selecciona un Municipio</option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label for="ddlColonia">Selecciona una Colonia: </label>
+                        <select id="ddlColonia">
+                            <option></option>
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                <input class="btn btn-success mt-5" type="submit" value="Guardar" onclick="AgregarUsuario()" />
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="table-responsive" id="table">
+    <table class="table table-striped  table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col"></th>
+                <th scope="col">Nombre</th>
+
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Contraseña</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Sexo</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Celular</th>
+
+                <th scope="col">CURP</th>
+
+                <th scope="col">Rol </th>
+
+                <th scope="col">Direccion</th>
+
+
+                <th scope="col">Status </th>
+
+                <th scope="col">Editar</th>
+                <th scope="col">Borrar</th>
+
+            </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var pathGetAll = "@Url.Action("GetAllUsuarios", "JsCRUD")"
+    var dllRol = "@Url.Action("GetAllRol", "JsCRUD")"
+    var ddlEstado = "@Url.Action("GetAllEstado", "JsCRUD")"
+    var ddlMunicipioUrl = "@Url.Action("GetAllByEstado", "JsCRUD")?IdEstado="
+    var ddlColoniaUrl = '@Url.Action("GetAllByMunicipio", "JsCRUD")?IdMunicipio='
+
+    var eliminarUrl = '@Url.Action("Delete", "JsCRUD")'
+</script>
+
+<script src="~/Scripts/js/FormJs.js"></script>
+<script src="~/Scripts/js/jsCRUD.js"></script>

@@ -1,0 +1,164 @@
+﻿@model ML.ProductoSucursal
+
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="~/Content/usuarioStyle/userGetAll.css">
+
+
+
+@using (Html.BeginForm("GetAll", "ProductoSucursal", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <details>
+        <summary> Buscar <i style="margin: 5px;" class="bi bi-search"></i> </summary>
+        <div class="row row-cols-lg-4">
+            <div class="col">
+                @Html.LabelFor(model => model.Sucursal.IdSucursal, "Sucursal")
+                @Html.DropDownListFor(model => model.Sucursal.IdSucursal, new SelectList(Model.Sucursal.Sucursales, "IdSucursal", "Nombre", Model.Sucursal.IdSucursal), "Selecciona una sucursal", new { @class = "form-control" })
+
+            </div>
+        </div>
+        <div class="col" style=" margin-top: 10px; display: flex; align-content: center; justify-content: center;">
+            <button type="submit" class="btn btn-outline-dark">Buscar</button>
+        </div>
+    </details>
+}
+
+
+
+@if (Model.ProductoSucursales.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre del Producto</th>
+                    <th>Sucursal</th>
+                    <th>Stock</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (ML.ProductoSucursal productoSucursal in Model.ProductoSucursales)
+                {
+                    <tr>
+
+                        <td><img style="width: 100px; height: 100px;" src="@(productoSucursal.Producto.Imagen != null ? "data:image/png;base64," + Convert.ToBase64String(productoSucursal.Producto.Imagen) : "https://s3.amazonaws.com/roypi.com/static/images/default_product.png")" class="card-img-top" alt="@productoSucursal.Producto.Imagen"></td>
+
+                        <td>@productoSucursal.Producto.Nombre</td>
+
+                        <td>@productoSucursal.Sucursal.Nombre</td>
+                        <td>
+
+                            @Html.HiddenFor(m => productoSucursal.Producto.IdProducto)
+                            @Html.HiddenFor(m => productoSucursal.Sucursal.IdSucursal)
+
+
+                            @Html.TextBoxFor(m => productoSucursal.Stock, new { @class = "form-control stock-input", disabled = "disabled" })
+                        </td>
+                        <td>
+                            <button class="btn btn-warning editar-btn">Editar</button>
+                            <button class="btn btn-primary guardar-btn d-none">Guardar</button>
+                            <button class="btn btn-danger eliminar-btn">Eliminar</button>
+                        </td>
+                    </tr>
+                }
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+
+}
+<script src="~/Scripts/jquery-3.7.0.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        let lastInput = null;
+
+        // Habilitar edición de stock
+        $(".editar-btn").click(function () {
+            if (lastInput) {
+                lastInput.prop("disabled", true);
+                lastInput.closest("tr").find(".guardar-btn").addClass("d-none");
+                lastInput.closest("tr").find(".editar-btn").removeClass("d-none");
+            }
+
+            let row = $(this).closest("tr");
+            let inputStock = row.find(".stock-input");
+
+            inputStock.prop("disabled", false);
+            $(this).addClass("d-none");
+            row.find(".guardar-btn").removeClass("d-none");
+
+            lastInput = inputStock;
+        });
+
+        // Guardar cambios en stock
+        $(".guardar-btn").click(function () {
+            let row = $(this).closest("tr");
+            let inputStock = row.find(".stock-input");
+
+            let idProducto = row.find("input[name$='.IdProducto']").val();
+            let idSucursal = row.find("input[name$='.IdSucursal']").val();
+            let nuevoStock = inputStock.val();
+
+            $.ajax({
+                url: "/ProductoSucursal/ActualizarStock",  // Cambia esta URL si es necesario
+                type: "POST",
+                data: { idProducto: idProducto, idSucursal: idSucursal, nuevoStock: nuevoStock },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                    } else {
+                        alert("Error: " + response.message);
+                    }
+
+                    inputStock.prop("disabled", true);
+                    row.find(".guardar-btn").addClass("d-none");
+                    row.find(".editar-btn").removeClass("d-none");
+                },
+                error: function () {
+                    alert("Ocurrió un error al actualizar el stock.");
+                }
+            });
+        });
+
+        // Eliminar producto de sucursal
+        $(".eliminar-btn").click(function () {
+            if (!confirm("¿Seguro que deseas eliminar este producto de la sucursal?")) return;
+
+            let row = $(this).closest("tr");
+            let idProducto = row.find("input[name$='.IdProducto']").val();
+            let idSucursal = row.find("input[name$='.IdSucursal']").val();
+
+
+            $.ajax({
+                url: "/ProductoSucursal/Delete",
+                type: "POST",
+                data: { IdProducto: idProducto, IdSucursal: idSucursal },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        row.remove();
+                    } else {
+                        alert("Error: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("Ocurrió un error al eliminar el producto.");
+                }
+            });
+        });
+    });
+
+
+</script>

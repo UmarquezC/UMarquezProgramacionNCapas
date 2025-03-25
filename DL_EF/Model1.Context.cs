@@ -20,6 +20,7 @@ namespace DL_EF
         public UMarquezProgramacionNCapasEntities()
             : base("name=UMarquezProgramacionNCapasEntities")
         {
+            ProductoGetAllView = Set<ProductoGetAllView>();
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -34,6 +35,17 @@ namespace DL_EF
         public virtual DbSet<Estado> Estado { get; set; }
         public virtual DbSet<Municipio> Municipio { get; set; }
         public virtual DbSet<UsuarioGetAllView> UsuarioGetAllView { get; set; }
+        public virtual DbSet<ActualizacionPedidos> ActualizacionPedidos { get; set; }
+        public virtual DbSet<Categoria> Categoria { get; set; }
+        public virtual DbSet<DetallePedido> DetallePedido { get; set; }
+        public virtual DbSet<EstadoPedido> EstadoPedido { get; set; }
+        public virtual DbSet<Notificacion> Notificacion { get; set; }
+        public virtual DbSet<Pedidos> Pedidos { get; set; }
+        public virtual DbSet<Producto> Producto { get; set; }
+        public virtual DbSet<ProductoSucursal> ProductoSucursal { get; set; }
+        public virtual DbSet<SubCategoria> SubCategoria { get; set; }
+        public virtual DbSet<Sucursal> Sucursal { get; set; }
+        internal virtual DbSet<ProductoGetAllView> ProductoGetAllView { get; set; }
     
         public virtual int CambiarStatus(Nullable<int> idUsuario, Nullable<bool> estatus)
         {
@@ -287,6 +299,139 @@ namespace DL_EF
                 new ObjectParameter("IdRol", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UsuarioGetAll_Result>("UsuarioGetAll", nombreParameter, apellidoPaternoParameter, apellidoMaternoParameter, idRolParameter);
+        }
+    
+        public virtual ObjectResult<SubCategoriaGetAllByCategoria_Result> SubCategoriaGetAllByCategoria(Nullable<int> idCategoria)
+        {
+            var idCategoriaParameter = idCategoria.HasValue ?
+                new ObjectParameter("IdCategoria", idCategoria) :
+                new ObjectParameter("IdCategoria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubCategoriaGetAllByCategoria_Result>("SubCategoriaGetAllByCategoria", idCategoriaParameter);
+        }
+    
+        public virtual ObjectResult<ProductoGetAll_Result> ProductoGetAll(Nullable<int> categoria, Nullable<int> idSubCategoria)
+        {
+            var categoriaParameter = categoria.HasValue ?
+                new ObjectParameter("Categoria", categoria) :
+                new ObjectParameter("Categoria", typeof(int));
+    
+            var idSubCategoriaParameter = idSubCategoria.HasValue ?
+                new ObjectParameter("IdSubCategoria", idSubCategoria) :
+                new ObjectParameter("IdSubCategoria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductoGetAll_Result>("ProductoGetAll", categoriaParameter, idSubCategoriaParameter);
+        }
+    
+        public virtual ObjectResult<ProductoGetById_Result> ProductoGetById(Nullable<int> idProducto)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductoGetById_Result>("ProductoGetById", idProductoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> ProductoAdd(string nombre, string descripcion, Nullable<decimal> precio, byte[] imagen, Nullable<int> idSubCategoria)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("Precio", precio) :
+                new ObjectParameter("Precio", typeof(decimal));
+    
+            var imagenParameter = imagen != null ?
+                new ObjectParameter("Imagen", imagen) :
+                new ObjectParameter("Imagen", typeof(byte[]));
+    
+            var idSubCategoriaParameter = idSubCategoria.HasValue ?
+                new ObjectParameter("IdSubCategoria", idSubCategoria) :
+                new ObjectParameter("IdSubCategoria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("ProductoAdd", nombreParameter, descripcionParameter, precioParameter, imagenParameter, idSubCategoriaParameter);
+        }
+    
+        public virtual int ProductoUpdate(Nullable<int> idProducto, string nombre, string descripcion, Nullable<decimal> precio, byte[] imagen, Nullable<int> idSubCategoria)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("Precio", precio) :
+                new ObjectParameter("Precio", typeof(decimal));
+    
+            var imagenParameter = imagen != null ?
+                new ObjectParameter("Imagen", imagen) :
+                new ObjectParameter("Imagen", typeof(byte[]));
+    
+            var idSubCategoriaParameter = idSubCategoria.HasValue ?
+                new ObjectParameter("IdSubCategoria", idSubCategoria) :
+                new ObjectParameter("IdSubCategoria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductoUpdate", idProductoParameter, nombreParameter, descripcionParameter, precioParameter, imagenParameter, idSubCategoriaParameter);
+        }
+    
+        public virtual int ProductoDelete(Nullable<int> idProducto)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductoDelete", idProductoParameter);
+        }
+    
+        public virtual int ProductoSucursalUpdateStock(Nullable<int> idProducto, Nullable<int> idSucursal, Nullable<int> nuevoStock)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(int));
+    
+            var nuevoStockParameter = nuevoStock.HasValue ?
+                new ObjectParameter("NuevoStock", nuevoStock) :
+                new ObjectParameter("NuevoStock", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductoSucursalUpdateStock", idProductoParameter, idSucursalParameter, nuevoStockParameter);
+        }
+    
+        public virtual ObjectResult<ProductoSucursalGetBySucursal_Result> ProductoSucursalGetBySucursal(Nullable<int> idSucursal)
+        {
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductoSucursalGetBySucursal_Result>("ProductoSucursalGetBySucursal", idSucursalParameter);
+        }
+    
+        public virtual int ProductoSucursalDelete(Nullable<int> idProducto, Nullable<int> idSucursal)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductoSucursalDelete", idProductoParameter, idSucursalParameter);
         }
     }
 }

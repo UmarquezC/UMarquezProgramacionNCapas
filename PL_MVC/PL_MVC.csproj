@@ -128,6 +128,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JsCRUDController.cs" />
+    <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\ProductoSucursalController.cs" />
+    <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -173,6 +177,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\js\FormJs.js" />
+    <Content Include="Scripts\js\jsCRUD.js" />
+    <Content Include="Scripts\js\Producto.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -192,6 +198,15 @@
     <Content Include="Views\Usuario\Form.cshtml" />
     <Content Include="Views\Usuario\_Modal.cshtml" />
     <Content Include="Views\Usuario\_Mensajes.cshtml" />
+    <Content Include="Views\JsCRUD\GetAll.cshtml" />
+    <Content Include="Views\Producto\GetAllProducto.cshtml" />
+    <Content Include="Views\Producto\Form.cshtml" />
+    <Content Include="Views\Producto\_Mensajes.cshtml" />
+    <Content Include="Views\Sucursal\GetAll.cshtml" />
+    <Content Include="Views\ProductoSucursal\GetAll.cshtml" />
+    <Content Include="Views\Sucursal\Form.cshtml" />
+    <Content Include="Views\ProductoSucursal\Form.cshtml" />
+    <Content Include="Views\Sucursal\_Mensajes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

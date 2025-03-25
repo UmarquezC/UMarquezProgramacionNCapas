@@ -54,14 +54,14 @@
                         <div class="col">
                             @Html.LabelFor(model => model.Nombre)
                             @Html.TextBoxFor(model => model.Nombre, new { @onkeypress = "soloLetras(event)", @onblur = "clean(event)", @class = "input-group mb-3 " })
-                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class="text-danger"})
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                             <span class="error"></span>
                         </div>
-                        
+
                         <div class="col">
                             @Html.LabelFor(model => model.ApellidoPaterno)
-                            @Html.TextBoxFor(model => model.ApellidoPaterno, "", new { @onkeypress = "soloLetras(event)", @onblur = "clean(event)", @class = "input-group mb-3 "})
-                            @Html.ValidationMessageFor(model => model.ApellidoPaterno, "", new { @class="text-danger" })
+                            @Html.TextBoxFor(model => model.ApellidoPaterno, "", new { @onkeypress = "soloLetras(event)", @onblur = "clean(event)", @class = "input-group mb-3 " })
+                            @Html.ValidationMessageFor(model => model.ApellidoPaterno, "", new { @class = "text-danger" })
                             <span class="error"></span>
                         </div>
 
@@ -126,7 +126,7 @@
 
                         <div class="col">
                             @Html.LabelFor(model => model.Curp)
-                            @Html.TextBoxFor(model => model.Curp, new { @class = "input-group mb-3 "})
+                            @Html.TextBoxFor(model => model.Curp, new { @class = "input-group mb-3 " })
                             @Html.ValidationMessageFor(model => model.Curp, "", new { @class = "text-danger" })
                             <span id="resultado"></span>
                         </div>
@@ -185,7 +185,7 @@
                             }
                             else
                             {
-                                @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(String.Empty), "Selecciona un municipio", new { @onchange = "ColoniaGetAllByMunicipio()", @id = "ddlMunicipio"})
+                                @Html.DropDownListFor(model => model.Direccion.Colonia.Municipio.IdMunicipio, new SelectList(String.Empty), "Selecciona un municipio", new { @onchange = "ColoniaGetAllByMunicipio()", @id = "ddlMunicipio" })
                             }
                         </div>
 
@@ -198,7 +198,7 @@
                             }
                             else
                             {
-                                @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(String.Empty), "Selecciona una colonia", new { @id = "ddlColonia"})
+                                @Html.DropDownListFor(model => model.Direccion.Colonia.IdColonia, new SelectList(String.Empty), "Selecciona una colonia", new { @id = "ddlColonia" })
                             }
 
                         </div>

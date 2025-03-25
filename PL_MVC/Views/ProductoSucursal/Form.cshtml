@@ -1,0 +1,34 @@
+﻿@model ML.ProductoSucursal
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Agregar Producto a una Sucursal</h2>
+
+@using (Html.BeginForm("Agregar", "ProductoSucursal", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.Producto.IdProducto, "Producto", new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.Producto.IdProducto,
+            new SelectList(Model.Producto.Productos, "IdProducto", "Nombre"),
+            "Selecciona un producto",
+            new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Sucursal.IdSucursal, "Sucursal", new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.Sucursal.IdSucursal,
+            new SelectList(Model.Sucursal.Sucursales, "IdSucursal", "Nombre"),
+            "Selecciona una sucursal",
+            new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Stock, "Stock", new { @class = "control-label" })
+        @Html.TextBoxFor(model => model.Stock, new { @class = "form-control", type = "number", min = "1" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a href="@Url.Action("GetAllProductoSucursal", "ProductoSucursal")" class="btn btn-secondary">Cancelar</a>
+}

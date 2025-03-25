@@ -578,9 +578,6 @@ namespace BL
 
 
 
-
-
-
         //HACER LO DE ENTITY FRAME*****************************
 
         //AGREGAR CON ENTITY
@@ -688,6 +685,17 @@ namespace BL
                             usuario.Estatus = Convert.ToBoolean(obj.Estatus);
                             usuario.Curp = obj.CURP;
                             usuario.Imagen = obj.Imagen;
+                            //USAR LA IMAGEN PARA JS
+                            
+                            if(obj.Imagen != null)
+                            {
+                                usuario.ImagenBase64 = Convert.ToBase64String(obj.Imagen);
+                            }
+                            else
+                            {
+                                usuario.ImagenBase64 = null;
+                            }
+
                             if (obj.IdRol == null)
                             {
                                 usuario.Rol.IdRol = 0;

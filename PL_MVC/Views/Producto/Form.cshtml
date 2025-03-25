@@ -1,0 +1,83 @@
+﻿@model ML.Producto
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>@(Model.IdProducto == 0 ? "Nuevo Producto" : "Editar Producto")</h2>
+
+@using (Html.BeginForm("Form", "Producto", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+
+
+    <div class="boximg">
+        <div class="show">
+            @Html.HiddenFor(model => model.Imagen)
+            @if (Model.Imagen != null)
+            {
+                <img style="width: 100px; height:100px; border-radius:50%; object-fit:cover;" id="show" src="data:image/*;base64, @Convert.ToBase64String(Model.Imagen)" alt="Alternate Text" />
+            }
+            else
+            {
+                <img id="show" style="width: 100px; height:100px; border-radius:50%; object-fit:cover;" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-image-icon-default-avatar-profile-icon-social-media-user-vector-image-209162840.jpg" alt="Alternate Text" />
+            }
+        </div>
+
+        <div class="input">
+            <input class="form-control" type="file" accept="png, jpg, jpeg" name="inptFileImagen" id="inptFileImagen" onchange="validarImagen(), visualizarImg(this)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.HiddenFor(model => model.IdProducto)
+        @Html.LabelFor(model => model.Nombre)
+        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Nombre)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Descripcion)
+        @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Descripcion)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Precio)
+        @Html.TextBoxFor(model => model.Precio, new { @class = "form-control", type = "number" })
+        @Html.ValidationMessageFor(model => model.Precio)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SubCategoria.Categoria.IdCategoria, "Categoría")
+        @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria,
+            new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre", Model.SubCategoria.Categoria.IdCategoria),
+            "Selecciona una categoría",
+            new { @class = "form-control", id = "IdCategoria", onchange = "CargarSubCategorias()" })
+        @Html.ValidationMessageFor(model => model.SubCategoria.Categoria.IdCategoria)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SubCategoria.IdSubCategoria, "Subcategoría")
+        @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria,
+            new SelectList(Model.SubCategoria.SubCategorias, "IdSubCategoria", "Nombre", Model.SubCategoria.IdSubCategoria),
+            "Selecciona una subcategoría",
+            new { @class = "form-control", id = "IdSubCategoria" })
+    </div>
+
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">@((Model.IdProducto == 0) ? "Crear Producto" : "Actualizar Producto")</button>
+    </div>
+}
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    var ddlSubCategoriaUrl = "@Url.Action("GetAllByCategoria", "Producto")?IdCategoria=";
+</script>
+
+<script src="~/Scripts/js/Producto.js"></script>
+<script src="~/Scripts/js/FormJs.js"></script>

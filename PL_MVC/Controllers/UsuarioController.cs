@@ -176,7 +176,7 @@ namespace PL_MVC.Controllers
             }
             else
             {
-                ViewBag.Message = result.Message;                
+                ViewBag.Message = result.Message;      
             }
             return PartialView("_Mensajes");
         }
@@ -190,7 +190,7 @@ namespace PL_MVC.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet]       
         public JsonResult GetAllByEstado(int IdEstado)
         {
 
@@ -336,6 +336,9 @@ namespace PL_MVC.Controllers
             Session["RutaExcel"] = null;
             return RedirectToAction("GetAll");
         }
+
+
+
 
     }
 }
