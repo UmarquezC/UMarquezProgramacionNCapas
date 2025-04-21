@@ -26,11 +26,9 @@ namespace ML
         public string ApellidoPaterno { get; set; }
 
         //Email
-        [DisplayName("Correo Electronico")]
-        [DataType (DataType.EmailAddress)]
-        [EmailAddress]
-        [Required(ErrorMessage = "Correo electronico requerido")]
-        
+        [DisplayName("Email")]
+        [Required(ErrorMessage = "Campo Obligatorio")]
+        [RegularExpression(@"^[^\s@@]+@[^\s@@]+\.[^\s@@]+$", ErrorMessage = "Este campo solo acepta correos correctos")]
         public string Email { get; set; }
 
         //USERNAME
@@ -76,6 +74,7 @@ namespace ML
         [Required(ErrorMessage = "CURP requerido")]
         [RegularExpression(@"^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0\d|1[0-2])(?:[0-2]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$", ErrorMessage = "CURP INVALIDA")]        
         public string Curp { get; set; }
+        //VOY A COMENTAR LA IMAGEN
         public byte[] Imagen { get; set; }
         //public int IdRol {  get; set; }
 
