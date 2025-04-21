@@ -578,9 +578,6 @@ namespace BL
 
 
 
-
-
-
         //HACER LO DE ENTITY FRAME*****************************
 
         //AGREGAR CON ENTITY
