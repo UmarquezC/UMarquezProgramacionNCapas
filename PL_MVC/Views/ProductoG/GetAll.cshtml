@@ -3,6 +3,7 @@
     ViewBag.Title = "GetAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 
 <style>
@@ -83,7 +84,12 @@
                                     </td>
                                     <td>@producto.SubCategoria.Categoria.Nombre</td>
                                     <td>@producto.SubCategoria.Nombre</td>
-
+                                    <td>
+                                        <a href="@Url.Action("Form", "Producto",new { IdProducto = producto.IdProducto})" class="btn btn-warning"><i class="bi bi-pencil-square"></i> </a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Delete", "",new { IdProducto = producto.IdProducto})" class="btn btn-danger"> <i class="bi bi-trash3-fill"></i> </a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>

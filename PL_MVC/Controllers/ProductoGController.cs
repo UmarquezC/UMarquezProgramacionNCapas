@@ -19,7 +19,7 @@ namespace PL_MVC.Controllers
             ML.Producto producto = new ML.Producto();
             producto.SubCategoria = new ML.SubCategoria();
             producto.SubCategoria.Categoria = new ML.Categoria();
-            
+
 
             ML.Result result = BL.ProductoG.GetAll(producto);
 
@@ -48,13 +48,11 @@ namespace PL_MVC.Controllers
         public ActionResult GetAll(ML.Producto producto)
         {
             producto.SubCategoria.IdSubCategoria = producto.SubCategoria.IdSubCategoria == 0 ? 0 : producto.SubCategoria.IdSubCategoria;
-            producto.SubCategoria.Categoria.IdCategoria = producto.SubCategoria.Categoria.IdCategoria == 0 ? 0 : producto.SubCategoria.Categoria.IdCategoria;
-
-
 
             ML.Result result = BL.ProductoG.GetAll(producto);
 
-            if (result.Success){
+            if (result.Success)
+            {
                 producto.Productos = result.Objects;
             }
 
@@ -67,5 +65,26 @@ namespace PL_MVC.Controllers
 
             return View(producto);
         }
+
+
+        //BORRAR
+
+        //FORMULARIOS
+        [HttpGet]
+        public ActionResult Form(int? IdProducto)
+        {
+            ML.Producto producto = new ML.Producto();
+            producto.SubCategoria = new ML.SubCategoria();
+            producto.SubCategoria.Categoria = new ML.Categoria();
+
+            if (IdProducto == 0)
+            {
+
+            }
+
+
+            return View(producto);
+        }
+
     }
 }
