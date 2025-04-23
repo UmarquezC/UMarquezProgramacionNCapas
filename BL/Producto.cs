@@ -8,6 +8,7 @@ namespace BL
 {
     public class Producto
     {
+        /*
         public static ML.Result GetAll(ML.Producto productoObj)
         {
             ML.Result result = new ML.Result();
@@ -193,6 +194,8 @@ namespace BL
 
             return result;
         }
+        */
 
     }
+        
 }

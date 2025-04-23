@@ -8,6 +8,7 @@ namespace PL_MVC.Controllers
 {
     public class ProductoSucursalController : Controller
     {
+        /*
         // GET: ProductoSucursal
         public ActionResult GetAll()
         {
@@ -102,7 +103,7 @@ namespace PL_MVC.Controllers
         }
 
 
-
+*/
 
     }
 }

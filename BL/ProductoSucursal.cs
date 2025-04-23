@@ -9,6 +9,7 @@ namespace BL
 {
     public class ProductoSucursal
     {
+        /*
         public static ML.Result Get(ML.ProductoSucursal productoSucursalObj)
         {
             ML.Result result = new ML.Result();
@@ -111,6 +112,6 @@ namespace BL
 
             return result;
         }
-
+        */
     }
 }

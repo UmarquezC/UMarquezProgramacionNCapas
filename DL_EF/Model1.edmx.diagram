@@ -16,29 +16,16 @@
         <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__Direccion__IdCol__6477ECF3" />
         <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__Direccion__IdUsu__656C112C" />
         <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__Municipio__IdEst__5EBF139D" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.UsuarioGetAllView" Width="1.5" PointX="5.375" PointY="4.75" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.ActualizacionPedidos" Width="1.5" PointX="15.25" PointY="7.75" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.Categoria" Width="1.5" PointX="8.5" PointY="15.125" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.DetallePedido" Width="1.5" PointX="15.25" PointY="10.875" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.EstadoPedido" Width="1.5" PointX="10.75" PointY="8" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.Notificacion" Width="1.5" PointX="15.25" PointY="16.875" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.Pedidos" Width="1.5" PointX="13" PointY="10.25" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.Producto" Width="1.5" PointX="13" PointY="14.625" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.ProductoSucursal" Width="1.5" PointX="10" PointY="10.875" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.SubCategoria" Width="1.5" PointX="10.75" PointY="15" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.Sucursal" Width="1.5" PointX="7.75" PointY="10.875" />
-        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.ProductoGetAllView" Width="1.5" PointX="0.75" PointY="6.75" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__Actualiza__IdEst__40F9A68C" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__Actualiza__IdPed__40058253" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__SubCatego__IdCat__2CF2ADDF" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__DetallePe__IdPed__3C34F16F" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__DetallePe__IdPro__3D2915A8" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__Pedidos__IdEstad__395884C4" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__Notificac__IdPed__43D61337" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__Pedidos__IdSucur__3864608B" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__Producto__IdSubC__2FCF1A8A" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__ProductoS__IdPro__32AB8735" />
-        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__ProductoS__IdSuc__339FAB6E" />
+        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.Categoria" Width="1.5" PointX="7.375" PointY="11.375" />
+        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.Producto" Width="1.5" PointX="11.875" PointY="11" />
+        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.ProductoSucursal" Width="1.5" PointX="14.125" PointY="11.125" />
+        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.SubCategoria" Width="1.5" PointX="9.625" PointY="11.25" />
+        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.Sucursal" Width="1.5" PointX="11.875" PointY="15.25" />
+        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__SubCatego__IdCat__793DFFAF" />
+        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__Producto__IdSubC__7C1A6C5A" />
+        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__ProductoS__IdPro__7EF6D905" />
+        <AssociationConnector Association="UMarquezProgramacionNCapasModel.FK__ProductoS__IdSuc__7FEAFD3E" />
+        <EntityTypeShape EntityType="UMarquezProgramacionNCapasModel.UsuarioGetAllView" Width="1.5" PointX="0.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

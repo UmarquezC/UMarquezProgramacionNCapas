@@ -17,7 +17,6 @@ namespace DL_EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Producto()
         {
-            this.DetallePedido = new HashSet<DetallePedido>();
             this.ProductoSucursal = new HashSet<ProductoSucursal>();
         }
     
@@ -26,10 +25,8 @@ namespace DL_EF
         public string Descripcion { get; set; }
         public decimal Precio { get; set; }
         public byte[] Imagen { get; set; }
-        public int IdSubCategoria { get; set; }
+        public Nullable<int> IdSubCategoria { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetallePedido> DetallePedido { get; set; }
         public virtual SubCategoria SubCategoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductoSucursal> ProductoSucursal { get; set; }
