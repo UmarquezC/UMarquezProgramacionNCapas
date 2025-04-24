@@ -302,6 +302,7 @@
     <Content Include="Views\ProductoSucursal\Form.cshtml" />
     <Content Include="Views\Sucursal\_Mensajes.cshtml" />
     <Content Include="Views\ProductoG\GetAll.cshtml" />
+    <Content Include="Views\ProductoG\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

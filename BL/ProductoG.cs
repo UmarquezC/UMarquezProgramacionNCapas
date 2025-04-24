@@ -50,5 +50,49 @@ namespace BL
 
             return result;
         }
+
+        public static ML.Result GetById(int IdProducto)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
+                {
+                    var query = context.ProductoGGetById(IdProducto).SingleOrDefault();
+
+                    if (query != null)
+                    {
+                        ML.Producto producto = new ML.Producto();
+                        producto.SubCategoria = new ML.SubCategoria();
+                        producto.SubCategoria.Categoria = new ML.Categoria();
+
+                        producto.IdProducto = query.IdProducto;
+                        producto.Nombre = query.NombreProducto;
+                        producto.Descripcion = query.Descripcion;
+                        producto.Precio = query.Precio;
+                        producto.Imagen = query.Imagen;
+                        producto.SubCategoria.IdSubCategoria = query.IdSubCategoria;
+                        producto.SubCategoria.Nombre = query.NombreSubCategoria;
+                        producto.SubCategoria.Categoria.IdCategoria = query.IdSubCategoria;
+                        producto.SubCategoria.Categoria.Nombre = query.NombreCategoria;
+
+                        result.Object = producto;
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Success = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+            return result;
+        }
     }
 }

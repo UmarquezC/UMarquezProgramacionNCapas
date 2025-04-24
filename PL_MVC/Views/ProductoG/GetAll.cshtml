@@ -1,4 +1,4 @@
-﻿﻿@model ML.Producto
+﻿﻿﻿@model ML.Producto
 @{
     ViewBag.Title = "GetAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,6 +7,32 @@
 
 
 <style>
+
+    body {
+        background-color: #EEEDEB;
+        text-transform: uppercase;
+    }
+
+    .enter {
+        height: 45px;
+        width: 100px;
+        border-radius: 5px;
+        border: 2px solid #000;
+        cursor: pointer;
+        background-color: transparent;
+        transition: 0.5s;
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 1em;
+    }
+
+        .enter:hover {
+            background-color: rgb(0, 0, 0);
+            color: white;
+        }
+
+
 
     .table-hover tbody tr:hover {
         background-color: #d4edda;
@@ -19,12 +45,15 @@
     }
 </style>
 
-<h2>GetAll</h2>
+<h2>Productos</h2>
+
+
+
 
 
 @using (Html.BeginForm("GetAll", "ProductoG", FormMethod.Post, new { id = "formBuscar" }))
 {
-    <div class="row row-cols-lg-4">
+    <div class="row row-cols-lg-4 mb-4">
         <div class="col">
             @Html.LabelFor(model => model.SubCategoria.Categoria)
             @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre", Model.SubCategoria.Categoria.IdCategoria), "Selecciona una categoría", new { @class = "form-control", id = "ddlCategoria", onchange = "cargarSubCategorias()" })
@@ -46,9 +75,14 @@
         </div>
 
         <div class="col">
-            <button type="submit" class="btn btn-outline-dark"> Buscar </button>
+            <button type="submit" class="enter"> Buscar </button>
         </div>
 
+        <div class="col">
+            <a href="@Url.Action("Form", "ProductoG")" class="enter">
+                Agregar <i class="bi bi-person-fill-add" style="font-size:20px;"></i>
+            </a>
+        </div>
     </div>
 }
 
@@ -85,10 +119,10 @@
                                     <td>@producto.SubCategoria.Categoria.Nombre</td>
                                     <td>@producto.SubCategoria.Nombre</td>
                                     <td>
-                                        <a href="@Url.Action("Form", "Producto",new { IdProducto = producto.IdProducto})" class="btn btn-warning"><i class="bi bi-pencil-square"></i> </a>
+                                        <a href="@Url.Action("Form", "ProductoG",new { IdProducto = producto.IdProducto})" class="btn btn-warning"><i class="bi bi-pencil-square"></i> </a>
                                     </td>
                                     <td>
-                                        <a href="@Url.Action("Delete", "",new { IdProducto = producto.IdProducto})" class="btn btn-danger"> <i class="bi bi-trash3-fill"></i> </a>
+                                        <a href="@Url.Action("Delete", "ProductoG",new { IdProducto = producto.IdProducto})" class="btn btn-danger"> <i class="bi bi-trash3-fill"></i> </a>
                                     </td>
                                 </tr>
                             }

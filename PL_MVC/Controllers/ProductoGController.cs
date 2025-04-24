@@ -29,10 +29,11 @@ namespace PL_MVC.Controllers
             }
 
             ML.Result CategoriaDDL = BL.Categoria.GetAll();
-            producto.SubCategoria.Categoria.Categorias = CategoriaDDL.Objects;
+            producto.SubCategoria.Categoria.Categorias = CategoriaDDL.Objects/*.Cast<ML.Categoria>().ToList()*/;
 
             ML.Result SubCategoriaDDL = BL.SubCategoria.GetAll(producto.SubCategoria.Categoria.IdCategoria);
-            producto.SubCategoria.SubCategorias = SubCategoriaDDL.Objects;
+            producto.SubCategoria.SubCategorias = SubCategoriaDDL.Objects/* != null ? SubCategoriaDDL.Objects.Cast<ML.SubCategoria>().ToList() : new List<ML.SubCategoria>()*/;
+
 
             return View(producto);
         }
@@ -56,12 +57,11 @@ namespace PL_MVC.Controllers
                 producto.Productos = result.Objects;
             }
 
-            ML.Result ddlCategorias = BL.Categoria.GetAll();
-            producto.SubCategoria.Categoria.Categorias = ddlCategorias.Objects;
+            ML.Result CategoriaDDL = BL.Categoria.GetAll();
+            producto.SubCategoria.Categoria.Categorias = CategoriaDDL.Objects/*.Cast<ML.Categoria>().ToList()*/;
 
-
-            ML.Result ddlSubCategoria = BL.SubCategoria.GetAll(producto.SubCategoria.Categoria.IdCategoria);
-            producto.SubCategoria.Categoria.Categorias = ddlCategorias.Objects;
+            ML.Result SubCategoriaDDL = BL.SubCategoria.GetAll(producto.SubCategoria.Categoria.IdCategoria);
+            producto.SubCategoria.SubCategorias = SubCategoriaDDL.Objects/*.Cast<ML.SubCategoria>().ToList()*/;
 
             return View(producto);
         }
@@ -74,16 +74,29 @@ namespace PL_MVC.Controllers
         public ActionResult Form(int? IdProducto)
         {
             ML.Producto producto = new ML.Producto();
-            producto.SubCategoria = new ML.SubCategoria();
-            producto.SubCategoria.Categoria = new ML.Categoria();
 
-            if (IdProducto == 0)
+            if (IdProducto == null)
             {
-
+                producto.SubCategoria = new ML.SubCategoria();
+                producto.SubCategoria.Categoria = new ML.Categoria();
             }
+            else
+            {
+                ML.Result result = BL.ProductoG.GetById(IdProducto.Value);
+                producto = (ML.Producto)result.Object;
+            }
+            ML.Result CategoriaDDL = BL.Categoria.GetAll();
+            producto.SubCategoria.Categoria.Categorias = CategoriaDDL.Objects/*.Cast<ML.Categoria>().ToList()*/;
 
-
+            ML.Result SubCategoriaDDL = BL.SubCategoria.GetAll(producto.SubCategoria.Categoria.IdCategoria);
+            producto.SubCategoria.SubCategorias = SubCategoriaDDL.Objects/*.Cast<ML.SubCategoria>().ToList()*/;
             return View(producto);
+        }
+
+        [HttpPost]
+        public ActionResult Form(ML.Producto producto)
+        {
+            return View();
         }
 
     }

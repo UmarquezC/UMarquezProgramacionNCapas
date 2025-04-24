@@ -96,6 +96,9 @@
     <Compile Include="ProductoGGetAll_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProductoGGetById_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="ProductoSucursal.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
