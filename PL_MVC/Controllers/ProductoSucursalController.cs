@@ -28,7 +28,7 @@ namespace PL_MVC.Controllers
             }
             
             productoSucursal.Sucursal.IdSucursal = 0;
-            ML.Result result = BL.ProductoSucursal.GetAll(productoSucursal);
+            ML.Result result = BL.ProductoSucursal.GetAll(productoSucursal.Sucursal.IdSucursal);
 
             if (result.Success)
             {
@@ -49,7 +49,7 @@ namespace PL_MVC.Controllers
         {
             productoSucursal.Sucursal.IdSucursal = Convert.ToByte(productoSucursal.Sucursal.IdSucursal == 0 ? 0 : productoSucursal.Sucursal.IdSucursal);
             
-            ML.Result result = BL.ProductoSucursal.GetAll(productoSucursal);            
+            ML.Result result = BL.ProductoSucursal.GetAll(productoSucursal.Sucursal.IdSucursal);            
 
             if (result.Success)
             {

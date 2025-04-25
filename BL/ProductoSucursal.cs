@@ -19,41 +19,64 @@ namespace BL
                 using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
                 {
                     var query = (from productosucursal in context.ProductoSucursal
-                                 where productosucursal.IdSucursal != 0 && productosucursal.IdSucursal == IdSucursal
-                                 select productosucursal
-                                 );
-                }
-
-                /*
-                using(DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
-                {
-                    var query = context.ProductoSucursalGetBySucursal(productoSucursalObj.Sucursal.IdSucursal).ToList();
+                                 where productosucursal.IdSucursal == IdSucursal
+                                 select productosucursal).ToList();
 
                     if (query.Count > 0)
                     {
                         result.Objects = new List<object>();
+
                         foreach (var obj in query)
                         {
-                            ML.ProductoSucursal productoSucursal = new ML.ProductoSucursal();
-                            productoSucursal.Sucursal = new ML.Sucursal();
-                            productoSucursal.Producto = new ML.Producto();
+                            ML.ProductoSucursal productosucursal = new ML.ProductoSucursal();
+                            productosucursal.Producto = new ML.Producto();
+                            productosucursal.Sucursal = new ML.Sucursal();
 
-                            productoSucursal.Producto.IdProducto = obj.IdProducto;
-                            productoSucursal.Producto.Imagen = obj.Imagen;
-                            productoSucursal.Producto.Nombre = obj.NombreProducto;
-                            productoSucursal.Sucursal.IdSucursal = obj.IdSucursal;
-                            productoSucursal.Sucursal.Nombre = obj.NombreSucursal;
-                            productoSucursal.Stock = obj.Stock;
-                            result.Objects.Add(productoSucursal);
+                            {
+                                productosucursal.Producto.IdProducto = obj.IdProducto.Value;
+                                productosucursal.Producto.Imagen = obj.Producto.Imagen;
+                                productosucursal.Producto.Nombre = obj.Producto.Nombre;
+                                productosucursal.Sucursal.IdSucursal = obj.Sucursal.IdSucursal;
+                                productosucursal.Sucursal.Nombre = obj.Sucursal.Nombre;
+                                productosucursal.Stock = obj.Stock;
+                            };
+                            result.Objects.Add(productosucursal);
                         }
                         result.Success = true;
+
                     }
-                    else
+
+                    /*
+                    using(DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
                     {
-                        result.Success = false;
+                        var query = context.ProductoSucursalGetBySucursal(productoSucursalObj.Sucursal.IdSucursal).ToList();
+
+                        if (query.Count > 0)
+                        {
+                            result.Objects = new List<object>();
+                            foreach (var obj in query)
+                            {
+                                ML.ProductoSucursal productoSucursal = new ML.ProductoSucursal();
+                                productoSucursal.Sucursal = new ML.Sucursal();
+                                productoSucursal.Producto = new ML.Producto();
+
+                                productoSucursal.Producto.IdProducto = obj.IdProducto;
+                                productoSucursal.Producto.Imagen = obj.Imagen;
+                                productoSucursal.Producto.Nombre = obj.NombreProducto;
+                                productoSucursal.Sucursal.IdSucursal = obj.IdSucursal;
+                                productoSucursal.Sucursal.Nombre = obj.NombreSucursal;
+                                productoSucursal.Stock = obj.Stock;
+                                result.Objects.Add(productoSucursal);
+                            }
+                            result.Success = true;
+                        }
+                        else
+                        {
+                            result.Success = false;
+                        }
                     }
+                    */
                 }
-                */
             }
             catch (Exception ex)
             {
