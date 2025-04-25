@@ -8,7 +8,7 @@ namespace PL_MVC.Controllers
 {
     public class ProductoSucursalController : Controller
     {
-        /*
+        
         // GET: ProductoSucursal
         public ActionResult GetAll()
         {
@@ -28,7 +28,7 @@ namespace PL_MVC.Controllers
             }
             
             productoSucursal.Sucursal.IdSucursal = 0;
-            ML.Result result = BL.ProductoSucursal.Get(productoSucursal);
+            ML.Result result = BL.ProductoSucursal.GetAll(productoSucursal);
 
             if (result.Success)
             {
@@ -49,7 +49,7 @@ namespace PL_MVC.Controllers
         {
             productoSucursal.Sucursal.IdSucursal = Convert.ToByte(productoSucursal.Sucursal.IdSucursal == 0 ? 0 : productoSucursal.Sucursal.IdSucursal);
             
-            ML.Result result = BL.ProductoSucursal.Get(productoSucursal);            
+            ML.Result result = BL.ProductoSucursal.GetAll(productoSucursal);            
 
             if (result.Success)
             {
@@ -74,7 +74,7 @@ namespace PL_MVC.Controllers
             return View(productoSucursal);
         }
 
-
+        /*
 
         [HttpPost]
         public JsonResult ActualizarStock(int IdProducto, int IdSucursal, int NuevoStock)
@@ -103,7 +103,7 @@ namespace PL_MVC.Controllers
         }
 
 
-*/
+        */
 
     }
 }

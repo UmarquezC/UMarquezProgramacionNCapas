@@ -10,7 +10,7 @@
 
     body {
         background-color: #EEEDEB;
-        text-transform: uppercase;
+        
     }
 
     .enter {
@@ -53,23 +53,24 @@
 
 @using (Html.BeginForm("GetAll", "ProductoG", FormMethod.Post, new { id = "formBuscar" }))
 {
-    <div class="row row-cols-lg-4 mb-4">
+
+    <div class="row row-cols-lg-4 mb-5">
         <div class="col">
             @Html.LabelFor(model => model.SubCategoria.Categoria)
-            @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre", Model.SubCategoria.Categoria.IdCategoria), "Selecciona una categoría", new { @class = "form-control", id = "ddlCategoria", onchange = "cargarSubCategorias()" })
+            @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre"), "Selecciona una Categoria", new { @class = "form-control", @onchange = "cargarSubCategorias()", @id = "ddlCategoria" })
         </div>
 
         <div class="col">
             @Html.LabelFor(model => model.SubCategoria)
 
-            @if (Model.SubCategoria != null && Model.SubCategoria.SubCategorias != null && Model.SubCategoria.SubCategorias.Count > 0)
+            @if (Model.SubCategoria != null && Model.SubCategoria.SubCategorias != null && Model.SubCategoria.IdSubCategoria > 0)
             {
-
-                @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(Model.SubCategoria.SubCategorias, "IdSubCategoria", "Nombre", Model.SubCategoria.IdSubCategoria), "Selecciona una subcategoria", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(Model.SubCategoria.SubCategorias, "IdSubCategoria", "Nombre", Model.SubCategoria.IdSubCategoria), "Selecciona la subcategoria ", new { @id = "ddlSubCategoria", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SubCategoria.IdSubCategoria, "", new { @class = "text-danger" })
             }
             else
             {
-                @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(String.Empty), "Selecciona una subcategoria", new { @class = "form-control", id = "ddlSubCategoria" })
+                @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(String.Empty), "Selecciona la subcategoria", new { @id = "ddlSubCategoria", @class = "form-control" })
             }
 
         </div>
@@ -78,7 +79,7 @@
             <button type="submit" class="enter"> Buscar </button>
         </div>
 
-        <div class="col">
+        <div class="container">
             <a href="@Url.Action("Form", "ProductoG")" class="enter">
                 Agregar <i class="bi bi-person-fill-add" style="font-size:20px;"></i>
             </a>
@@ -114,7 +115,7 @@
                                     <td>@producto.Descripcion</td>
                                     <td>@producto.Precio</td>
                                     <td>
-                                        <img src="@producto.Imagen" alt="" class="img-thumbnail" style="width: 80px; height: 80px; object-fit: cover;" />
+                                        <img src="@(producto.Imagen != null ? "data:image/png;base64," + Convert.ToBase64String(producto.Imagen) : "https://s3.amazonaws.com/roypi.com/static/images/default_product.png")" class="card-img-top" alt="@producto.Nombre">
                                     </td>
                                     <td>@producto.SubCategoria.Categoria.Nombre</td>
                                     <td>@producto.SubCategoria.Nombre</td>

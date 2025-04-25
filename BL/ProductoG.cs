@@ -94,5 +94,95 @@ namespace BL
 
             return result;
         }
+
+
+        public static ML.Result ProductoAdd(ML.Producto producto)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
+                {
+                    var query = context.ProductoGAdd(producto.Nombre, producto.Descripcion, producto.Precio, producto.Imagen, producto.SubCategoria.IdSubCategoria);
+
+                    if (query != null)
+                    {
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Success = false;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+            return result;
+        }
+
+
+        public static ML.Result ProductoUpdate(ML.Producto producto)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
+                {
+                    var query = context.ProductoGUpdate(producto.IdProducto, producto.Nombre, producto.Descripcion, producto.Precio, producto.Imagen, producto.SubCategoria.IdSubCategoria);
+
+                    if (query != null)
+                    {
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Success = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+            return result;
+        }
+
+        public static ML.Result ProductoDelete(int IdProduxcto)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
+                {
+                    var query = context.ProductoGDelete(IdProduxcto);
+                    if (query != null)
+                    {
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Success = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return result;
+        }
+
     }
 }

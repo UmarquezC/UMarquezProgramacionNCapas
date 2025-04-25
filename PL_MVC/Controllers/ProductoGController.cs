@@ -28,12 +28,11 @@ namespace PL_MVC.Controllers
                 producto.Productos = result.Objects;
             }
 
-            ML.Result CategoriaDDL = BL.Categoria.GetAll();
-            producto.SubCategoria.Categoria.Categorias = CategoriaDDL.Objects/*.Cast<ML.Categoria>().ToList()*/;
+            ML.Result ddlCategoria = BL.Categoria.GetAll();
+            producto.SubCategoria.Categoria.Categorias = ddlCategoria.Objects;
 
-            ML.Result SubCategoriaDDL = BL.SubCategoria.GetAll(producto.SubCategoria.Categoria.IdCategoria);
-            producto.SubCategoria.SubCategorias = SubCategoriaDDL.Objects/* != null ? SubCategoriaDDL.Objects.Cast<ML.SubCategoria>().ToList() : new List<ML.SubCategoria>()*/;
-
+            ML.Result ddlSubCategoria = BL.SubCategoria.GetAll(producto.SubCategoria.Categoria.IdCategoria);
+            producto.SubCategoria.SubCategorias = ddlSubCategoria.Objects;
 
             return View(producto);
         }
@@ -57,17 +56,25 @@ namespace PL_MVC.Controllers
                 producto.Productos = result.Objects;
             }
 
-            ML.Result CategoriaDDL = BL.Categoria.GetAll();
-            producto.SubCategoria.Categoria.Categorias = CategoriaDDL.Objects/*.Cast<ML.Categoria>().ToList()*/;
+            ML.Result ddlCategoria = BL.Categoria.GetAll();
+            producto.SubCategoria.Categoria.Categorias = ddlCategoria.Objects;
 
-            ML.Result SubCategoriaDDL = BL.SubCategoria.GetAll(producto.SubCategoria.Categoria.IdCategoria);
-            producto.SubCategoria.SubCategorias = SubCategoriaDDL.Objects/*.Cast<ML.SubCategoria>().ToList()*/;
+            ML.Result ddlSubCategoria = BL.SubCategoria.GetAll(producto.SubCategoria.Categoria.IdCategoria);
+            producto.SubCategoria.SubCategorias = ddlSubCategoria.Objects;
 
             return View(producto);
         }
 
 
         //BORRAR
+        public ActionResult Delete(int IdProducto)
+        {
+            ML.Result result = BL.ProductoG.ProductoDelete(IdProducto);
+
+
+            return RedirectToAction("GetAll");
+        }
+
 
         //FORMULARIOS
         [HttpGet]
@@ -96,8 +103,49 @@ namespace PL_MVC.Controllers
         [HttpPost]
         public ActionResult Form(ML.Producto producto)
         {
-            return View();
+            HttpPostedFileBase file = Request.Files["inptFileImagen"];
+            if (file != null && file.ContentLength > 0)
+            {
+                producto.Imagen = ConvertirAArrayBytes(file);
+            }
+
+            if (producto.IdProducto == 0)
+            {
+                ML.Result result = BL.ProductoG.ProductoAdd(producto);
+                if (result.Success)
+                {
+                    result.Message = "Agregado correctamente";
+                }
+                else
+                {
+                    result.Message = "Error";
+                }
+                return RedirectToAction("GetAll");
+            }
+            else
+            {
+                ML.Result result = BL.ProductoG.ProductoUpdate(producto);
+                if (result.Success)
+                {
+                    result.Message = "Actualizado";
+                }
+                else
+                {
+                    result.Message = "Error";
+
+                }
+
+                return RedirectToAction("GetAll");
+
+            }
         }
+        public Byte[] ConvertirAArrayBytes(HttpPostedFileBase Foto)
+        {
+            System.IO.BinaryReader reader = new System.IO.BinaryReader(Foto.InputStream);
+            byte[] data = reader.ReadBytes((int)Foto.ContentLength);
+            return data;
+        }
+
 
     }
 }

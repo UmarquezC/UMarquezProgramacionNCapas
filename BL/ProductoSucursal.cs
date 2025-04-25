@@ -9,13 +9,22 @@ namespace BL
 {
     public class ProductoSucursal
     {
-        /*
-        public static ML.Result Get(ML.ProductoSucursal productoSucursalObj)
+
+        public static ML.Result GetAll(int IdSucursal)
         {
             ML.Result result = new ML.Result();
 
             try
             {
+                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
+                {
+                    var query = (from productosucursal in context.ProductoSucursal
+                                 where productosucursal.IdSucursal != 0 && productosucursal.IdSucursal == IdSucursal
+                                 select productosucursal
+                                 );
+                }
+
+                /*
                 using(DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
                 {
                     var query = context.ProductoSucursalGetBySucursal(productoSucursalObj.Sucursal.IdSucursal).ToList();
@@ -44,6 +53,7 @@ namespace BL
                         result.Success = false;
                     }
                 }
+                */
             }
             catch (Exception ex)
             {
@@ -54,6 +64,8 @@ namespace BL
             return result;
         }
 
+
+        /*
         public static ML.Result UpdateStock(int IdProducto, int IdSucursal, int NuevoStock)
         {
             ML.Result result = new ML.Result();
@@ -113,5 +125,6 @@ namespace BL
             return result;
         }
         */
+
     }
 }

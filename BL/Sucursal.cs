@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,40 @@ namespace BL
 
             try
             {
+                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
+                {
+                    var query = (from sucursal in context.Sucursal
+                                 select new
+                                 {
+                                     IdSucursal = sucursal.IdSucursal,
+                                     Nombre = sucursal.Nombre,
+                                     Latitud = sucursal.Latitud,
+                                     Longitud = sucursal.Longitud
+                                 }
+                                 );
+
+                    if (query != null)
+                    {
+                        result.Objects = new List<object>();
+
+                        foreach(var obj in query)
+                        {
+                            ML.Sucursal sucursal = new ML.Sucursal();
+                            sucursal.IdSucursal = obj.IdSucursal;
+                            sucursal.Nombre = obj.Nombre;
+                            sucursal.Latitud = obj.Latitud;
+                            sucursal.Longitud = obj.Longitud;
+                            result.Objects.Add( sucursal );
+                        }
+                        result.Success = true;
+
+                    }
+                    else
+                    {
+                        result.Success = false;
+                    }
+                }
+                /*
                 using (SqlConnection context = new SqlConnection(DL.Connection.GetConnection()))
                 {
                     var query = "SELECT * FROM Sucursal";
@@ -48,7 +83,7 @@ namespace BL
                         result.Success = false;
                         result.Message = "No hay sucursales";
                     }
-                }
+                }*/
             }
             catch (Exception ex)
             {
@@ -65,11 +100,11 @@ namespace BL
 
             try
             {
-                using(SqlConnection context = new SqlConnection(DL.Connection.GetConnection()))
+                using (SqlConnection context = new SqlConnection(DL.Connection.GetConnection()))
                 {
                     var query = "INSERT INTO Sucursal (Nombre, Latitud, Longitud) VALUES (@Nombre, @Latitud, @Longitud)";
                     SqlCommand cmd = new SqlCommand(query, context);
-                    
+
                     cmd.Parameters.AddWithValue("@Nombre", sucursal.Nombre);
                     cmd.Parameters.AddWithValue("@Latitud", sucursal.Latitud);
                     cmd.Parameters.AddWithValue("@Longitud", sucursal.Longitud);
@@ -106,13 +141,13 @@ namespace BL
                     string query = "SELECT IdSucursal, Nombre, Latitud, Longitud FROM Sucursal WHERE IdSucursal = @IdSucursal";
 
                     SqlCommand cmd = new SqlCommand(query, context);
-                    cmd.Parameters.AddWithValue ("IdSucursal", IdSucursal);
+                    cmd.Parameters.AddWithValue("IdSucursal", IdSucursal);
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     DataTable dataTable = new DataTable();
                     adapter.Fill(dataTable);
-                    
 
-                    if(dataTable.Rows.Count > 0)
+
+                    if (dataTable.Rows.Count > 0)
                     {
                         DataRow datarow = dataTable.Rows[0];
                         ML.Sucursal sucursal = new ML.Sucursal();
@@ -127,7 +162,7 @@ namespace BL
                     }
                     else
                     {
-                        result.Success=false;
+                        result.Success = false;
                     }
 
                 }
@@ -172,7 +207,7 @@ namespace BL
 
                 }
             }
-                catch (Exception ex)
+            catch (Exception ex)
             {
                 result.Success = false;
                 result.Message = ex.Message;

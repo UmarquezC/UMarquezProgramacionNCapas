@@ -374,5 +374,14 @@ namespace DL_EF
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductoGUpdate", idProductoParameter, nombreParameter, descripcionParameter, precioParameter, imagenParameter, idSubCategoriaParameter);
         }
+    
+        public virtual ObjectResult<ProductoSucursalGetBySucursal_Result> ProductoSucursalGetBySucursal(Nullable<byte> idSucursal)
+        {
+            var idSucursalParameter = idSucursal.HasValue ?
+                new ObjectParameter("IdSucursal", idSucursal) :
+                new ObjectParameter("IdSucursal", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductoSucursalGetBySucursal_Result>("ProductoSucursalGetBySucursal", idSucursalParameter);
+        }
     }
 }
