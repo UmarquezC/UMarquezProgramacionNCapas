@@ -152,26 +152,32 @@
                 <span>Precio</span>
             </div>
 
-            @*<div class="inputBox">
-                    @Html.TextBoxFor(model => model.SubCategoria.Categoria.Nombre, new { type = "text", required = "required" })
-                    <span>Categoria</span>
-                </div>
-
-                <div class="inputBox">
-                    @Html.TextBoxFor(model => model.SubCategoria.Nombre, new { type = "text", required = "required" })
-                    <span>SubCategoria</span>
-                </div>*@
+            <div class="inputBox">
+                @Html.TextBoxFor(model => model.SubCategoria.Categoria.Nombre, new { type = "text", required = "required" })
+                <span>Categoria</span>
+            </div>
 
             <div class="inputBox">
-                @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre"), "Selecciona una Categoria", new { @class = "form-control", @onchange = "cargarSubCategorias()", @id = "ddlCategoria" })
+                @Html.TextBoxFor(model => model.SubCategoria.Nombre, new { type = "text", required = "required" })
+                <span>SubCategoria</span>
+            </div>
+
+            <div class="inputBox">
+                @Html.LabelFor(model => model.SubCategoria.Categoria, new { @class = "form-label" })
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-folder-fill"></i></span>
+                    @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre"), "Selecciona una Categoria", new { @onchange = "cargarSubCategorias()", @id = "ddlCategoria", @class = "form-select " })
+                </div>
                 <span>Categoria</span>
             </div>
 
 
             <div class="inputBox">
+                @Html.LabelFor(model => model.SubCategoria, new { @class = "form-label" })
+
                 @if (Model.SubCategoria != null && Model.SubCategoria.SubCategorias != null && Model.SubCategoria.IdSubCategoria > 0)
                 {
-                    @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(Model.SubCategoria.SubCategorias, "IdSubCategoria", "Nombre", Model.SubCategoria.IdSubCategoria), "Selecciona la subcategoria ", new { @id = "ddlSubCategoria", @class = "form-control" })
+                    @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(Model.SubCategoria.SubCategorias, "IdSubCategoria", "Nombre"), "Selecciona la subcategoria ", new { @id = "ddlSubCategoria", @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.SubCategoria.IdSubCategoria, "", new { @class = "text-danger" })
                 }
                 else
@@ -189,5 +195,5 @@
 }
 
 <script src="~/Scripts/jquery-3.7.0.js"></script>
-<script> var ddlSuCategoriaUrl = "@Url.Action("GetAllByCategoria", "ProductoG")?ddlCategoria=" </script>
+<script> var ddlSuCategoriaUrl = "@Url.Action("GetAllByCategoria", "ProductoG")" </script>
 <script src="~/Scripts/js/Index.js"></script>
