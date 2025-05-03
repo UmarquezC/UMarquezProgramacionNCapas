@@ -22,7 +22,7 @@ namespace DL_EF
     
         public int IdSubCategoria { get; set; }
         public string Nombre { get; set; }
-        public int IdCategoria { get; set; }
+        public Nullable<int> IdCategoria { get; set; }
     
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -9,10 +9,9 @@ namespace ML
     public class ProductoSucursal
     {
         public int IdProductoSucursal { get; set; }
-
         public ML.Producto Producto { get; set; }
         public ML.Sucursal Sucursal { get; set; }
         public int Stock { get; set; }
-        public List<Object> ProductoSucursales { get; set; }
+        public List<object> ProductoSucursales { get; set; }
     }
 }

@@ -214,7 +214,7 @@ namespace PL_MVC.Controllers
 
             ML.Usuario usuario = new ML.Usuario();
             usuario.Rol = new ML.Rol();
-            usuario.Nombre = "";
+            usuario.Nombre = "";    
             usuario.ApellidoPaterno = "";
             usuario.ApellidoMaterno = "";
             usuario.Rol.IdRol = 0;

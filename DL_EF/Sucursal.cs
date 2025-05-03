@@ -17,7 +17,6 @@ namespace DL_EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Sucursal()
         {
-            this.Pedidos = new HashSet<Pedidos>();
             this.ProductoSucursal = new HashSet<ProductoSucursal>();
         }
     
@@ -26,8 +25,6 @@ namespace DL_EF
         public string Latitud { get; set; }
         public string Longitud { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pedidos> Pedidos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductoSucursal> ProductoSucursal { get; set; }
     }

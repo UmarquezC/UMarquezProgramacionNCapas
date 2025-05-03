@@ -15,8 +15,8 @@ namespace DL_EF
     public partial class ProductoSucursal
     {
         public int IdProductoSucursal { get; set; }
-        public int IdProducto { get; set; }
-        public byte IdSucursal { get; set; }
+        public Nullable<int> IdProducto { get; set; }
+        public Nullable<byte> IdSucursal { get; set; }
         public int Stock { get; set; }
     
         public virtual Producto Producto { get; set; }

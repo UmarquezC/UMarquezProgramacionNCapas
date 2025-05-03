@@ -1,0 +1,148 @@
+﻿﻿﻿@model ML.Producto
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+<style>
+
+    body {
+        background-color: #EEEDEB;
+        
+    }
+
+    .enter {
+        height: 45px;
+        width: 100px;
+        border-radius: 5px;
+        border: 2px solid #000;
+        cursor: pointer;
+        background-color: transparent;
+        transition: 0.5s;
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 1em;
+    }
+
+        .enter:hover {
+            background-color: rgb(0, 0, 0);
+            color: white;
+        }
+
+
+
+    .table-hover tbody tr:hover {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .table thead {
+        background-color: #28a745;
+        color: white;
+    }
+</style>
+
+<h2>Productos</h2>
+
+
+
+
+
+@using (Html.BeginForm("GetAll", "ProductoG", FormMethod.Post, new { id = "formBuscar" }))
+{
+
+    <div class="row row-cols-lg-4 mb-5">
+        <div class="col">
+            @Html.LabelFor(model => model.SubCategoria.Categoria)
+            @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre"), "Selecciona una Categoria", new { @class = "form-control", @onchange = "cargarSubCategorias()", @id = "ddlCategoria" })
+        </div>
+
+        <div class="col">
+            @Html.LabelFor(model => model.SubCategoria)
+
+            @if (Model.SubCategoria != null && Model.SubCategoria.SubCategorias != null && Model.SubCategoria.IdSubCategoria > 0)
+            {
+                @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(Model.SubCategoria.SubCategorias, "IdSubCategoria", "Nombre", Model.SubCategoria.IdSubCategoria), "Selecciona la subcategoria ", new { @id = "ddlSubCategoria", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SubCategoria.IdSubCategoria, "", new { @class = "text-danger" })
+            }
+            else
+            {
+                @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(String.Empty), "Selecciona la subcategoria", new { @id = "ddlSubCategoria", @class = "form-control" })
+            }
+
+        </div>
+
+        <div class="col">
+            <button type="submit" class="enter"> Buscar </button>
+        </div>
+
+        <div class="container">
+            <a href="@Url.Action("Form", "ProductoG")" class="enter">
+                Agregar <i class="bi bi-person-fill-add" style="font-size:20px;"></i>
+            </a>
+        </div>
+    </div>
+}
+
+
+@if (Model.Productos.Count > 0)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Precio</th>
+                                <th>Imagen</th>
+                                <th>Categoria</th>
+                                <th>SubCategoria</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ML.Producto producto in Model.Productos)
+                            {
+                                <tr>
+                                    <td>@producto.Nombre</td>
+                                    <td>@producto.Descripcion</td>
+                                    <td>@producto.Precio</td>
+                                    <td>
+                                        <img src="@(producto.Imagen != null ? "data:image/png;base64," + Convert.ToBase64String(producto.Imagen) : "https://s3.amazonaws.com/roypi.com/static/images/default_product.png")" class="card-img-top" alt="@producto.Nombre">
+                                    </td>
+                                    <td>@producto.SubCategoria.Categoria.Nombre</td>
+                                    <td>@producto.SubCategoria.Nombre</td>
+                                    <td>
+                                        <a href="@Url.Action("Form", "ProductoG",new { IdProducto = producto.IdProducto})" class="btn btn-warning"><i class="bi bi-pencil-square"></i> </a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Delete", "ProductoG",new { IdProducto = producto.IdProducto})" class="btn btn-danger"> <i class="bi bi-trash3-fill"></i> </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else
+{
+    <div></div>
+}
+
+@*AQUI*@
+
+
+<script src="~/Scripts/jquery-3.7.0.js"></script>
+<script> var ddlSuCategoriaUrl = "@Url.Action("GetAllByCategoria", "ProductoG")?ddlCategoria=" </script>
+<script src="~/Scripts/js/Index.js"></script>

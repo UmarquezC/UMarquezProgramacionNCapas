@@ -14,7 +14,7 @@ namespace ML
         public decimal Precio { get; set; }
         public byte[] Imagen { get; set; }
         public ML.SubCategoria SubCategoria { get; set; }
-        public List<Producto> Productos { get; set; }
+        public List<object> Productos { get; set; }
 
 
     }

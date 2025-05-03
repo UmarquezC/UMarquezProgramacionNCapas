@@ -10,16 +10,17 @@
 namespace DL_EF
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Notificacion
+    public partial class ProductoGGetAll_Result
     {
-        public int IdNotificacion { get; set; }
-        public int IdPedido { get; set; }
-        public int IdTipoNotificacion { get; set; }
-        public string Mensaje { get; set; }
-        public System.DateTime Fecha { get; set; }
-    
-        public virtual Pedidos Pedidos { get; set; }
+        public int IdProducto { get; set; }
+        public string NombreProducto { get; set; }
+        public string Descripcion { get; set; }
+        public decimal Precio { get; set; }
+        public byte[] Imagen { get; set; }
+        public int IdSubCategoria { get; set; }
+        public string NombreSubCategoria { get; set; }
+        public int IdCategoria { get; set; }
+        public string NombreCategoria { get; set; }
     }
 }

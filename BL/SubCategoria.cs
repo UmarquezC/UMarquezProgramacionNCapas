@@ -9,7 +9,7 @@ namespace BL
 {
     public class SubCategoria
     {
-        public static ML.Result GetAll(int IdCategoria)
+        public static ML.Result GetAll(int idCategoria)
         {
             ML.Result result = new ML.Result();
 
@@ -17,7 +17,9 @@ namespace BL
             {
                 using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
                 {
-                    var query = context.SubCategoriaGetAllByCategoria(IdCategoria).ToList();
+                    var query = (from subCategoria in context.SubCategoria
+                                 where subCategoria.IdCategoria == idCategoria
+                                 select subCategoria).ToList();
 
                     if (query.Count > 0)
                     {
@@ -25,21 +27,15 @@ namespace BL
 
                         foreach (var obj in query)
                         {
-                            ML.SubCategoria subCategoria = new ML.SubCategoria();
-
-                            subCategoria.IdSubCategoria = obj.IdSubCategoria;
-                            subCategoria.Nombre = obj.NombreSubCategoria;
-                            
+                            ML.SubCategoria subCategoria = new ML.SubCategoria()
+                            {
+                                IdSubCategoria = obj.IdSubCategoria,
+                                Nombre = obj.Nombre
+                            };
                             result.Objects.Add(subCategoria);
                         }
                         result.Success = true;
                     }
-                    else
-                    {
-                        result.Success = false;
-                        result.Message = "No hay subcategorías disponibles para la categoría seleccionada.";
-                    }
-
                 }
             }
             catch (Exception ex)
