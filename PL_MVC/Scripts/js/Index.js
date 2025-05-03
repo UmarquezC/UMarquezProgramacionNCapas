@@ -1,18 +1,19 @@
 ﻿$(document).ready(function () {
-    //cargarSubCategorias()
+    cargarSubCategorias()
 })
 
 
 function cargarSubCategorias() {
     let ddl = $("#ddlCategoria").val()
     $.ajax({
-        url: ddlSubCategoriaUrl + "?idCategoria=" + ddl,
+
+        url: ddlSuCategoriaUrl,
         type: "GET",
         dataType: 'JSON',
+        data: { idCategoria: ddl },
         success: function (result) {
             if (result.Success) {
                 let ddlSubCategoria = $('#ddlSubCategoria')
-                //ddl.empty()
                 ddlSubCategoria.empty()
 
                 let optionDefault = "<option> Selecciona una subcategoría</option>"
@@ -26,7 +27,6 @@ function cargarSubCategorias() {
         },
     })
 }
-
 
 function validarImagen() {
     let input = $('#inptFileImagen')[0].files[0].name.split('.').pop().toLowerCase()
