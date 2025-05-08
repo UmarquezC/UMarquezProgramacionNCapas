@@ -10,6 +10,9 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using Microsoft.Reporting.WebForms;
+using System.Web.UI.WebControls;
+using System.Data.SqlClient;
 
 namespace PL_MVC.Controllers
 {
@@ -214,12 +217,22 @@ namespace PL_MVC.Controllers
 
             ML.Usuario usuario = new ML.Usuario();
             usuario.Rol = new ML.Rol();
-            usuario.Nombre = "";    
+            usuario.Nombre = "";
             usuario.ApellidoPaterno = "";
             usuario.ApellidoMaterno = "";
             usuario.Rol.IdRol = 0;
             ML.Result resultRol = BL.Rol.GetAll();
             usuario.Rol.Roles = resultRol.Objects.ToList();
+
+
+            ReportViewer reportViewer = new ReportViewer();
+            reportViewer.ProcessingMode = ProcessingMode.Local;
+            reportViewer.SizeToReportContent = true;
+            reportViewer.Width = Unit.Percentage(900);
+            reportViewer.Height = Unit.Percentage(900);
+            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Reports\Reporte.rdlc";
+            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", result.Objects));
+            ViewBag.ReportViewer = reportViewer;
 
 
             if (result.Objects.Count > 0)
@@ -229,6 +242,8 @@ namespace PL_MVC.Controllers
 
             return View(usuario);
         }
+
+        
 
         //SERVICIO DE LA MANERA FACIL EL GET ALL BUSQUEDA ABIERTA
         /*
@@ -402,7 +417,7 @@ namespace PL_MVC.Controllers
         {
             ML.Usuario usuario = new ML.Usuario();
 
-            if(IdUsuario == null)
+            if (IdUsuario == null)
             {
                 usuario.Rol = new ML.Rol();
                 usuario.Direccion = new ML.Direccion();
@@ -738,7 +753,7 @@ namespace PL_MVC.Controllers
                 {
                     usuario.Imagen = ConvertirAArrayBytes(file);
                 }
-                
+
                 if (usuario.IdUsuario == 0)
                 {
                     ML.Result result = AddRest(usuario);
@@ -900,7 +915,7 @@ namespace PL_MVC.Controllers
         }
 
 
-        [HttpGet]       
+        [HttpGet]
         public JsonResult GetAllByEstado(int IdEstado)
         {
 

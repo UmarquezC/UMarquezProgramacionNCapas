@@ -10,10 +10,56 @@
 
     body {
         background-color: #EEEDEB;
-        
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        border-radius: 12px;
+        padding: 25px 15px;
+        margin-bottom: 20px;
+
+    }
+
+    .tittle {
+        margin-bottom: 10px;
+    }
+
+        .tittle h1 {
+            font-size: 48px;
+            font-weight: 600;
+        }
+
+    .ddl {
+        display: flex;
+        align-content: center;
+        justify-content: space-around;
+    }
+
+    .items-select {
+        display: flex;
+        align-content: center;
+    }
+
+    .Categoria {
+        margin: 0px 20px 0px 0px;
+    }
+
+    .SubCategoria {
+        margin: 0px 20px 0px 0px;
+    }
+
+    .Buscar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .enter {
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        color: black;
         height: 45px;
         width: 100px;
         border-radius: 5px;
@@ -24,7 +70,6 @@
         text-transform: uppercase;
         font-size: 10px;
         letter-spacing: 2px;
-        margin-bottom: 1em;
     }
 
         .enter:hover {
@@ -35,17 +80,16 @@
 
 
     .table-hover tbody tr:hover {
-        background-color: #d4edda;
+        background-color: #b200ff;
         color: #155724;
     }
 
     .table thead {
-        background-color: #28a745;
+        background-color: #000000;
         color: white;
     }
 </style>
 
-<h2>Productos</h2>
 
 
 
@@ -54,30 +98,61 @@
 @using (Html.BeginForm("GetAll", "ProductoG", FormMethod.Post, new { id = "formBuscar" }))
 {
 
-    <div class="row row-cols-lg-4 mb-5">
-        <div class="col">
-            @Html.LabelFor(model => model.SubCategoria.Categoria)
-            @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre"), "Selecciona una Categoria", new { @class = "form-control", @onchange = "cargarSubCategorias()", @id = "ddlCategoria" })
+    <div class="card">
+        <div class="content">
+            <div class="back">
+                <div class="back-content">
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row @*row-cols-lg-4 mb-5*@">
+        <div class="wrapper">
+            <div class="blob"></div>
+
+            <div class="tittle">
+                <h1>Buscador de productos</h1>
+            </div>
+
+            <div class="ddl">
+                <div class="items-select">
+                    <div class="Categoria">
+                        @Html.LabelFor(model => model.SubCategoria.Categoria)
+                        @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre"), "Selecciona una Categoria", new { @class = "form-control", @onchange = "cargarSubCategorias()", @id = "ddlCategoria" })
+                    </div>
+
+                    <div class="SubCategoria">
+                        @Html.LabelFor(model => model.SubCategoria)
+
+                        @if (Model.SubCategoria != null && Model.SubCategoria.SubCategorias != null && Model.SubCategoria.IdSubCategoria > 0)
+                        {
+                            @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(Model.SubCategoria.SubCategorias, "IdSubCategoria", "Nombre", Model.SubCategoria.IdSubCategoria), "Selecciona la subcategoria ", new { @id = "ddlSubCategoria", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.SubCategoria.IdSubCategoria, "", new { @class = "text-danger" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(String.Empty), "Selecciona la subcategoria", new { @id = "ddlSubCategoria", @class = "form-control" })
+                        }
+
+                    </div>
+                </div>
+
+                <div class="Buscar">
+                    <button type="submit" class="enter"> Buscar </button>
+                </div>
+            </div>
+
         </div>
 
-        <div class="col">
-            @Html.LabelFor(model => model.SubCategoria)
 
-            @if (Model.SubCategoria != null && Model.SubCategoria.SubCategorias != null && Model.SubCategoria.IdSubCategoria > 0)
-            {
-                @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(Model.SubCategoria.SubCategorias, "IdSubCategoria", "Nombre", Model.SubCategoria.IdSubCategoria), "Selecciona la subcategoria ", new { @id = "ddlSubCategoria", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.SubCategoria.IdSubCategoria, "", new { @class = "text-danger" })
-            }
-            else
-            {
-                @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(String.Empty), "Selecciona la subcategoria", new { @id = "ddlSubCategoria", @class = "form-control" })
-            }
 
-        </div>
 
-        <div class="col">
-            <button type="submit" class="enter"> Buscar </button>
-        </div>
+
 
         <div class="container">
             <a href="@Url.Action("Form", "ProductoG")" class="enter">

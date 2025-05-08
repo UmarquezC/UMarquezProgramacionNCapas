@@ -1,7 +1,14 @@
-﻿using System;
+﻿using Microsoft.Reporting.WebForms;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace PL_MVC.Controllers
@@ -25,6 +32,7 @@ namespace PL_MVC.Controllers
 
             if (result.Success)
             {
+                
                 producto.Productos = result.Objects;
             }
 
@@ -93,10 +101,10 @@ namespace PL_MVC.Controllers
                 producto = (ML.Producto)result.Object;
             }
             ML.Result CategoriaDDL = BL.Categoria.GetAll();
-            producto.SubCategoria.Categoria.Categorias = CategoriaDDL.Objects/*.Cast<ML.Categoria>().ToList()*/;
+            producto.SubCategoria.Categoria.Categorias = CategoriaDDL.Objects;
 
             ML.Result SubCategoriaDDL = BL.SubCategoria.GetAll(producto.SubCategoria.Categoria.IdCategoria);
-            producto.SubCategoria.SubCategorias = SubCategoriaDDL.Objects/*.Cast<ML.SubCategoria>().ToList()*/;
+            producto.SubCategoria.SubCategorias = SubCategoriaDDL.Objects;
             return View(producto);
         }
 
@@ -146,6 +154,91 @@ namespace PL_MVC.Controllers
             return data;
         }
 
+        
+        
+        public ActionResult Enviar()
+        {
+            try
+
+            {
+                string correo = WebConfigurationManager.AppSettings["Correo"];
+
+                string password = WebConfigurationManager.AppSettings["Password"];
+
+                
+                string htmlPath = Server.MapPath("~/Content/Email/Template.html");
+
+
+                string htmlBody;
+
+                using (StreamReader reader = new StreamReader(htmlPath))
+
+                {
+
+                    htmlBody = reader.ReadToEnd();
+                }
+
+                htmlBody = htmlBody.Replace("{{Usuario}}", "Prueba");
+
+
+                AlternateView avHtml = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
+
+                string imagePath = Server.MapPath("~/Content/Email/TemImagen.webp");
+
+                LinkedResource logo = new LinkedResource(imagePath, MediaTypeNames.Image.Jpeg);
+
+                logo.ContentId = "imagenProducto";
+
+                logo.TransferEncoding = TransferEncoding.Base64;
+
+                avHtml.LinkedResources.Add(logo);
+
+
+
+                MailMessage mensaje = new MailMessage
+
+                {
+                    From = new MailAddress(correo, "Uriel Mc"),
+
+                    Subject = "Paquete en camino",
+
+                    IsBodyHtml = true
+
+                };
+                mensaje.To.Add("urielmc28@hotmail.com");
+                
+
+                mensaje.AlternateViews.Add(avHtml);
+
+
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+
+                    Credentials = new NetworkCredential(correo, password),
+
+                    EnableSsl = true
+
+                };
+
+                smtp.Send(mensaje);
+
+            }
+
+            catch (Exception ex)
+
+            {
+                ML.Result result = new ML.Result();
+                result.Success = false;
+                result.Message = ex.Message;
+                result.Ex = ex;
+                Console.WriteLine("Error al enviar correo: " + ex.Message);
+
+            }
+
+            return View();
+
+        }
 
     }
 }

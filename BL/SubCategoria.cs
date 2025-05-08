@@ -20,6 +20,7 @@ namespace BL
                     var query = (from subCategoria in context.SubCategoria
                                  where subCategoria.IdCategoria == idCategoria
                                  select subCategoria).ToList();
+                    
 
                     if (query.Count > 0)
                     {

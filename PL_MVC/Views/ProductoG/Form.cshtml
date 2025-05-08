@@ -152,7 +152,7 @@
                 <span>Precio</span>
             </div>
 
-            @*<div class="inputBox">
+            <div class="inputBox">
                     @Html.TextBoxFor(model => model.SubCategoria.Categoria.Nombre, new { type = "text", required = "required" })
                     <span>Categoria</span>
                 </div>
@@ -160,10 +160,10 @@
                 <div class="inputBox">
                     @Html.TextBoxFor(model => model.SubCategoria.Nombre, new { type = "text", required = "required" })
                     <span>SubCategoria</span>
-                </div>*@
+                </div>
 
             <div class="inputBox">
-                @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre"), "Selecciona una Categoria", new { @class = "form-control", @onchange = "cargarSubCategorias()", @id = "ddlCategoria" })
+                @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre", Model.SubCategoria.Categoria.IdCategoria), "Selecciona una Categoria", new { @class = "form-control", @onchange = "CargarSubCategorias()", @id = "ddlCategoria" })
                 <span>Categoria</span>
             </div>
 
@@ -172,7 +172,7 @@
                 @if (Model.SubCategoria != null && Model.SubCategoria.SubCategorias != null && Model.SubCategoria.IdSubCategoria > 0)
                 {
                     @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(Model.SubCategoria.SubCategorias, "IdSubCategoria", "Nombre", Model.SubCategoria.IdSubCategoria), "Selecciona la subcategoria ", new { @id = "ddlSubCategoria", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.SubCategoria.IdSubCategoria, "", new { @class = "text-danger" })
+                   
                 }
                 else
                 {
@@ -188,8 +188,7 @@
 
 }
 
-@*AQUI*@
 
 <script src="~/Scripts/jquery-3.7.0.js"></script>
 <script> var ddlSuCategoriaUrl = "@Url.Action("GetAllByCategoria", "ProductoG")?ddlCategoria=" </script>
-<script src="~/Scripts/js/Index.js"></script>
+<script src="~/Scripts/js/Producto.js"></script>

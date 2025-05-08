@@ -74,7 +74,7 @@ namespace BL
                         producto.Imagen = query.Imagen;
                         producto.SubCategoria.IdSubCategoria = query.IdSubCategoria;
                         producto.SubCategoria.Nombre = query.NombreSubCategoria;
-                        producto.SubCategoria.Categoria.IdCategoria = query.IdSubCategoria;
+                        producto.SubCategoria.Categoria.IdCategoria = query.IdCategoria;
                         producto.SubCategoria.Categoria.Nombre = query.NombreCategoria;
 
                         result.Object = producto;
