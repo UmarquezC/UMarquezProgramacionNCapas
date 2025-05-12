@@ -30,11 +30,33 @@ namespace SL_WebApi.Controllers
         public IHttpActionResult GetAll()
         {
             ML.Usuario usuario = new ML.Usuario();
+
             usuario.Rol = new ML.Rol();
             usuario.Nombre = "";
             usuario.ApellidoPaterno = "";
             usuario.ApellidoMaterno = "";
             usuario.Rol.IdRol = 0;
+            ML.Result resultRol = BL.Rol.GetAll();
+
+            ML.Result result = BL.Usuario.GetAllEF(usuario);
+
+            if (result.Success)
+            {
+                return Content(HttpStatusCode.OK, result);
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, result);
+            }
+        }
+
+        [HttpPost]
+        [Route("Usuario/GetAllPost")]
+        public IHttpActionResult GetAllPost([FromBody]ML.Usuario usuario)
+        {
+            
+            usuario.Rol = new ML.Rol();
+            
             ML.Result resultRol = BL.Rol.GetAll();
 
             ML.Result result = BL.Usuario.GetAllEF(usuario);

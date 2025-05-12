@@ -81,14 +81,14 @@
                     <div class="col">
                         <label>Genero: </label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                            <label class="form-check-label" for="exampleRadios1">
+                            <input class="form-check-input" type="radio" name="Sexo" id="H" value="M">
+                            <label class="form-check-label" for="Sexo">
                                 Hombre
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                            <label class="form-check-label" for="exampleRadios2">
+                            <input class="form-check-input" type="radio" name="Sexo" id="M" value="F">
+                            <label class="form-check-label" for="Sexo">
                                 Mujer
                             </label>
                         </div>
@@ -149,7 +149,7 @@
 
                     <div class="col">
                         <label>Numero Exterior: </label>
-                        <input type="text" id="inptNumeroInterior" />
+                        <input type="text" id="inptNumeroExterior" />
                     </div>
 
                     <div class="col">
@@ -168,7 +168,7 @@
                     </div>
 
                     <div class="col">
-                        <label for="ddlColonia">Selecciona una Colonia: </label>
+                        <label for="ddlMunicipio">Selecciona una Colonia: </label>
                         <select id="ddlColonia">
                             <option></option>
                         </select>
@@ -179,7 +179,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-                <input class="btn btn-success mt-5" type="submit" value="Guardar" onclick="AgregarUsuario()" />
+                <input class="btn btn-success mt-5" type="submit" value="Guardar" onclick="BtnGuardar()" />
 
             </div>
         </div>
@@ -229,7 +229,13 @@
     var ddlMunicipioUrl = "@Url.Action("GetAllByEstado", "JsCRUD")?IdEstado="
     var ddlColoniaUrl = '@Url.Action("GetAllByMunicipio", "JsCRUD")?IdMunicipio='
 
-    var eliminarUrl = '@Url.Action("Delete", "JsCRUD")'
+    var AddURL = "@Url.Action("AddUsuario", "JsCRUD")";
+
+    var UsuarioGetByIdURL = "@Url.Action("UsuarioGetById", "JsCRUD")?IdUsuario=";
+
+    var UpdateURL = "@Url.Action("UpdateUsuario", "JsCRUD")";
+
+    var eliminarUrl = '@Url.Action("Delete", "JsCRUD")?IdUsuario=';
 </script>
 
 <script src="~/Scripts/js/FormJs.js"></script>

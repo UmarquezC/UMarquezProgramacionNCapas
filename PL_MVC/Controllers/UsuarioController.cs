@@ -246,7 +246,7 @@ namespace PL_MVC.Controllers
         
 
         //SERVICIO DE LA MANERA FACIL EL GET ALL BUSQUEDA ABIERTA
-        /*
+        
         //SE ESTA OCUPANDO EL SERVICO DE LA MANERA FACIL
         //BUSCAR POR EL SEARCH SP CON LIKE
         [HttpPost]
@@ -258,13 +258,41 @@ namespace PL_MVC.Controllers
             usuario.ApellidoMaterno = usuario.ApellidoMaterno == null ? "" : usuario.ApellidoMaterno;
             usuario.Rol.IdRol = usuario.Rol.IdRol == 0 ? 0 : usuario.Rol.IdRol;
 
+            ML.Result result = GetAllRest(usuario);
+
+
+            ReportViewer reportViewer = new ReportViewer();
+            reportViewer.ProcessingMode = ProcessingMode.Local;
+            reportViewer.SizeToReportContent = true;
+            reportViewer.Width = Unit.Percentage(900);
+            reportViewer.Height = Unit.Percentage(900);
+            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Reports\Reporte.rdlc";
+            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", result.Objects));
+            ViewBag.ReportViewer = reportViewer;
+
+
+            //ML.Result result = GetAllRest(usuario);
+
+
+            if (result.Success)
+            {
+                usuario.Usuarios = result.Objects;
+            }
             //se lo quite para agregar el servicio
-            //ML.Result result = BL.Usuario.GetAllEF(usuario);
+            /*
+            ML.Result result = BL.Usuario.GetAllEF(usuario);
+
+            if (result.Success)
+            {
+                usuario.Usuarios = result.Objects;
+            }
+            */
 
             //AGREGAMOS EL SERVICIO
+            /*
             UsuarioReference.CRUDClient obj = new UsuarioReference.CRUDClient();
             var usuarioReference = obj.usuarioGetAll(usuario);
-
+          
             //aqui iba el result
             if (usuarioReference.Success)
             {
@@ -275,14 +303,14 @@ namespace PL_MVC.Controllers
             {
                 usuario.Usuarios = new List<object>();
             }
-
+            */
             ML.Result resultDDL = BL.Rol.GetAll();
             usuario.Rol.Roles = resultDDL.Objects;
 
             return View(usuario);
         }
 
-        */
+        
 
 
 
@@ -1097,6 +1125,8 @@ namespace PL_MVC.Controllers
 
                             result.Objects.Add(usuario);
                         }
+
+                        result.Success = true;
                     }
                 }
             }
@@ -1104,6 +1134,49 @@ namespace PL_MVC.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
+            }
+
+            return result;
+        }
+
+        [NonAction]
+        public static ML.Result GetAllRest(ML.Usuario usuario)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (var cliente = new HttpClient())
+                {
+                    string endPoint = ConfigurationManager.AppSettings["UsuarioEndPoint"].ToString();
+                    cliente.BaseAddress = new Uri(endPoint);
+                    var responseTask = cliente.PostAsJsonAsync<ML.Usuario>("GetAllPost", usuario);
+                    responseTask.Wait();
+
+                    var resultServicio = responseTask.Result;
+                    if (resultServicio.IsSuccessStatusCode)
+                    {
+                        var readTask = resultServicio.Content.ReadAsAsync<ML.Result>();
+                        readTask.Wait();
+
+                        result.Objects = new List<object>();
+
+                        foreach (var item in readTask.Result.Objects)
+                        {
+                            usuario = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Usuario>(item.ToString());
+
+                            result.Objects.Add(usuario);
+                        }
+                        result.Success = true;
+                    }
+                    
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                result.Ex = ex;
             }
 
             return result;

@@ -4,19 +4,37 @@
 });
 
 function Form() {
-    cleanForm()
+    CleanModal()
     GetAllRol()
     GetAllEstado()
     MunicipioGetByEstado()
     ColoniaGetAllByMunicipio()
-    showModal()
+    ShowModal()
 }
 
-function showModal() {
+function ShowModal() {
     $('#staticBackdrop').modal("show")
 }
-function cleanForm() {
+function CleanModal() {
     $('#inptNombre').val('')
+    $('#Nombre').val("");
+    $('#UserName').val("");
+    $('#ApellidoPaterno').val("");
+    $('#ApellidoMaterno').val("");
+    $('#Email').val("");
+    $('#Password').val("");
+    $('#datepicker').val("").toString();
+    $('input[name="Sexo"]:checked').val("");
+    $('#Telefono').val("");
+    $('#Celular').val("");
+    $('#CURP').val("");
+    $('#ddlRol').val("");
+    $('#Calle').val("");
+    $('#inptNumeroExterior').val("");
+    $('#inptNumeroInterior').val("");
+    $('#ddlColonia').val("");
+    $('#ddlMunicipio').val("");
+    $('#ddlEstado').val("");
 }
 
 
@@ -64,7 +82,7 @@ function GetAllUsuarios() {
                             <td>${value.Direccion.Calle}, ${value.Direccion.NumeroInterior}, ${value.Direccion.NumeroExterior},${value.Direccion.Colonia.Nombre}, ${value.Direccion.Colonia.CodigoPostal}, ${value.Direccion.Colonia.Municipio.Nombre}, ${value.Direccion.Colonia.Municipio.Estado.Nombre}  </td>
 
                             <td>${value.Estatus}</td>
-                            <td><button type="button" class="btn btn-warning "> ${editar} </button> </td>
+                            <td><button type="button" class="btn btn-warning" onclick="UsuarioGetById(${value.IdUsuario})"> ${editar} </button> </td>
                             <td><button type="button" class="btn btn-danger" onclick="deleteUsuario(${value.IdUsuario})">${borrar}</button> </td>
 
                         </tr>
@@ -188,6 +206,34 @@ function MunicipioGetByEstado() {
     })
 }
 
+function ColoniaGetAllByMunicipio() {
+    let ddl = $('#ddlMunicipio').val();
+
+    $.ajax({
+        url: ddlColoniaUrl + ddl,
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (result) {
+            if (result.Success) {
+                let ddlColonia = $('#ddlColonia')
+                ddlColonia.empty();
+
+                let optionDefault = "<option> Selecciona una colonia</option>"
+                ddlColonia.append(optionDefault)
+
+                $.each(result.Objects, function (index, value) {
+                    let tagOption = `<option value = '${value.IdColonia}'> ${value.Nombre_Colonia} </option> `
+                    ddlColonia.append(tagOption)
+                })
+
+            }
+        },
+        error: function (xhr) {
+            console.log(xhr)
+        }
+    })
+}
+
 //let MunicipioGetByIdEstado = (e) => {
 //    //console.log(e)
 //    let ddl = ddlMunicipioUrl + e
@@ -219,41 +265,7 @@ function MunicipioGetByEstado() {
 //    })
 //}
 
-function MunicipioGetByEstado() {
-    let ddl = $('#ddlEstado').val()
 
-    $.ajax({
-        url: ddlMunicipioUrl + ddl,
-        type: "GET",
-        dataType: 'JSON',
-        success: function (result) {
-            if (result.Success) {
-                let ddlMunicipio = $('#ddlMunicipio')
-                ddlMunicipio.empty()
-
-                let ddlColonia = $('#ddlColonia')
-                ddlColonia.empty();
-
-                let optionDefault = "<option> Selecciona un municipio</option>"
-                ddlMunicipio.append(optionDefault)
-
-                let optionDefaultC = "<option> Selecciona una colonia</option>"
-                ddlColonia.append(optionDefaultC)
-
-                $.each(result.Objects, function (index, value) {
-                    let tagOption = `<option value = '${value.IdMunicipio}'> ${value.Nombre_Municipio} </option> `
-                    ddlMunicipio.append(tagOption)
-
-                    let tagOptionC = `<option value = '${value.IdColonia}'> ${value.Nombre_Colonia} </option> `
-                    ddlColonia.append(tagOptionC)
-                })
-            }
-        },
-        error: function (xhr) {
-            console.log(xhr)
-        },
-    })
-}
 
 
 //let ColoniaGetAllByMunicipio = () => {
@@ -287,28 +299,30 @@ function MunicipioGetByEstado() {
 //}
 
 /**AQUI HAY QUE CHECAR TODO ESTO*/
-function GuardarUsuario() {
+
+/*
+function AgregarUsuario() {
     var formData = new FormData();
 
     var idUsuario = $("#IdUsuario").val();
     if (idUsuario) {
         formData.append("IdUsuario", idUsuario);
     }
-    formData.append("UserName", $("#UserName").val());
-    formData.append("Nombre", $("#Nombre").val());
-    formData.append("ApellidoPaterno", $("#ApellidoPaterno").val());
-    formData.append("ApellidoMaterno", $("#ApellidoMaterno").val());
-    formData.append("Email", $("#Email").val());
-    formData.append("Password", $("#password").val());
-    formData.append("FechaNacimiento", $("#Fecha").val());
+    formData.append("UserName", $("#inptUserName").val());
+    formData.append("Nombre", $("#inptNombre").val());
+    formData.append("ApellidoPaterno", $("#inptApellidoPaterno").val());
+    formData.append("ApellidoMaterno", $("#inpApellidoMaterno").val());
+    formData.append("Email", $("#inptEmail").val());
+    formData.append("Password", $("#inptPassword").val());
+    formData.append("FechaNacimiento", $("#datepicker").val());
     formData.append("Sexo", $("input[name='Sexo']:checked").val());
-    formData.append("Curp", $("#Curp").val());
-    formData.append("Telefono", $("#Telefono").val());
-    formData.append("Celular", $("#Celular").val());
+    formData.append("Curp", $("#inptCurp").val());
+    formData.append("Telefono", $("#inptTelefono").val());
+    formData.append("Celular", $("#inptCelular").val());
     formData.append("Rol.IdRol", $("#ddlRol").val() || 0);
-    formData.append("Direccion.Calle", $("#Calle").val());
-    formData.append("Direccion.NumeroExterior", $("#NumeroExterior").val());
-    formData.append("Direccion.NumeroInterior", $("#NumeroInterior").val());
+    formData.append("Direccion.Calle", $("#inptCalle").val());
+    formData.append("Direccion.NumeroExterior", $("#inptNumeroExterior").val());
+    formData.append("Direccion.NumeroInterior", $("#inptNumeroExterior").val());
     formData.append("Direccion.Colonia.IdColonia", $("#ddlColonia").val() || 0);
     formData.append("Direccion.Colonia.Municipio.IdMunicipio", $("#ddlMunicipio").val() || 0);
     formData.append("Direccion.Colonia.Municipio.Estado.IdEstado", $("#ddlEstado").val() || 0);
@@ -320,13 +334,13 @@ function GuardarUsuario() {
     }
 
     $.ajax({
-        url: rutaForm,
+        url: AddURL,
         type: 'POST',
         data: formData,
         processData: false,
         contentType: false,
         success: function (response) {
-            if (response.Correct) {
+            if (response.Success) {
                 alert("Usuario guardado correctamente.");
                 location.reload(); // Recarga la página
             } else {
@@ -339,74 +353,207 @@ function GuardarUsuario() {
         }
     });
 }
+*/
 
 
-function CargarUsuario(IdUsuario) {
-    Formulario()
+
+function BtnGuardar() {
+    var inpIdUsuario = $('#IdUsuario').val();
+    var inptNombre = $('#inptNombre').val();
+    var inptUserName = $('#inptUserName').val();
+    var inptApellidoPaterno = $('#inptApellidoPaterno').val();
+    var inptApellidoMaterno = $('#inpApellidoMaterno').val();
+    var inptEmail = $('#inptEmail').val();
+    var inptPassword = $('#inptPassword').val();
+    var inptFecha = $('#datepicker').val().toString();
+    var sexoSeleccionado = $('input[name="Sexo"]:checked').val();
+    var inptTelefono = $('#inptTelefono').val();
+    var inptCelular = $('#inptCelular').val();
+    var inptCURP = $('#inptCurp').val();
+    var inptRol = $('#ddlRol').val();
+    var inptCalle = $('#inptCalle').val();
+    var inptNumeroExterior = $('#inptNumeroExterior').val();
+    var inptNumeroInterior = $('#inptNumeroInterior').val();
+    var inptColonia = $('#ddlColonia').val();
+    var inptMunicipio = $('#ddlMunicipio').val();
+    var inptEstado = $('#ddlEstado').val();
+
+
+    if (inpIdUsuario == "") {
+        inpIdUsuario = 0;
+        var json = {
+            UserName: inptUserName,
+            Nombre: inptNombre,
+            ApellidoPaterno: inptApellidoPaterno,
+            ApellidoMaterno: inptApellidoMaterno,
+            Email: inptEmail,
+            Password: inptPassword,
+            FechaNacimiento: inptFecha,
+            Sexo: sexoSeleccionado,
+            Telefono: inptTelefono,
+            Celular: inptCelular,
+            CURP: inptCURP,
+            Rol: {
+                IdRol: inptRol,
+            },
+            Direccion: {
+                Calle: inptCalle,
+                NumeroExterior: inptNumeroExterior,
+                NumeroInterior: inptNumeroInterior,
+                Colonia: {
+                    IdColonia: inptColonia,
+                    Municipio: {
+                        IdMunicipio: inptMunicipio,
+                        Estado: {
+                            IdEstado: inptEstado
+                        }
+                    }
+                }
+            }
+
+        };
+        /* console.log(json)*/
+        Add(json);
+    }
+    else {
+        var json = {
+            IdUsuario: inpIdUsuario,
+            UserName: inptUserName,
+            Nombre: inptNombre,
+            ApellidoPaterno: inptApellidoPaterno,
+            ApellidoMaterno: inptApellidoMaterno,
+            Email: inptEmail,
+            Password: inptPassword,
+            FechaNacimiento: inptFecha,
+            Sexo: sexoSeleccionado,
+            Telefono: inptTelefono,
+            Celular: inptCelular,
+            CURP: inptCURP,
+            Rol: {
+                IdRol: inptRol,
+            },
+            Direccion: {
+                Calle: inptCalle,
+                NumeroExterior: inptNumeroExterior,
+                NumeroInterior: inptNumeroInterior,
+                Colonia: {
+                    IdColonia: inptColonia,
+                    Municipio: {
+                        IdMunicipio: inptMunicIpio,
+                        Estado: {
+                            IdEstado: inptEstado
+                        }
+                    }
+                }
+            }
+
+        };
+        Update(json);
+    }
+
+}
+
+
+function Add(json) {
+    console.log(json)
     $.ajax({
-        url: rutaForm,
-        type: "GET",
-        data: { IdUsuario: IdUsuario },
-        success: function (response) {
-            if (response.Correct) {
-                $("#IdUsuario").val(response.Usuario.IdUsuario);
-                $("#UserName").val(response.Usuario.UserName);
-                $("#Nombre").val(response.Usuario.Nombre);
-                $("#ApellidoPaterno").val(response.Usuario.ApellidoPaterno);
-                $("#ApellidoMaterno").val(response.Usuario.ApellidoMaterno);
-                $("#Email").val(response.Usuario.Email);
-                $("#password").val(response.Usuario.Password);
-                $("#Fecha").val(response.Usuario.FechaNacimiento);
-                $("#Curp").val(response.Usuario.Curp);
-                $("#Telefono").val(response.Usuario.Telefono);
-                $("#Celular").val(response.Usuario.Celular);
-                $("#ddlRol").val(response.Usuario.Rol.IdRol);
-                $("#Calle").val(response.Usuario.Direccion.Calle);
-                $("#NumeroExterior").val(response.Usuario.Direccion.NumeroExterior);
-                $("#NumeroInterior").val(response.Usuario.Direccion.NumeroInterior);
-
-                $("#IdRol").empty();
-                $.each(response.Roles, function (index, rol) {
-                    $("#ddlRol").append(`<option value="${rol.IdRol}">${rol.Nombre}</option>`);
-                });
-                $("#ddlRol").val(response.Usuario.Rol.IdRol || "");
-
-                $("#ddlEstado").empty();
-                $.each(response.Estados, function (index, estado) {
-                    $("#ddlEstado").append(`<option value="${estado.IdEstado}">${estado.Nombre}</option>`);
-                });
-                $("#ddlMunicipio").val(response.Usuario.Direccion.Colonia.Municipio.Estado.IdEstado || "");
-
-
-                $("#ddlMunicipio").empty();
-                $.each(response.Municipios, function (index, municipio) {
-                    $("#ddlMunicipio").append(`<option value="${municipio.IdMunicipio}">${municipio.Nombre}</option>`);
-                });
-                $("#ddlMunicipio").val(response.Usuario.Direccion.Colonia.Municipio.IdMunicipio || "");
-
-                $("#ddlColonia").empty();
-                $.each(response.Colonias, function (index, colonia) {
-                    $("#ddlColonia").append(`<option value="${colonia.IdColonia}">${colonia.Nombre}</option>`);
-                });
-                $("#ddlColonia").val(response.Usuario.Direccion.Colonia.IdColonia || "");
-
-                if (response.Sexo) {
-
-                    $("input[name='Sexo'][value='" + response.Usuario.Sexo + "']").prop("checked", true);
-                }
-
-                if (response.Usuario.Imagen) {
-                    $("#img").attr("src", "data:image/jpeg;base64," + response.Usuario.Imagen);
-                } else {
-                    $("#img").attr("src", ""); // Limpiar si no hay imagen
-                }
+        url: AddURL,
+        type: "POST",
+        data: JSON.stringify(json),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            if (result.Success) {
+                console.log("Entro al ajax add");
+                CleanModal();
+                GetAllUsuarios();
 
             } else {
-                alert("Error al cargar el usuario: " + response.Message);
+                console.log("Hubo un error al insertar");
             }
         },
         error: function (xhr, status, error) {
-            console.error("Error al obtener usuario:", error);
+            console.log("Status: " + status);
+            console.log("Error: " + error);
+
+        }
+    });
+}
+function Update(json) {
+    console.log(json)
+    $.ajax({
+        url: UpdateURL,
+        type: "POST",
+        data: JSON.stringify(json),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            if (result.Success) {
+                console.log("Actualizo de manera correcta");
+
+                GetAllTabla();
+                CloseModal();
+            } else {
+                console.log("Hubo un error al actualizar");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Status: " + status);
+            console.log("Error: " + error);
+
+        }
+    });
+}
+
+
+
+
+function UsuarioGetById(IdUsuario) {
+    $.ajax({
+        url: UsuarioGetByIdURL + IdUsuario,
+        type: "GET",
+        dataType: "json",
+        success: function (result) {
+            if (result.Success) {
+                console.log("Entro al ajax get by id");
+                var usuario = result.Object;
+                console.log(usuario)
+                CleanModal();
+                GetAllRol();
+                GetAllEstado()
+                MunicipioGetByEstado()
+                ColoniaGetAllByMunicipio()
+    
+                $('#IdUsuario').val(usuario.IdUsuario);
+                $('#inptNombre').val(usuario.Nombre);
+                $('#inptApellidoPaterno').val(usuario.ApellidoPaterno);
+                $('#inpApellidoMaterno').val(usuario.ApellidoMaterno);
+                $('#inptUserName').val(usuario.UserName);
+                $('#inptEmail').val(usuario.Email);
+                $('#datepicker').val(usuario.FechaNacimiento).toString();
+                $('input[name="Sexo"]:checked').val(usuario.Sexo);
+                $('#inptTelefono').val(usuario.Telefono);
+                $('#inptCelular').val(usuario.Celular);
+                $('#inptCurp').val(usuario.Curp);
+                $('#inptPassword').val(usuario.Password);
+                $("#ddlRol :selected").text();
+                $('#ddlRol').val(usuario.Rol.IdRol);
+                $('#inptCalle').val(usuario.Direccion.Calle);
+                $('#inptNumeroInterior').val(usuario.Direccion.NumeroInteriror);
+                $('#inptNumeroExterior').val(usuario.Direccion.NumeroExterior);
+                $('#ddlEstado').val(usuario.Direccion.Colonia.Municipio.Estado.IdEstado);
+                $('#ddlMunicipio').val(usuario.Direccion.Colonia.Municipio.IdMunicipio);
+                $('#ddlColonia').val(usuario.Direccion.Colonia.IdColonia);
+
+                ShowModal();
+            } else {
+                alert("No hay datos de usuario");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Status: " + status);
+            console.log("Error: " + error);
+
         }
     });
 }

@@ -12,14 +12,63 @@
         background-color: #EEEDEB;
     }
 
+
     .wrapper {
+        height: 380px;
+        position: relative;
+        overflow: hidden;
+        background-color: white;
         display: flex;
         flex-direction: column;
         border-radius: 12px;
         padding: 25px 15px;
         margin-bottom: 20px;
 
+
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 2px;
     }
+
+    .wave {
+        background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 6400px;
+        height: 198px;
+        animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+        transform: translate3d(0, 0, 0);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+        .wave:nth-of-type(2) {
+            bottom: 0;
+            animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
+            opacity: 1;
+        }
+
+    @@keyframes wave {
+        0% {
+            margin-left: 0;
+        }
+
+        100% {
+            margin-left: -1600px;
+        }
+    }
+
+    @@keyframes swell {
+        0%, 100% {
+            transform: translate3d(0,-25px,0);
+        }
+
+        50% {
+            transform: translate3d(0,5px,0);
+        }
+    }
+
 
     .tittle {
         margin-bottom: 10px;
@@ -27,7 +76,7 @@
 
         .tittle h1 {
             font-size: 48px;
-            font-weight: 600;
+            font-weight: 400;
         }
 
     .ddl {
@@ -61,7 +110,7 @@
         text-align: center;
         color: black;
         height: 45px;
-        width: 100px;
+        width: 150px;
         border-radius: 5px;
         border: 2px solid #000;
         cursor: pointer;
@@ -77,15 +126,19 @@
             color: white;
         }
 
-
-
-    .table-hover tbody tr:hover {
-        background-color: #b200ff;
-        color: #155724;
+    .add{
+        display: flex;
+        justify-content: center;
+        margin: 55px 0px;
     }
 
+    .table-hover tbody tr:hover {
+        background-color: #DFD0B8;
+    }
+
+
     .table thead {
-        background-color: #000000;
+        background-color: #222831;
         color: white;
     }
 </style>
@@ -97,23 +150,8 @@
 
 @using (Html.BeginForm("GetAll", "ProductoG", FormMethod.Post, new { id = "formBuscar" }))
 {
-
-    <div class="card">
-        <div class="content">
-            <div class="back">
-                <div class="back-content">
-
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div class="row @*row-cols-lg-4 mb-5*@">
         <div class="wrapper">
-            <div class="blob"></div>
 
             <div class="tittle">
                 <h1>Buscador de productos</h1>
@@ -147,14 +185,14 @@
                 </div>
             </div>
 
+            <div class="ocean">
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+
         </div>
 
-
-
-
-
-
-        <div class="container">
+        <div class="add">
             <a href="@Url.Action("Form", "ProductoG")" class="enter">
                 Agregar <i class="bi bi-person-fill-add" style="font-size:20px;"></i>
             </a>
@@ -214,8 +252,6 @@ else
 {
     <div></div>
 }
-
-@*AQUI*@
 
 
 <script src="~/Scripts/jquery-3.7.0.js"></script>
