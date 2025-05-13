@@ -6,21 +6,18 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    public class Producto
+    public class ProductoG
     {
-        /*
         public static ML.Result GetAll(ML.Producto productoObj)
         {
             ML.Result result = new ML.Result();
-
             try
             {
                 using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
                 {
+                    var query = context.ProductoGGetAll(productoObj.SubCategoria.IdSubCategoria);
 
-                    var query = context.ProductoGetAll(productoObj.SubCategoria.Categoria.IdCategoria, productoObj.SubCategoria.IdSubCategoria).ToList();
-
-                    if (query.Count > 0)
+                    if (query != null)
                     {
                         result.Objects = new List<object>();
 
@@ -29,24 +26,20 @@ namespace BL
                             ML.Producto producto = new ML.Producto();
                             producto.SubCategoria = new ML.SubCategoria();
                             producto.SubCategoria.Categoria = new ML.Categoria();
-
                             producto.IdProducto = obj.IdProducto;
                             producto.Nombre = obj.NombreProducto;
                             producto.Descripcion = obj.Descripcion;
+                            producto.Precio = obj.Precio;
                             producto.Imagen = obj.Imagen;
                             producto.SubCategoria.IdSubCategoria = obj.IdSubCategoria;
                             producto.SubCategoria.Nombre = obj.NombreSubCategoria;
-                            producto.SubCategoria.Categoria.IdCategoria = obj.IdCategoria;
+                            producto.SubCategoria.Categoria.IdCategoria = obj.IdSubCategoria;
                             producto.SubCategoria.Categoria.Nombre = obj.NombreCategoria;
-                            producto.Precio = obj.Precio;
 
                             result.Objects.Add(producto);
                         }
-
                         result.Success = true;
-
                     }
-
                 }
             }
             catch (Exception ex)
@@ -56,70 +49,6 @@ namespace BL
             }
 
             return result;
-        }
-
-
-        public static ML.Result Add(ML.Producto producto)
-        {
-            ML.Result result = new ML.Result();
-
-            try
-            {
-                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
-                {
-                    var rowAffets = context.ProductoAdd(producto.Nombre, producto.Descripcion, producto.Precio, producto.Imagen, producto.SubCategoria.IdSubCategoria).SingleOrDefault();
-
-                    if (rowAffets >= 2)
-                    {
-                        result.Success = true;
-                    }
-                    else
-                    {
-                        result.Success = false;
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = ex.Message;
-            }
-
-            return result;
-        }
-
-        public static ML.Result Update(ML.Producto producto)
-        {
-            ML.Result result = new ML.Result();
-
-
-            try
-            {
-                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
-                {
-                    int rowAffects = context.ProductoUpdate(producto.IdProducto, producto.Nombre, producto.Descripcion, producto.Precio, producto.Imagen, producto.SubCategoria.IdSubCategoria);
-
-                    if (rowAffects > 0)
-                    {
-                        result.Success = true;
-                    }
-                    else
-                    {
-                        result.Success = false;
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = ex.Message;
-            }
-
-
-            return result;
-
         }
 
         public static ML.Result GetById(int IdProducto)
@@ -130,7 +59,7 @@ namespace BL
             {
                 using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
                 {
-                    var query = context.ProductoGetById(IdProducto).SingleOrDefault();
+                    var query = context.ProductoGGetById(IdProducto).SingleOrDefault();
 
                     if (query != null)
                     {
@@ -139,17 +68,17 @@ namespace BL
                         producto.SubCategoria.Categoria = new ML.Categoria();
 
                         producto.IdProducto = query.IdProducto;
-                        producto.Nombre = query.NombreCategoria;
+                        producto.Nombre = query.NombreProducto;
                         producto.Descripcion = query.Descripcion;
                         producto.Precio = query.Precio;
                         producto.Imagen = query.Imagen;
                         producto.SubCategoria.IdSubCategoria = query.IdSubCategoria;
                         producto.SubCategoria.Nombre = query.NombreSubCategoria;
-                        producto.SubCategoria.Categoria.IdCategoria = query.IdSubCategoria;
+                        producto.SubCategoria.Categoria.IdCategoria = query.IdCategoria;
                         producto.SubCategoria.Categoria.Nombre = query.NombreCategoria;
 
-                        result.Success = true;
                         result.Object = producto;
+                        result.Success = true;
                     }
                     else
                     {
@@ -166,17 +95,50 @@ namespace BL
             return result;
         }
 
-        public static ML.Result Delete(int IdProducto)
+
+        public static ML.Result ProductoAdd(ML.Producto producto)
         {
             ML.Result result = new ML.Result();
 
             try
             {
-
-                using(DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
+                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
                 {
-                    int rowAffect = context.ProductoDelete(IdProducto);
-                    if (rowAffect > 0)
+                    var query = context.ProductoGAdd(producto.Nombre, producto.Descripcion, producto.Precio, producto.Imagen, producto.SubCategoria.IdSubCategoria);
+
+                    if (query != null)
+                    {
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Success = false;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+            return result;
+        }
+
+
+        public static ML.Result ProductoUpdate(ML.Producto producto)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
+                {
+                    var query = context.ProductoGUpdate(producto.IdProducto, producto.Nombre, producto.Descripcion, producto.Precio, producto.Imagen, producto.SubCategoria.IdSubCategoria);
+
+                    if (query != null)
                     {
                         result.Success = true;
                     }
@@ -185,8 +147,8 @@ namespace BL
                         result.Success = false;
                     }
                 }
-
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 result.Success = false;
                 result.Message = ex.Message;
@@ -194,8 +156,33 @@ namespace BL
 
             return result;
         }
-        */
+
+        public static ML.Result ProductoDelete(int IdProduxcto)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.UMarquezProgramacionNCapasEntities context = new DL_EF.UMarquezProgramacionNCapasEntities())
+                {
+                    var query = context.ProductoGDelete(IdProduxcto);
+                    if (query != null)
+                    {
+                        result.Success = true;
+                    }
+                    else
+                    {
+                        result.Success = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return result;
+        }
 
     }
-        
 }

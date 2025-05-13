@@ -9,6 +9,7 @@ namespace PL_MVC.Controllers
 {
     public class ProductoController : Controller
     {
+        /*
         // GET: Producto
         [HttpGet]
         public ActionResult GetAllProducto()
@@ -175,6 +176,6 @@ namespace PL_MVC.Controllers
 
             return PartialView("_Mensajes");
         }
-
+        */
     }
 }

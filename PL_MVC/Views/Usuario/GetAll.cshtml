@@ -1,5 +1,7 @@
 ﻿@model ML.Usuario
 
+@using ReportViewerForMvc;
+
 
 @{
     ViewBag.Title = "GetAll";
@@ -16,6 +18,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <link rel="stylesheet" href="~/Content/usuarioStyle/userGetAll.css">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer)
+        </div>
+    </div>
+</div>
 
 <div class="container">
 

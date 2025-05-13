@@ -11,7 +11,7 @@ namespace DL_EF
 {
     using System;
     
-    public partial class ProductoGetAll_Result
+    public partial class ProductoGGetById_Result
     {
         public int IdProducto { get; set; }
         public string NombreProducto { get; set; }
@@ -19,7 +19,6 @@ namespace DL_EF
         public decimal Precio { get; set; }
         public byte[] Imagen { get; set; }
         public int IdSubCategoria { get; set; }
-        public int IdCategoriaSub { get; set; }
         public string NombreSubCategoria { get; set; }
         public int IdCategoria { get; set; }
         public string NombreCategoria { get; set; }

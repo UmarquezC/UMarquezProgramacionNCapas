@@ -95,15 +95,48 @@
                         </div>
 
                         <div class="col">
-                            <div class="form-check form-check-inline">
-                                @Html.LabelFor(model => model.Sexo, "Hombre", new { @class = "form-check-label" })
-                                @Html.RadioButtonFor(model => model.Sexo, "M", new { @class = "input-group mb-3 " })
-                            </div>
 
-                            <div class="form-check form-check-inline">
-                                @Html.LabelFor(model => model.Sexo, "Mujer", new { @class = "form-check-label" })
-                                @Html.RadioButtonFor(model => model.Sexo, "F", new { @class = "input-group mb-3 " })
-                            </div>
+                            @if (Model.Sexo != null)
+                            {
+                                if (Model.Sexo == "M " || Model.Sexo == "m ")
+                                {
+                                    <div class="form-check form-check-inline">
+                                        @Html.LabelFor(model => model.Sexo, "Hombre", new { @class = "form-check-label" })
+                                        @Html.RadioButtonFor(model => model.Sexo, "M", new { @class = "input-group mb-3", @checked = true })
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        @Html.LabelFor(model => model.Sexo, "Mujer", new { @class = "form-check-label" })
+                                        @Html.RadioButtonFor(model => model.Sexo, "F", new { @class = "input-group mb-3 " })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-check form-check-inline">
+                                        @Html.LabelFor(model => model.Sexo, "Hombre", new { @class = "form-check-label" })
+                                        @Html.RadioButtonFor(model => model.Sexo, "M", new { @class = "input-group mb-3" })
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        @Html.LabelFor(model => model.Sexo, "Mujer", new { @class = "form-check-label" })
+                                        @Html.RadioButtonFor(model => model.Sexo, "F", new { @class = "input-group mb-3", @checked = true })
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="form-check form-check-inline">
+                                    @Html.LabelFor(model => model.Sexo, "Hombre", new { @class = "form-check-label" })
+                                    @Html.RadioButtonFor(model => model.Sexo, "M", new { @class = "input-group mb-3" })
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    @Html.LabelFor(model => model.Sexo, "Mujer", new { @class = "form-check-label" })
+                                    @Html.RadioButtonFor(model => model.Sexo, "F", new { @class = "input-group mb-3 " })
+                                </div>
+
+                            }
+
                             @Html.ValidationMessageFor(model => model.Sexo, "", new { @class = "text-danger" })
                         </div>
 
@@ -133,11 +166,12 @@
 
                         <div class="col">
                             @Html.LabelFor(model => model.Password)
-                            @Html.PasswordFor(model => model.Password, new { @class = "input-group mb-3 ", @onblur = "validarContraseña(event)" })
+                            @Html.TextBoxFor(model => model.Password, new { @class = "input-group mb-3 ", @onblur = "validarContraseña(event)", @type="Password" })
                             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                             <span class="error"></span>
 
                             <div class="col">
+
                                 <label class="row" for="password-confirm">Confirmar Contraseña </label>
                                 <input name="password-confirm" onblur="comparar(this)" id="pass" />
                                 <span class="error"></span>

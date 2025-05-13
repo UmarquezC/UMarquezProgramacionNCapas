@@ -15,6 +15,47 @@ namespace PL_MVC.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult AddUsuario(ML.Usuario usuario)
+        {
+            ML.Result result = new ML.Result();
+
+            result = BL.Usuario.AddEF(usuario);
+
+            JsonResult jsonResult = Json(result, JsonRequestBehavior.AllowGet);
+
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        public JsonResult UpdateUsuario(ML.Usuario usuario)
+        {
+            ML.Result result = new ML.Result();
+
+            result = BL.Usuario.UpdateEF(usuario); ;
+
+            JsonResult jsonResult = Json(result, JsonRequestBehavior.AllowGet);
+
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+        }
+
+
+        [HttpGet]
+        public JsonResult UsuarioGetById(int IdUsuario)
+        {
+            ML.Result result = new ML.Result();
+
+            result = BL.Usuario.GetByIdEF(IdUsuario); ;
+
+            JsonResult jsonResult = Json(result, JsonRequestBehavior.AllowGet);
+
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+        }
+
+
         public JsonResult GetAllRol()
         {
             ML.Result resultDDL = new ML.Result();

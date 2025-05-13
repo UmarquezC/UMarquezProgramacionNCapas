@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="UMarquezProgramacionNCapasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="ActualizacionPedidos">
-          <Key>
-            <PropertyRef Name="IdActualizacionPedidos" />
-          </Key>
-          <Property Name="IdActualizacionPedidos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdPedido" Type="int" Nullable="false" />
-          <Property Name="IdEstadoPedido" Type="tinyint" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="500" />
-          <Property Name="FechaActualizacion" Type="date" Nullable="false" />
-        </EntityType>
         <EntityType Name="Categoria">
           <Key>
             <PropertyRef Name="IdCategoria" />
@@ -30,15 +20,6 @@
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CodigoPostal" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdMunicipio" Type="int" />
-        </EntityType>
-        <EntityType Name="DetallePedido">
-          <Key>
-            <PropertyRef Name="IdDetallePedido" />
-          </Key>
-          <Property Name="IdDetallePedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdPedido" Type="int" Nullable="false" />
-          <Property Name="IdProducto" Type="int" Nullable="false" />
-          <Property Name="Cantidad" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Direccion">
           <Key>
@@ -58,13 +39,6 @@
           <Property Name="IdEstado" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="EstadoPedido">
-          <Key>
-            <PropertyRef Name="IdEstadoPedido" />
-          </Key>
-          <Property Name="IdEstadoPedido" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-        </EntityType>
         <EntityType Name="Municipio">
           <Key>
             <PropertyRef Name="IdMunicipio" />
@@ -73,47 +47,24 @@
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdEstado" Type="int" />
         </EntityType>
-        <EntityType Name="Notificacion">
-          <Key>
-            <PropertyRef Name="IdNotificacion" />
-          </Key>
-          <Property Name="IdNotificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdPedido" Type="int" Nullable="false" />
-          <Property Name="IdTipoNotificacion" Type="int" Nullable="false" />
-          <Property Name="Mensaje" Type="varchar" MaxLength="500" />
-          <Property Name="Fecha" Type="date" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Pedidos">
-          <Key>
-            <PropertyRef Name="IdPedido" />
-          </Key>
-          <Property Name="IdPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdUsuario" Type="int" Nullable="false" />
-          <Property Name="IdSucursal" Type="tinyint" Nullable="false" />
-          <Property Name="IdTipoPago" Type="tinyint" />
-          <Property Name="IdDireccion" Type="int" Nullable="false" />
-          <Property Name="IdEstadoPedido" Type="tinyint" Nullable="false" />
-          <Property Name="FechaCreacion" Type="date" Nullable="false" />
-          <Property Name="IdRepartidor" Type="int" />
-        </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
           <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="500" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Imagen" Type="varbinary(max)" />
-          <Property Name="IdSubCategoria" Type="int" Nullable="false" />
+          <Property Name="IdSubCategoria" Type="int" />
         </EntityType>
         <EntityType Name="ProductoSucursal">
           <Key>
             <PropertyRef Name="IdProductoSucursal" />
           </Key>
           <Property Name="IdProductoSucursal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdProducto" Type="int" Nullable="false" />
-          <Property Name="IdSucursal" Type="tinyint" Nullable="false" />
+          <Property Name="IdProducto" Type="int" />
+          <Property Name="IdSucursal" Type="tinyint" />
           <Property Name="Stock" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Rol">
@@ -128,8 +79,8 @@
             <PropertyRef Name="IdSubCategoria" />
           </Key>
           <Property Name="IdSubCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="IdCategoria" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="IdCategoria" Type="int" />
         </EntityType>
         <EntityType Name="Sucursal">
           <Key>
@@ -137,8 +88,8 @@
           </Key>
           <Property Name="IdSucursal" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Latitud" Type="varchar" MaxLength="50" />
-          <Property Name="Longitud" Type="varchar" MaxLength="50" />
+          <Property Name="Latitud" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Longitud" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -159,30 +110,6 @@
           <Property Name="CURP" Type="varchar" MaxLength="50" />
           <Property Name="Imagen" Type="varbinary(max)" />
           <Property Name="IdRol" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.ProductoGetAllView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ProductoGetAllView">
-          <Key>
-            
-            <PropertyRef Name="NombreProducto" />
-            <PropertyRef Name="Precio" />
-            <PropertyRef Name="IdSubCategoria" />
-            <PropertyRef Name="IdCategoriaSub" />
-            <PropertyRef Name="NombreSubCategoria" />
-            <PropertyRef Name="IdCategoria" />
-            <PropertyRef Name="NombreCategoria" />
-          </Key>
-          <Property Name="IdProducto" Type="int" Nullable="false" />
-          <Property Name="NombreProducto" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="500" />
-          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="Imagen" Type="varbinary(max)" />
-          <Property Name="IdSubCategoria" Type="int" Nullable="false" />
-          <Property Name="IdCategoriaSub" Type="int" Nullable="false" />
-          <Property Name="NombreSubCategoria" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="IdCategoria" Type="int" Nullable="false" />
-          <Property Name="NombreCategoria" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -218,30 +145,6 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
           <Property Name="IdEstado" Type="int" />
           <Property Name="NombreEstado" Type="varchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK__Actualiza__IdEst__40F9A68C">
-          <End Role="EstadoPedido" Type="Self.EstadoPedido" Multiplicity="1" />
-          <End Role="ActualizacionPedidos" Type="Self.ActualizacionPedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstadoPedido">
-              <PropertyRef Name="IdEstadoPedido" />
-            </Principal>
-            <Dependent Role="ActualizacionPedidos">
-              <PropertyRef Name="IdEstadoPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Actualiza__IdPed__40058253">
-          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1" />
-          <End Role="ActualizacionPedidos" Type="Self.ActualizacionPedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pedidos">
-              <PropertyRef Name="IdPedido" />
-            </Principal>
-            <Dependent Role="ActualizacionPedidos">
-              <PropertyRef Name="IdPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Colonia__IdMunic__619B8048">
           <End Role="Municipio" Type="Self.Municipio" Multiplicity="0..1" />
           <End Role="Colonia" Type="Self.Colonia" Multiplicity="*" />
@@ -251,30 +154,6 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             </Principal>
             <Dependent Role="Colonia">
               <PropertyRef Name="IdMunicipio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__DetallePe__IdPed__3C34F16F">
-          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1" />
-          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pedidos">
-              <PropertyRef Name="IdPedido" />
-            </Principal>
-            <Dependent Role="DetallePedido">
-              <PropertyRef Name="IdPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__DetallePe__IdPro__3D2915A8">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="DetallePedido">
-              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -314,44 +193,8 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Notificac__IdPed__43D61337">
-          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1" />
-          <End Role="Notificacion" Type="Self.Notificacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pedidos">
-              <PropertyRef Name="IdPedido" />
-            </Principal>
-            <Dependent Role="Notificacion">
-              <PropertyRef Name="IdPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Pedidos__IdEstad__395884C4">
-          <End Role="EstadoPedido" Type="Self.EstadoPedido" Multiplicity="1" />
-          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstadoPedido">
-              <PropertyRef Name="IdEstadoPedido" />
-            </Principal>
-            <Dependent Role="Pedidos">
-              <PropertyRef Name="IdEstadoPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Pedidos__IdSucur__3864608B">
-          <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
-          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sucursal">
-              <PropertyRef Name="IdSucursal" />
-            </Principal>
-            <Dependent Role="Pedidos">
-              <PropertyRef Name="IdSucursal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Producto__IdSubC__2FCF1A8A">
-          <End Role="SubCategoria" Type="Self.SubCategoria" Multiplicity="1" />
+        <Association Name="FK__Producto__IdSubC__7C1A6C5A">
+          <End Role="SubCategoria" Type="Self.SubCategoria" Multiplicity="0..1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SubCategoria">
@@ -362,8 +205,8 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProductoS__IdPro__32AB8735">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+        <Association Name="FK__ProductoS__IdPro__7EF6D905">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
           <End Role="ProductoSucursal" Type="Self.ProductoSucursal" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Producto">
@@ -374,8 +217,8 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProductoS__IdSuc__339FAB6E">
-          <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="1" />
+        <Association Name="FK__ProductoS__IdSuc__7FEAFD3E">
+          <End Role="Sucursal" Type="Self.Sucursal" Multiplicity="0..1" />
           <End Role="ProductoSucursal" Type="Self.ProductoSucursal" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sucursal">
@@ -386,8 +229,8 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SubCatego__IdCat__2CF2ADDF">
-          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+        <Association Name="FK__SubCatego__IdCat__793DFFAF">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
           <End Role="SubCategoria" Type="Self.SubCategoria" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categoria">
@@ -421,45 +264,32 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
         <Function Name="MunicipioGetAllByIdEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdEstado" Type="int" Mode="In" />
         </Function>
-        <Function Name="ProductoAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+        <Function Name="ProductoGAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="Descripcion" Type="varchar" Mode="In" />
           <Parameter Name="Precio" Type="decimal" Mode="In" />
           <Parameter Name="Imagen" Type="varbinary(max)" Mode="In" />
           <Parameter Name="IdSubCategoria" Type="int" Mode="In" />
         </Function>
-        <Function Name="ProductoDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdProducto" Type="int" Mode="In" />
+        <Function Name="ProductoGDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idProducto" Type="int" Mode="In" />
         </Function>
-        <Function Name="ProductoGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Categoria" Type="int" Mode="In" />
+        <Function Name="ProductoGGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idSubCategoria" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ProductoGGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idProducto" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ProductoGUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idProducto" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="Precio" Type="decimal" Mode="In" />
+          <Parameter Name="Imagen" Type="varbinary(max)" Mode="In" />
           <Parameter Name="IdSubCategoria" Type="int" Mode="In" />
-        </Function>
-        <Function Name="ProductoGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdProducto" Type="int" Mode="In" />
-        </Function>
-        <Function Name="ProductoSucursalDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdProducto" Type="int" Mode="In" />
-          <Parameter Name="IdSucursal" Type="int" Mode="In" />
         </Function>
         <Function Name="ProductoSucursalGetBySucursal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdSucursal" Type="int" Mode="In" />
-        </Function>
-        <Function Name="ProductoSucursalUpdateStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdProducto" Type="int" Mode="In" />
-          <Parameter Name="IdSucursal" Type="int" Mode="In" />
-          <Parameter Name="NuevoStock" Type="int" Mode="In" />
-        </Function>
-        <Function Name="ProductoUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdProducto" Type="int" Mode="In" />
-          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
-          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
-          <Parameter Name="Precio" Type="decimal" Mode="In" />
-          <Parameter Name="Imagen" Type="varbinary(max)" Mode="In" />
-          <Parameter Name="IdSubCategoria" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SubCategoriaGetAllByCategoria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdCategoria" Type="int" Mode="In" />
+          <Parameter Name="IdSucursal" Type="tinyint" Mode="In" />
         </Function>
         <Function Name="UsuarioAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -521,36 +351,17 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
           <Parameter Name="IdColonia" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="UMarquezProgramacionNCapasModelStoreContainer">
-          <EntitySet Name="ActualizacionPedidos" EntityType="Self.ActualizacionPedidos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Colonia" EntityType="Self.Colonia" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DetallePedido" EntityType="Self.DetallePedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Direccion" EntityType="Self.Direccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EstadoPedido" EntityType="Self.EstadoPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Municipio" EntityType="Self.Municipio" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Notificacion" EntityType="Self.Notificacion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductoSucursal" EntityType="Self.ProductoSucursal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategoria" EntityType="Self.SubCategoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sucursal" EntityType="Self.Sucursal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductoGetAllView" EntityType="Self.ProductoGetAllView" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ProductoGetAllView].[IdProducto] AS [IdProducto], 
-    [ProductoGetAllView].[NombreProducto] AS [NombreProducto], 
-    [ProductoGetAllView].[Descripcion] AS [Descripcion], 
-    [ProductoGetAllView].[Precio] AS [Precio], 
-    [ProductoGetAllView].[Imagen] AS [Imagen], 
-    [ProductoGetAllView].[IdSubCategoria] AS [IdSubCategoria], 
-    [ProductoGetAllView].[IdCategoriaSub] AS [IdCategoriaSub], 
-    [ProductoGetAllView].[NombreSubCategoria] AS [NombreSubCategoria], 
-    [ProductoGetAllView].[IdCategoria] AS [IdCategoria], 
-    [ProductoGetAllView].[NombreCategoria] AS [NombreCategoria]
-    FROM [dbo].[ProductoGetAllView] AS [ProductoGetAllView]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="UsuarioGetAllView" EntityType="Self.UsuarioGetAllView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [UsuarioGetAllView].[IdUsuario] AS [IdUsuario], 
@@ -582,25 +393,9 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
     [UsuarioGetAllView].[NombreEstado] AS [NombreEstado]
     FROM [dbo].[UsuarioGetAllView] AS [UsuarioGetAllView]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__Actualiza__IdEst__40F9A68C" Association="Self.FK__Actualiza__IdEst__40F9A68C">
-            <End Role="EstadoPedido" EntitySet="EstadoPedido" />
-            <End Role="ActualizacionPedidos" EntitySet="ActualizacionPedidos" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Actualiza__IdPed__40058253" Association="Self.FK__Actualiza__IdPed__40058253">
-            <End Role="Pedidos" EntitySet="Pedidos" />
-            <End Role="ActualizacionPedidos" EntitySet="ActualizacionPedidos" />
-          </AssociationSet>
           <AssociationSet Name="FK__Colonia__IdMunic__619B8048" Association="Self.FK__Colonia__IdMunic__619B8048">
             <End Role="Municipio" EntitySet="Municipio" />
             <End Role="Colonia" EntitySet="Colonia" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DetallePe__IdPed__3C34F16F" Association="Self.FK__DetallePe__IdPed__3C34F16F">
-            <End Role="Pedidos" EntitySet="Pedidos" />
-            <End Role="DetallePedido" EntitySet="DetallePedido" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DetallePe__IdPro__3D2915A8" Association="Self.FK__DetallePe__IdPro__3D2915A8">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="DetallePedido" EntitySet="DetallePedido" />
           </AssociationSet>
           <AssociationSet Name="FK__Direccion__IdCol__6477ECF3" Association="Self.FK__Direccion__IdCol__6477ECF3">
             <End Role="Colonia" EntitySet="Colonia" />
@@ -614,31 +409,19 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Municipio" EntitySet="Municipio" />
           </AssociationSet>
-          <AssociationSet Name="FK__Notificac__IdPed__43D61337" Association="Self.FK__Notificac__IdPed__43D61337">
-            <End Role="Pedidos" EntitySet="Pedidos" />
-            <End Role="Notificacion" EntitySet="Notificacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Pedidos__IdEstad__395884C4" Association="Self.FK__Pedidos__IdEstad__395884C4">
-            <End Role="EstadoPedido" EntitySet="EstadoPedido" />
-            <End Role="Pedidos" EntitySet="Pedidos" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Pedidos__IdSucur__3864608B" Association="Self.FK__Pedidos__IdSucur__3864608B">
-            <End Role="Sucursal" EntitySet="Sucursal" />
-            <End Role="Pedidos" EntitySet="Pedidos" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Producto__IdSubC__2FCF1A8A" Association="Self.FK__Producto__IdSubC__2FCF1A8A">
+          <AssociationSet Name="FK__Producto__IdSubC__7C1A6C5A" Association="Self.FK__Producto__IdSubC__7C1A6C5A">
             <End Role="SubCategoria" EntitySet="SubCategoria" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProductoS__IdPro__32AB8735" Association="Self.FK__ProductoS__IdPro__32AB8735">
+          <AssociationSet Name="FK__ProductoS__IdPro__7EF6D905" Association="Self.FK__ProductoS__IdPro__7EF6D905">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="ProductoSucursal" EntitySet="ProductoSucursal" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProductoS__IdSuc__339FAB6E" Association="Self.FK__ProductoS__IdSuc__339FAB6E">
+          <AssociationSet Name="FK__ProductoS__IdSuc__7FEAFD3E" Association="Self.FK__ProductoS__IdSuc__7FEAFD3E">
             <End Role="Sucursal" EntitySet="Sucursal" />
             <End Role="ProductoSucursal" EntitySet="ProductoSucursal" />
           </AssociationSet>
-          <AssociationSet Name="FK__SubCatego__IdCat__2CF2ADDF" Association="Self.FK__SubCatego__IdCat__2CF2ADDF">
+          <AssociationSet Name="FK__SubCatego__IdCat__793DFFAF" Association="Self.FK__SubCatego__IdCat__793DFFAF">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="SubCategoria" EntitySet="SubCategoria" />
           </AssociationSet>
@@ -739,7 +522,6 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             <Parameter Name="NumeroExterior" Mode="In" Type="String" />
             <Parameter Name="IdColonia" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="UsuarioGetAllView" EntityType="UMarquezProgramacionNCapasModel.UsuarioGetAllView" />
           <FunctionImport Name="UsuarioGetById" ReturnType="Collection(UMarquezProgramacionNCapasModel.UsuarioGetById_Result)">
           <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -749,100 +531,54 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
             <Parameter Name="IdRol" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="ActualizacionPedidos" EntityType="UMarquezProgramacionNCapasModel.ActualizacionPedidos" />
           <EntitySet Name="Categoria" EntityType="UMarquezProgramacionNCapasModel.Categoria" />
-          <EntitySet Name="DetallePedido" EntityType="UMarquezProgramacionNCapasModel.DetallePedido" />
-          <EntitySet Name="EstadoPedido" EntityType="UMarquezProgramacionNCapasModel.EstadoPedido" />
-          <EntitySet Name="Notificacion" EntityType="UMarquezProgramacionNCapasModel.Notificacion" />
-          <EntitySet Name="Pedidos" EntityType="UMarquezProgramacionNCapasModel.Pedidos" />
           <EntitySet Name="Producto" EntityType="UMarquezProgramacionNCapasModel.Producto" />
           <EntitySet Name="ProductoSucursal" EntityType="UMarquezProgramacionNCapasModel.ProductoSucursal" />
           <EntitySet Name="SubCategoria" EntityType="UMarquezProgramacionNCapasModel.SubCategoria" />
           <EntitySet Name="Sucursal" EntityType="UMarquezProgramacionNCapasModel.Sucursal" />
-          <EntitySet Name="ProductoGetAllView" EntityType="UMarquezProgramacionNCapasModel.ProductoGetAllView" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-          <AssociationSet Name="FK__Actualiza__IdEst__40F9A68C" Association="UMarquezProgramacionNCapasModel.FK__Actualiza__IdEst__40F9A68C">
-            <End Role="EstadoPedido" EntitySet="EstadoPedido" />
-            <End Role="ActualizacionPedidos" EntitySet="ActualizacionPedidos" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Actualiza__IdPed__40058253" Association="UMarquezProgramacionNCapasModel.FK__Actualiza__IdPed__40058253">
-            <End Role="Pedidos" EntitySet="Pedidos" />
-            <End Role="ActualizacionPedidos" EntitySet="ActualizacionPedidos" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SubCatego__IdCat__2CF2ADDF" Association="UMarquezProgramacionNCapasModel.FK__SubCatego__IdCat__2CF2ADDF">
+          <AssociationSet Name="FK__SubCatego__IdCat__793DFFAF" Association="UMarquezProgramacionNCapasModel.FK__SubCatego__IdCat__793DFFAF">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="SubCategoria" EntitySet="SubCategoria" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetallePe__IdPed__3C34F16F" Association="UMarquezProgramacionNCapasModel.FK__DetallePe__IdPed__3C34F16F">
-            <End Role="Pedidos" EntitySet="Pedidos" />
-            <End Role="DetallePedido" EntitySet="DetallePedido" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DetallePe__IdPro__3D2915A8" Association="UMarquezProgramacionNCapasModel.FK__DetallePe__IdPro__3D2915A8">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="DetallePedido" EntitySet="DetallePedido" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Pedidos__IdEstad__395884C4" Association="UMarquezProgramacionNCapasModel.FK__Pedidos__IdEstad__395884C4">
-            <End Role="EstadoPedido" EntitySet="EstadoPedido" />
-            <End Role="Pedidos" EntitySet="Pedidos" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Notificac__IdPed__43D61337" Association="UMarquezProgramacionNCapasModel.FK__Notificac__IdPed__43D61337">
-            <End Role="Pedidos" EntitySet="Pedidos" />
-            <End Role="Notificacion" EntitySet="Notificacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Pedidos__IdSucur__3864608B" Association="UMarquezProgramacionNCapasModel.FK__Pedidos__IdSucur__3864608B">
-            <End Role="Sucursal" EntitySet="Sucursal" />
-            <End Role="Pedidos" EntitySet="Pedidos" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Producto__IdSubC__2FCF1A8A" Association="UMarquezProgramacionNCapasModel.FK__Producto__IdSubC__2FCF1A8A">
+          <AssociationSet Name="FK__Producto__IdSubC__7C1A6C5A" Association="UMarquezProgramacionNCapasModel.FK__Producto__IdSubC__7C1A6C5A">
             <End Role="SubCategoria" EntitySet="SubCategoria" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProductoS__IdPro__32AB8735" Association="UMarquezProgramacionNCapasModel.FK__ProductoS__IdPro__32AB8735">
+          <AssociationSet Name="FK__ProductoS__IdPro__7EF6D905" Association="UMarquezProgramacionNCapasModel.FK__ProductoS__IdPro__7EF6D905">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="ProductoSucursal" EntitySet="ProductoSucursal" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProductoS__IdSuc__339FAB6E" Association="UMarquezProgramacionNCapasModel.FK__ProductoS__IdSuc__339FAB6E">
+          <AssociationSet Name="FK__ProductoS__IdSuc__7FEAFD3E" Association="UMarquezProgramacionNCapasModel.FK__ProductoS__IdSuc__7FEAFD3E">
             <End Role="Sucursal" EntitySet="Sucursal" />
             <End Role="ProductoSucursal" EntitySet="ProductoSucursal" />
           </AssociationSet>
-          <FunctionImport Name="SubCategoriaGetAllByCategoria" ReturnType="Collection(UMarquezProgramacionNCapasModel.SubCategoriaGetAllByCategoria_Result)">
-          <Parameter Name="IdCategoria" Mode="In" Type="Int32" />
+          <EntitySet Name="UsuarioGetAllView" EntityType="UMarquezProgramacionNCapasModel.UsuarioGetAllView" />
+          <FunctionImport Name="ProductoGGetAll" ReturnType="Collection(UMarquezProgramacionNCapasModel.ProductoGGetAll_Result)">
+          <Parameter Name="idSubCategoria" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="ProductoGetAll" ReturnType="Collection(UMarquezProgramacionNCapasModel.ProductoGetAll_Result)">
-            <Parameter Name="Categoria" Mode="In" Type="Int32" />
-            <Parameter Name="IdSubCategoria" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ProductoGetById" ReturnType="Collection(UMarquezProgramacionNCapasModel.ProductoGetById_Result)">
-          <Parameter Name="IdProducto" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ProductoAdd" ReturnType="Collection(Decimal)">
+          <FunctionImport Name="ProductoGAdd">
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="Precio" Mode="In" Type="Decimal" />
             <Parameter Name="Imagen" Mode="In" Type="Binary" />
             <Parameter Name="IdSubCategoria" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="ProductoUpdate">
-            <Parameter Name="IdProducto" Mode="In" Type="Int32" />
+          <FunctionImport Name="ProductoGDelete">
+          <Parameter Name="idProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProductoGUpdate">
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="Precio" Mode="In" Type="Decimal" />
             <Parameter Name="Imagen" Mode="In" Type="Binary" />
             <Parameter Name="IdSubCategoria" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ProductoDelete">
-          <Parameter Name="IdProducto" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ProductoSucursalUpdateStock">
-            <Parameter Name="IdProducto" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
-            <Parameter Name="NuevoStock" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ProductoSucursalGetBySucursal" ReturnType="Collection(UMarquezProgramacionNCapasModel.ProductoSucursalGetBySucursal_Result)">
-          <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
+          <Parameter Name="IdSucursal" Mode="In" Type="Byte" />
           </FunctionImport>
-          <FunctionImport Name="ProductoSucursalDelete">
-            <Parameter Name="IdProducto" Mode="In" Type="Int32" />
-            <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
+          <FunctionImport Name="ProductoGGetById" ReturnType="Collection(UMarquezProgramacionNCapasModel.ProductoGGetById_Result)">
+            <Parameter Name="idProducto" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Rol">
@@ -1021,38 +757,6 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
           <Property Type="Int32" Name="IdEstado" Nullable="true" />
           <Property Type="String" Name="NombreEstado" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="UsuarioGetAllView">
-          <Key>
-            <PropertyRef Name="NombreRol" />
-          </Key>
-          <Property Name="IdUsuario" Type="Int32" />
-          <Property Name="NombreUsuario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ApellidoPaterno" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaNacimiento" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Sexo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Celular" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Estatus" Type="Boolean" />
-          <Property Name="CURP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdRol" Type="Int32" />
-          <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="NombreRol" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdDireccion" Type="Int32" />
-          <Property Name="Calle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NumeroInterior" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="NumeroExterior" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdColonia" Type="Int32" />
-          <Property Name="NombreColonia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CodigoPostal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdMunicipio" Type="Int32" />
-          <Property Name="NombreMunicipio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstado" Type="Int32" />
-          <Property Name="NombreEstado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <ComplexType Name="UsuarioGetById_Result">
           <Property Type="Int32" Name="IdUsuario" Nullable="true" />
           <Property Type="String" Name="NombreUsuario" Nullable="true" MaxLength="30" />
@@ -1111,74 +815,13 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
           <Property Type="Int32" Name="IdEstado" Nullable="true" />
           <Property Type="String" Name="NombreEstado" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="ActualizacionPedidos">
-          <Key>
-            <PropertyRef Name="IdActualizacionPedidos" />
-          </Key>
-          <Property Name="IdActualizacionPedidos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdPedido" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoPedido" Type="Byte" Nullable="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="FechaActualizacion" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="EstadoPedido" Relationship="UMarquezProgramacionNCapasModel.FK__Actualiza__IdEst__40F9A68C" FromRole="ActualizacionPedidos" ToRole="EstadoPedido" />
-          <NavigationProperty Name="Pedidos" Relationship="UMarquezProgramacionNCapasModel.FK__Actualiza__IdPed__40058253" FromRole="ActualizacionPedidos" ToRole="Pedidos" />
-        </EntityType>
         <EntityType Name="Categoria">
           <Key>
             <PropertyRef Name="IdCategoria" />
           </Key>
           <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SubCategoria" Relationship="UMarquezProgramacionNCapasModel.FK__SubCatego__IdCat__2CF2ADDF" FromRole="Categoria" ToRole="SubCategoria" />
-        </EntityType>
-        <EntityType Name="DetallePedido">
-          <Key>
-            <PropertyRef Name="IdDetallePedido" />
-          </Key>
-          <Property Name="IdDetallePedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdPedido" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Int32" Nullable="false" />
-          <Property Name="Cantidad" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Pedidos" Relationship="UMarquezProgramacionNCapasModel.FK__DetallePe__IdPed__3C34F16F" FromRole="DetallePedido" ToRole="Pedidos" />
-          <NavigationProperty Name="Producto" Relationship="UMarquezProgramacionNCapasModel.FK__DetallePe__IdPro__3D2915A8" FromRole="DetallePedido" ToRole="Producto" />
-        </EntityType>
-        <EntityType Name="EstadoPedido">
-          <Key>
-            <PropertyRef Name="IdEstadoPedido" />
-          </Key>
-          <Property Name="IdEstadoPedido" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ActualizacionPedidos" Relationship="UMarquezProgramacionNCapasModel.FK__Actualiza__IdEst__40F9A68C" FromRole="EstadoPedido" ToRole="ActualizacionPedidos" />
-          <NavigationProperty Name="Pedidos" Relationship="UMarquezProgramacionNCapasModel.FK__Pedidos__IdEstad__395884C4" FromRole="EstadoPedido" ToRole="Pedidos" />
-        </EntityType>
-        <EntityType Name="Notificacion">
-          <Key>
-            <PropertyRef Name="IdNotificacion" />
-          </Key>
-          <Property Name="IdNotificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdPedido" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoNotificacion" Type="Int32" Nullable="false" />
-          <Property Name="Mensaje" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Pedidos" Relationship="UMarquezProgramacionNCapasModel.FK__Notificac__IdPed__43D61337" FromRole="Notificacion" ToRole="Pedidos" />
-        </EntityType>
-        <EntityType Name="Pedidos">
-          <Key>
-            <PropertyRef Name="IdPedido" />
-          </Key>
-          <Property Name="IdPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Byte" Nullable="false" />
-          <Property Name="IdTipoPago" Type="Byte" />
-          <Property Name="IdDireccion" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoPedido" Type="Byte" Nullable="false" />
-          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="IdRepartidor" Type="Int32" />
-          <NavigationProperty Name="ActualizacionPedidos" Relationship="UMarquezProgramacionNCapasModel.FK__Actualiza__IdPed__40058253" FromRole="Pedidos" ToRole="ActualizacionPedidos" />
-          <NavigationProperty Name="DetallePedido" Relationship="UMarquezProgramacionNCapasModel.FK__DetallePe__IdPed__3C34F16F" FromRole="Pedidos" ToRole="DetallePedido" />
-          <NavigationProperty Name="EstadoPedido" Relationship="UMarquezProgramacionNCapasModel.FK__Pedidos__IdEstad__395884C4" FromRole="Pedidos" ToRole="EstadoPedido" />
-          <NavigationProperty Name="Notificacion" Relationship="UMarquezProgramacionNCapasModel.FK__Notificac__IdPed__43D61337" FromRole="Pedidos" ToRole="Notificacion" />
-          <NavigationProperty Name="Sucursal" Relationship="UMarquezProgramacionNCapasModel.FK__Pedidos__IdSucur__3864608B" FromRole="Pedidos" ToRole="Sucursal" />
+          <NavigationProperty Name="SubCategoria" Relationship="UMarquezProgramacionNCapasModel.FK__SubCatego__IdCat__793DFFAF" FromRole="Categoria" ToRole="SubCategoria" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
@@ -1186,34 +829,33 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
           </Key>
           <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="IdSubCategoria" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="DetallePedido" Relationship="UMarquezProgramacionNCapasModel.FK__DetallePe__IdPro__3D2915A8" FromRole="Producto" ToRole="DetallePedido" />
-          <NavigationProperty Name="SubCategoria" Relationship="UMarquezProgramacionNCapasModel.FK__Producto__IdSubC__2FCF1A8A" FromRole="Producto" ToRole="SubCategoria" />
-          <NavigationProperty Name="ProductoSucursal" Relationship="UMarquezProgramacionNCapasModel.FK__ProductoS__IdPro__32AB8735" FromRole="Producto" ToRole="ProductoSucursal" />
+          <Property Name="IdSubCategoria" Type="Int32" />
+          <NavigationProperty Name="SubCategoria" Relationship="UMarquezProgramacionNCapasModel.FK__Producto__IdSubC__7C1A6C5A" FromRole="Producto" ToRole="SubCategoria" />
+          <NavigationProperty Name="ProductoSucursal" Relationship="UMarquezProgramacionNCapasModel.FK__ProductoS__IdPro__7EF6D905" FromRole="Producto" ToRole="ProductoSucursal" />
         </EntityType>
         <EntityType Name="ProductoSucursal">
           <Key>
             <PropertyRef Name="IdProductoSucursal" />
           </Key>
           <Property Name="IdProductoSucursal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdProducto" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Byte" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" />
+          <Property Name="IdSucursal" Type="Byte" />
           <Property Name="Stock" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="UMarquezProgramacionNCapasModel.FK__ProductoS__IdPro__32AB8735" FromRole="ProductoSucursal" ToRole="Producto" />
-          <NavigationProperty Name="Sucursal" Relationship="UMarquezProgramacionNCapasModel.FK__ProductoS__IdSuc__339FAB6E" FromRole="ProductoSucursal" ToRole="Sucursal" />
+          <NavigationProperty Name="Producto" Relationship="UMarquezProgramacionNCapasModel.FK__ProductoS__IdPro__7EF6D905" FromRole="ProductoSucursal" ToRole="Producto" />
+          <NavigationProperty Name="Sucursal" Relationship="UMarquezProgramacionNCapasModel.FK__ProductoS__IdSuc__7FEAFD3E" FromRole="ProductoSucursal" ToRole="Sucursal" />
         </EntityType>
         <EntityType Name="SubCategoria">
           <Key>
             <PropertyRef Name="IdSubCategoria" />
           </Key>
           <Property Name="IdSubCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdCategoria" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Categoria" Relationship="UMarquezProgramacionNCapasModel.FK__SubCatego__IdCat__2CF2ADDF" FromRole="SubCategoria" ToRole="Categoria" />
-          <NavigationProperty Name="Producto" Relationship="UMarquezProgramacionNCapasModel.FK__Producto__IdSubC__2FCF1A8A" FromRole="SubCategoria" ToRole="Producto" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdCategoria" Type="Int32" />
+          <NavigationProperty Name="Categoria" Relationship="UMarquezProgramacionNCapasModel.FK__SubCatego__IdCat__793DFFAF" FromRole="SubCategoria" ToRole="Categoria" />
+          <NavigationProperty Name="Producto" Relationship="UMarquezProgramacionNCapasModel.FK__Producto__IdSubC__7C1A6C5A" FromRole="SubCategoria" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Sucursal">
           <Key>
@@ -1221,58 +863,12 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
           </Key>
           <Property Name="IdSucursal" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Latitud" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Longitud" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Pedidos" Relationship="UMarquezProgramacionNCapasModel.FK__Pedidos__IdSucur__3864608B" FromRole="Sucursal" ToRole="Pedidos" />
-          <NavigationProperty Name="ProductoSucursal" Relationship="UMarquezProgramacionNCapasModel.FK__ProductoS__IdSuc__339FAB6E" FromRole="Sucursal" ToRole="ProductoSucursal" />
+          <Property Name="Latitud" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Longitud" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProductoSucursal" Relationship="UMarquezProgramacionNCapasModel.FK__ProductoS__IdSuc__7FEAFD3E" FromRole="Sucursal" ToRole="ProductoSucursal" />
         </EntityType>
-        <EntityType Name="ProductoGetAllView" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" Abstract="false">
-          <Key>
-            <PropertyRef Name="NombreProducto" />
-            <PropertyRef Name="Precio" />
-            <PropertyRef Name="IdSubCategoria" />
-            <PropertyRef Name="IdCategoriaSub" />
-            <PropertyRef Name="NombreSubCategoria" />
-            <PropertyRef Name="IdCategoria" />
-            <PropertyRef Name="NombreCategoria" />
-          </Key>
-          <Property Name="IdProducto" Type="Int32" Nullable="false" />
-          <Property Name="NombreProducto" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="IdSubCategoria" Type="Int32" Nullable="false" />
-          <Property Name="IdCategoriaSub" Type="Int32" Nullable="false" />
-          <Property Name="NombreSubCategoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdCategoria" Type="Int32" Nullable="false" />
-          <Property Name="NombreCategoria" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK__Actualiza__IdEst__40F9A68C">
-          <End Type="UMarquezProgramacionNCapasModel.EstadoPedido" Role="EstadoPedido" Multiplicity="1" />
-          <End Type="UMarquezProgramacionNCapasModel.ActualizacionPedidos" Role="ActualizacionPedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstadoPedido">
-              <PropertyRef Name="IdEstadoPedido" />
-            </Principal>
-            <Dependent Role="ActualizacionPedidos">
-              <PropertyRef Name="IdEstadoPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Actualiza__IdPed__40058253">
-          <End Type="UMarquezProgramacionNCapasModel.Pedidos" Role="Pedidos" Multiplicity="1" />
-          <End Type="UMarquezProgramacionNCapasModel.ActualizacionPedidos" Role="ActualizacionPedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pedidos">
-              <PropertyRef Name="IdPedido" />
-            </Principal>
-            <Dependent Role="ActualizacionPedidos">
-              <PropertyRef Name="IdPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SubCatego__IdCat__2CF2ADDF">
-          <End Type="UMarquezProgramacionNCapasModel.Categoria" Role="Categoria" Multiplicity="1" />
+        <Association Name="FK__SubCatego__IdCat__793DFFAF">
+          <End Type="UMarquezProgramacionNCapasModel.Categoria" Role="Categoria" Multiplicity="0..1" />
           <End Type="UMarquezProgramacionNCapasModel.SubCategoria" Role="SubCategoria" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categoria">
@@ -1283,68 +879,8 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetallePe__IdPed__3C34F16F">
-          <End Type="UMarquezProgramacionNCapasModel.Pedidos" Role="Pedidos" Multiplicity="1" />
-          <End Type="UMarquezProgramacionNCapasModel.DetallePedido" Role="DetallePedido" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pedidos">
-              <PropertyRef Name="IdPedido" />
-            </Principal>
-            <Dependent Role="DetallePedido">
-              <PropertyRef Name="IdPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__DetallePe__IdPro__3D2915A8">
-          <End Type="UMarquezProgramacionNCapasModel.Producto" Role="Producto" Multiplicity="1" />
-          <End Type="UMarquezProgramacionNCapasModel.DetallePedido" Role="DetallePedido" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="DetallePedido">
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Pedidos__IdEstad__395884C4">
-          <End Type="UMarquezProgramacionNCapasModel.EstadoPedido" Role="EstadoPedido" Multiplicity="1" />
-          <End Type="UMarquezProgramacionNCapasModel.Pedidos" Role="Pedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstadoPedido">
-              <PropertyRef Name="IdEstadoPedido" />
-            </Principal>
-            <Dependent Role="Pedidos">
-              <PropertyRef Name="IdEstadoPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Notificac__IdPed__43D61337">
-          <End Type="UMarquezProgramacionNCapasModel.Pedidos" Role="Pedidos" Multiplicity="1" />
-          <End Type="UMarquezProgramacionNCapasModel.Notificacion" Role="Notificacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pedidos">
-              <PropertyRef Name="IdPedido" />
-            </Principal>
-            <Dependent Role="Notificacion">
-              <PropertyRef Name="IdPedido" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Pedidos__IdSucur__3864608B">
-          <End Type="UMarquezProgramacionNCapasModel.Sucursal" Role="Sucursal" Multiplicity="1" />
-          <End Type="UMarquezProgramacionNCapasModel.Pedidos" Role="Pedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Sucursal">
-              <PropertyRef Name="IdSucursal" />
-            </Principal>
-            <Dependent Role="Pedidos">
-              <PropertyRef Name="IdSucursal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Producto__IdSubC__2FCF1A8A">
-          <End Type="UMarquezProgramacionNCapasModel.SubCategoria" Role="SubCategoria" Multiplicity="1" />
+        <Association Name="FK__Producto__IdSubC__7C1A6C5A">
+          <End Type="UMarquezProgramacionNCapasModel.SubCategoria" Role="SubCategoria" Multiplicity="0..1" />
           <End Type="UMarquezProgramacionNCapasModel.Producto" Role="Producto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SubCategoria">
@@ -1355,8 +891,8 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProductoS__IdPro__32AB8735">
-          <End Type="UMarquezProgramacionNCapasModel.Producto" Role="Producto" Multiplicity="1" />
+        <Association Name="FK__ProductoS__IdPro__7EF6D905">
+          <End Type="UMarquezProgramacionNCapasModel.Producto" Role="Producto" Multiplicity="0..1" />
           <End Type="UMarquezProgramacionNCapasModel.ProductoSucursal" Role="ProductoSucursal" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Producto">
@@ -1367,8 +903,8 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProductoS__IdSuc__339FAB6E">
-          <End Type="UMarquezProgramacionNCapasModel.Sucursal" Role="Sucursal" Multiplicity="1" />
+        <Association Name="FK__ProductoS__IdSuc__7FEAFD3E">
+          <End Type="UMarquezProgramacionNCapasModel.Sucursal" Role="Sucursal" Multiplicity="0..1" />
           <End Type="UMarquezProgramacionNCapasModel.ProductoSucursal" Role="ProductoSucursal" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sucursal">
@@ -1379,32 +915,46 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="SubCategoriaGetAllByCategoria_Result">
-          <Property Type="Int32" Name="IdSubCategoria" Nullable="false" />
-          <Property Type="String" Name="NombreSubCategoria" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="IdCategoria" Nullable="false" />
-          <Property Type="String" Name="NombreCategoria" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="ProductoGetAll_Result">
+        <EntityType Name="UsuarioGetAllView">
+          <Key>
+            <PropertyRef Name="NombreRol" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Sexo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Estatus" Type="Boolean" />
+          <Property Name="CURP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRol" Type="Int32" />
+          <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="NombreRol" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdDireccion" Type="Int32" />
+          <Property Name="Calle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NumeroInterior" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NumeroExterior" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdColonia" Type="Int32" />
+          <Property Name="NombreColonia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoPostal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdMunicipio" Type="Int32" />
+          <Property Name="NombreMunicipio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstado" Type="Int32" />
+          <Property Name="NombreEstado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="ProductoGGetAll_Result">
           <Property Type="Int32" Name="IdProducto" Nullable="false" />
           <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
           <Property Type="Decimal" Name="Precio" Nullable="false" Precision="10" Scale="2" />
           <Property Type="Binary" Name="Imagen" Nullable="true" />
           <Property Type="Int32" Name="IdSubCategoria" Nullable="false" />
-          <Property Type="Int32" Name="IdCategoriaSub" Nullable="false" />
-          <Property Type="String" Name="NombreSubCategoria" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="IdCategoria" Nullable="false" />
-          <Property Type="String" Name="NombreCategoria" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="ProductoGetById_Result">
-          <Property Type="Int32" Name="IdProducto" Nullable="false" />
-          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="500" />
-          <Property Type="Decimal" Name="Precio" Nullable="false" Precision="10" Scale="2" />
-          <Property Type="Binary" Name="Imagen" Nullable="true" />
-          <Property Type="Int32" Name="IdSubCategoria" Nullable="false" />
-          <Property Type="String" Name="NombreSubCategoria" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="NombreSubCategoria" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="IdCategoria" Nullable="false" />
           <Property Type="String" Name="NombreCategoria" Nullable="false" MaxLength="100" />
         </ComplexType>
@@ -1415,6 +965,17 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
           <Property Type="Byte" Name="IdSucursal" Nullable="false" />
           <Property Type="String" Name="NombreSucursal" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="Stock" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ProductoGGetById_Result">
+          <Property Type="Int32" Name="IdProducto" Nullable="false" />
+          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="Decimal" Name="Precio" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="Binary" Name="Imagen" Nullable="true" />
+          <Property Type="Int32" Name="IdSubCategoria" Nullable="false" />
+          <Property Type="String" Name="NombreSubCategoria" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="IdCategoria" Nullable="false" />
+          <Property Type="String" Name="NombreCategoria" Nullable="false" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1554,39 +1115,6 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UsuarioUpdate" FunctionName="UMarquezProgramacionNCapasModel.Store.UsuarioUpdate" />
-          <EntitySetMapping Name="UsuarioGetAllView">
-            <EntityTypeMapping TypeName="UMarquezProgramacionNCapasModel.UsuarioGetAllView">
-              <MappingFragment StoreEntitySet="UsuarioGetAllView">
-                <ScalarProperty Name="NombreEstado" ColumnName="NombreEstado" />
-                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
-                <ScalarProperty Name="NombreMunicipio" ColumnName="NombreMunicipio" />
-                <ScalarProperty Name="IdMunicipio" ColumnName="IdMunicipio" />
-                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
-                <ScalarProperty Name="NombreColonia" ColumnName="NombreColonia" />
-                <ScalarProperty Name="IdColonia" ColumnName="IdColonia" />
-                <ScalarProperty Name="NumeroExterior" ColumnName="NumeroExterior" />
-                <ScalarProperty Name="NumeroInterior" ColumnName="NumeroInterior" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
-                <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
-                <ScalarProperty Name="NombreRol" ColumnName="NombreRol" />
-                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
-                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
-                <ScalarProperty Name="CURP" ColumnName="CURP" />
-                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
-                <ScalarProperty Name="Celular" ColumnName="Celular" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
-                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="UsuarioGetById" FunctionName="UMarquezProgramacionNCapasModel.Store.UsuarioGetById">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UMarquezProgramacionNCapasModel.UsuarioGetById_Result">
@@ -1653,65 +1181,11 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="ActualizacionPedidos">
-            <EntityTypeMapping TypeName="UMarquezProgramacionNCapasModel.ActualizacionPedidos">
-              <MappingFragment StoreEntitySet="ActualizacionPedidos">
-                <ScalarProperty Name="FechaActualizacion" ColumnName="FechaActualizacion" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="IdEstadoPedido" ColumnName="IdEstadoPedido" />
-                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
-                <ScalarProperty Name="IdActualizacionPedidos" ColumnName="IdActualizacionPedidos" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Categoria">
             <EntityTypeMapping TypeName="UMarquezProgramacionNCapasModel.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DetallePedido">
-            <EntityTypeMapping TypeName="UMarquezProgramacionNCapasModel.DetallePedido">
-              <MappingFragment StoreEntitySet="DetallePedido">
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
-                <ScalarProperty Name="IdDetallePedido" ColumnName="IdDetallePedido" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EstadoPedido">
-            <EntityTypeMapping TypeName="UMarquezProgramacionNCapasModel.EstadoPedido">
-              <MappingFragment StoreEntitySet="EstadoPedido">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="IdEstadoPedido" ColumnName="IdEstadoPedido" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Notificacion">
-            <EntityTypeMapping TypeName="UMarquezProgramacionNCapasModel.Notificacion">
-              <MappingFragment StoreEntitySet="Notificacion">
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
-                <ScalarProperty Name="IdTipoNotificacion" ColumnName="IdTipoNotificacion" />
-                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
-                <ScalarProperty Name="IdNotificacion" ColumnName="IdNotificacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Pedidos">
-            <EntityTypeMapping TypeName="UMarquezProgramacionNCapasModel.Pedidos">
-              <MappingFragment StoreEntitySet="Pedidos">
-                <ScalarProperty Name="IdRepartidor" ColumnName="IdRepartidor" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
-                <ScalarProperty Name="IdEstadoPedido" ColumnName="IdEstadoPedido" />
-                <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
-                <ScalarProperty Name="IdTipoPago" ColumnName="IdTipoPago" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1756,51 +1230,42 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProductoGetAllView">
-            <EntityTypeMapping TypeName="UMarquezProgramacionNCapasModel.ProductoGetAllView">
-              <MappingFragment StoreEntitySet="ProductoGetAllView">
-                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
-                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
-                <ScalarProperty Name="NombreSubCategoria" ColumnName="NombreSubCategoria" />
-                <ScalarProperty Name="IdCategoriaSub" ColumnName="IdCategoriaSub" />
-                <ScalarProperty Name="IdSubCategoria" ColumnName="IdSubCategoria" />
+          <EntitySetMapping Name="UsuarioGetAllView">
+            <EntityTypeMapping TypeName="UMarquezProgramacionNCapasModel.UsuarioGetAllView">
+              <MappingFragment StoreEntitySet="UsuarioGetAllView">
+                <ScalarProperty Name="NombreEstado" ColumnName="NombreEstado" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="NombreMunicipio" ColumnName="NombreMunicipio" />
+                <ScalarProperty Name="IdMunicipio" ColumnName="IdMunicipio" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="NombreColonia" ColumnName="NombreColonia" />
+                <ScalarProperty Name="IdColonia" ColumnName="IdColonia" />
+                <ScalarProperty Name="NumeroExterior" ColumnName="NumeroExterior" />
+                <ScalarProperty Name="NumeroInterior" ColumnName="NumeroInterior" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
+                <ScalarProperty Name="NombreRol" ColumnName="NombreRol" />
                 <ScalarProperty Name="Imagen" ColumnName="Imagen" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="CURP" ColumnName="CURP" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SubCategoriaGetAllByCategoria" FunctionName="UMarquezProgramacionNCapasModel.Store.SubCategoriaGetAllByCategoria">
+          <FunctionImportMapping FunctionImportName="ProductoGGetAll" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoGGetAll">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="UMarquezProgramacionNCapasModel.SubCategoriaGetAllByCategoria_Result">
-                <ScalarProperty Name="IdSubCategoria" ColumnName="IdSubCategoria" />
-                <ScalarProperty Name="NombreSubCategoria" ColumnName="NombreSubCategoria" />
-                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
-                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProductoGetAll" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoGetAll">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UMarquezProgramacionNCapasModel.ProductoGetAll_Result">
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
-                <ScalarProperty Name="IdSubCategoria" ColumnName="IdSubCategoria" />
-                <ScalarProperty Name="IdCategoriaSub" ColumnName="IdCategoriaSub" />
-                <ScalarProperty Name="NombreSubCategoria" ColumnName="NombreSubCategoria" />
-                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
-                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProductoGetById" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoGetById">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UMarquezProgramacionNCapasModel.ProductoGetById_Result">
+              <ComplexTypeMapping TypeName="UMarquezProgramacionNCapasModel.ProductoGGetAll_Result">
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -1813,10 +1278,9 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProductoAdd" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoAdd" />
-          <FunctionImportMapping FunctionImportName="ProductoUpdate" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoUpdate" />
-          <FunctionImportMapping FunctionImportName="ProductoDelete" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoDelete" />
-          <FunctionImportMapping FunctionImportName="ProductoSucursalUpdateStock" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoSucursalUpdateStock" />
+          <FunctionImportMapping FunctionImportName="ProductoGAdd" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoGAdd" />
+          <FunctionImportMapping FunctionImportName="ProductoGDelete" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoGDelete" />
+          <FunctionImportMapping FunctionImportName="ProductoGUpdate" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoGUpdate" />
           <FunctionImportMapping FunctionImportName="ProductoSucursalGetBySucursal" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoSucursalGetBySucursal">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UMarquezProgramacionNCapasModel.ProductoSucursalGetBySucursal_Result">
@@ -1829,7 +1293,21 @@ warning 6002: The table/view 'UMarquezProgramacionNCapas.dbo.UsuarioGetAllView' 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProductoSucursalDelete" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoSucursalDelete" />
+          <FunctionImportMapping FunctionImportName="ProductoGGetById" FunctionName="UMarquezProgramacionNCapasModel.Store.ProductoGGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UMarquezProgramacionNCapasModel.ProductoGGetById_Result">
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="IdSubCategoria" ColumnName="IdSubCategoria" />
+                <ScalarProperty Name="NombreSubCategoria" ColumnName="NombreSubCategoria" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
