@@ -34,9 +34,7 @@ namespace PL_MVC.Controllers
             
             if (IdSucursal == null)
             {
-                
-                sucursal.Latitud = "0"; 
-                sucursal.Longitud = "0";
+
             }
             else
             {

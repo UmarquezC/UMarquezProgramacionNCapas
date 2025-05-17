@@ -5,27 +5,219 @@
 }
 
 
+<style>
+    .login {
+        color: #000;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        display: block;
+        font-weight: 300;
+        font-size: x-large;
+    }
 
-<h2>Agregar Sucursal</h2>
+    #map {
+        display: flex;
+        width: 100%;
+        height: 300px;
+        flex-grow: 1;
+        position: relative;
+        border-radius: 20px;
+    }
 
-@using (Html.BeginForm("Form", "Sucursal", FormMethod.Post))
-{
-    @Html.HiddenFor(model => model.IdSucursal)
-    <div class="mb-3">
-        @Html.LabelFor(model => model.Nombre, new { @class = "form-label" })
-        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", required = "required" })
-    </div>
+    .ah {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        justify-content: flex-start;
+        flex: 1; /* Hacer que el contenedor use toda la altura disponible */
+    }
 
-    <div class="mb-3">
-        @Html.LabelFor(model => model.Latitud, new { @class = "form-label" })
-        @Html.TextBoxFor(model => model.Latitud, new { @class = "form-control", required = "required", type = "number", step = "any" })
-    </div>
 
-    <div class="mb-3">
-        @Html.LabelFor(model => model.Longitud, new { @class = "form-label" })
-        @Html.TextBoxFor(model => model.Longitud, new { @class = "form-control", required = "required", type = "number", step = "any" })
-    </div>
+    .card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 350px;
+        width: 300px;
+        flex-direction: column;
+        gap: 35px;
+        background: #e3e3e3;
+        box-shadow: 16px 16px 32px #c8c8c8, -16px -16px 32px #fefefe;
+        border-radius: 8px;
+    }
 
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a href="@Url.Action("Index", "Sucursal")" class="btn btn-secondary">Cancelar</a>
-}
+    .inputBox {
+        position: relative;
+        width: 250px;
+    }
+
+        .inputBox input {
+            width: 100%;
+            padding: 10px;
+            outline: none;
+            border: none;
+            color: #000;
+            font-size: 1em;
+            background: transparent;
+            border-left: 2px solid #000;
+            border-bottom: 2px solid #000;
+            transition: 0.1s;
+            border-bottom-left-radius: 8px;
+        }
+
+        .inputBox span {
+            margin-top: 5px;
+            position: absolute;
+            left: 0;
+            transform: translateY(-4px);
+            margin-left: 10px;
+            padding: 10px;
+            pointer-events: none;
+            font-size: 12px;
+            color: #000;
+            text-transform: uppercase;
+            transition: 0.5s;
+            letter-spacing: 3px;
+            border-radius: 8px;
+        }
+
+        .inputBox input:valid ~ span,
+        .inputBox input:focus ~ span {
+            transform: translateX(113px) translateY(-15px);
+            font-size: 0.8em;
+            padding: 5px 10px;
+            background: #000;
+            letter-spacing: 0.2em;
+            color: #fff;
+            border: 2px;
+        }
+
+        .inputBox input:valid,
+        .inputBox input:focus {
+            border: 2px solid #000;
+            border-radius: 8px;
+        }
+
+    .enter {
+        height: 45px;
+        width: 100px;
+        border-radius: 5px;
+        border: 2px solid #000;
+        cursor: pointer;
+        background-color: transparent;
+        transition: 0.5s;
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 1em;
+    }
+
+        .enter:hover {
+            background-color: rgb(0, 0, 0);
+            color: white;
+        }
+</style>
+
+
+<div style="margin: 30px;">
+
+    @using (Html.BeginForm("Form", "Sucursal", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.IdSucursal)
+
+
+        <div class="ah">
+            <div class="card">
+                <h2 class="login">@(Model.IdSucursal == 0 ? "Nuevo Sucursal" : "Editar Sucursal")</h2>
+
+
+                <div class="inputBox">
+                    @Html.TextBoxFor(model => model.Nombre, new { required = "required" })
+                    <span class="user">Nombre</span>
+                </div>
+
+                <div class="inputBox">
+
+                    @Html.TextBoxFor(model => model.Latitud, new { @readonly = "readonly" })
+                    <span>Latitud</span>
+                </div>
+
+
+                <div class="inputBox">
+                    @Html.TextBoxFor(model => model.Longitud, new { @readonly = "readonly" })
+                    <span>Longitud</span>
+                </div>
+
+
+                <button type="submit" class="enter">Enter</button>
+
+            </div>
+            <div style="width:50%; height:400px; flex: 1;" id="map"></div>
+        </div>
+
+    }
+</div>
+
+<script>
+
+    (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
+        key: "AIzaSyDCt5qUAX_luLPwkcfUOJutLLavQwVFgcA",
+        v: "weekly",
+    });
+
+    let map;
+
+    async function initMap() {
+        const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+        const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+        const { ColorScheme } = await google.maps.importLibrary("core")
+
+        const sucursal = @Html.Raw(Json.Encode(Model));
+        const position = { lat: @Model.Latitud, lng: @Model.Longitud };
+
+        // Empieza el mapa
+        map = new Map(document.getElementById("map"), {
+            zoom: 11.3,
+            center: position,
+            colorScheme: ColorScheme.DARK,
+            mapId: "DEMO_MAP_ID",
+        });
+
+        // Si hay una sucursal, inicializamos el marcador
+        const marketPosition = new google.maps.LatLng(sucursal.Latitud, sucursal.Longitud);
+        let marker = new AdvancedMarkerElement({
+            map: map,
+            position: marketPosition
+        });
+
+        //Modificar los valores del latitud y longitud
+
+        document.getElementById('Latitud').value = sucursal.Latitud
+        document.getElementById('Longitud').value = sucursal.Longitud
+
+        // Manejador de evento para clic en el mapa
+        google.maps.event.addListener(map, 'click', function (event) {
+            placeMarker(event.latLng);
+        });
+
+        // Función para agregar el marcador
+        function placeMarker(location) {
+            if (marker) {
+                marker.setMap(null); // Elimina si hay marcador anterior
+            }
+
+            // Crea un nuevo marcador en la nueva posición
+            marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+
+            // Actualiza los valores de Latitud y Longitud en los campos de texto
+            document.getElementById('Latitud').value = location.lat()
+            document.getElementById('Longitud').value = location.lng()
+        }
+    }
+
+    initMap();
+
+</script>

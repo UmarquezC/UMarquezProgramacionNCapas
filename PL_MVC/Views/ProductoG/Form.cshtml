@@ -7,14 +7,24 @@
 }
 
 <style>
-    /* From Uiverse.io by JkHuger */
+
+    body {
+        background: #DDDDDD;
+    }
+    .container {
+        margin: 20px;
+        display: grid;
+        justify-content: center;
+    }
+
     .login {
         color: #000;
         text-transform: uppercase;
         letter-spacing: 2px;
         display: block;
-        font-weight: bold;
+        font-weight: 300;
         font-size: x-large;
+        margin-top: 22px;
     }
 
     .card {
@@ -22,7 +32,7 @@
         justify-content: center;
         align-items: center;
         min-height: 350px;
-        width: 300px;
+        width: 450px;
         flex-direction: column;
         gap: 35px;
         background: #e3e3e3;
@@ -102,8 +112,6 @@
         }
 </style>
 
-<h2>Producto</h2>
-
 
 @using (Html.BeginForm("Form", "ProductoG", FormMethod.Post, new { @enctype = "multipart/form-data" }))
 {
@@ -113,15 +121,15 @@
             <h2 class="login">@(Model.IdProducto == 0 ? "Nuevo Producto" : "Editar Producto")</h2>
 
             <div class="inputBox">
-                <div class="show">
+                <div class="show" style="display: flex; justify-content: center; margin: 10px;">
                     @Html.HiddenFor(model => model.Imagen)
                     @if (Model.Imagen != null)
                     {
-                        <img style="width: 100px; height:100px; border-radius:50%; object-fit:cover;" id="show" src="data:image/*;base64, @Convert.ToBase64String(Model.Imagen)" alt="Alternate Text" />
+                        <img style="width: 100px; height:100px; border-radius:12%; object-fit:cover;" id="show" src="data:image/*;base64, @Convert.ToBase64String(Model.Imagen)" alt="Alternate Text" />
                     }
                     else
                     {
-                        <img id="show" style="width: 100px; height:100px; border-radius:50%; object-fit:cover;" src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-image-icon-default-avatar-profile-icon-social-media-user-vector-image-209162840.jpg" alt="Alternate Text" />
+                        <img id="show" style="width: 100px; height:100px; border-radius:12%; object-fit:cover;" src="https://s3.amazonaws.com/roypi.com/static/images/default_product.png" alt="Alternate Text" />
                     }
                 </div>
 
@@ -137,7 +145,7 @@
 
             <div class="inputBox">
                 @Html.TextBoxFor(model => model.Nombre, new { type = "text", required = "required" })
-                <span class="user">Nombre</span>
+                <span class="user">Nombre del producto</span>
             </div>
 
             <div class="inputBox">
@@ -152,19 +160,10 @@
                 <span>Precio</span>
             </div>
 
-            <div class="inputBox">
-                    @Html.TextBoxFor(model => model.SubCategoria.Categoria.Nombre, new { type = "text", required = "required" })
-                    <span>Categoria</span>
-                </div>
-
-                <div class="inputBox">
-                    @Html.TextBoxFor(model => model.SubCategoria.Nombre, new { type = "text", required = "required" })
-                    <span>SubCategoria</span>
-                </div>
 
             <div class="inputBox">
                 @Html.DropDownListFor(model => model.SubCategoria.Categoria.IdCategoria, new SelectList(Model.SubCategoria.Categoria.Categorias, "IdCategoria", "Nombre", Model.SubCategoria.Categoria.IdCategoria), "Selecciona una Categoria", new { @class = "form-control", @onchange = "CargarSubCategorias()", @id = "ddlCategoria" })
-                <span>Categoria</span>
+                
             </div>
 
 
@@ -178,7 +177,7 @@
                 {
                     @Html.DropDownListFor(model => model.SubCategoria.IdSubCategoria, new SelectList(String.Empty), "Selecciona la subcategoria", new { @id = "ddlSubCategoria", @class = "form-control" })
                 }
-                <span>SubCategoria</span>
+                
             </div>
 
             <button type="submit" class="enter">Enter</button>

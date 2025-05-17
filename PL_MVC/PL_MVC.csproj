@@ -299,6 +299,7 @@
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Content>
     <Content Include="Content\Email\TemImagen.webp" />
+    <Content Include="Content\Cart.json" />
     <None Include="Reports\DataSet1.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

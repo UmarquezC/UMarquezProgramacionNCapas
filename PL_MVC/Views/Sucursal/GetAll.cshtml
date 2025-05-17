@@ -3,72 +3,288 @@
     ViewBag.Title = "GetAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="~/Content/usuarioStyle/userGetAll.css">
 
-
-<script src="https://maps.googleapis.com/maps/api/js?key=&libraries=maps,marker"
-        defer>
-</script>
-
-
 <div class="up">
     <h2>Sucursales</h2>
-    <a href="@Url.Action("Form", "Sucursal")" class="btn btn-success">Agregar <i class="bi bi-person-fill-add" style="font-size:20px;"></i> </a>
+    <a href="@Url.Action("Form", "Sucursal")" class="enter">Agregar  </a>
 </div>
 
+<article class="content-container">
+    <section class="cards">
+        @if (Model.Sucursales.Count > 0)
+        {
+            foreach (ML.Sucursal sucursal in Model.Sucursales)
+            {
+                <div class="card">
+                    <div class="tools">
+                        <div class="circle">
+                            <span class="red box"></span>
+                        </div>
+                        <div class="circle">
+                            <span class="yellow box"></span>
+                        </div>
+                        <div class="circle">
+                            <span class="green box"></span>
+                        </div>
+                    </div>
+                    <div class="card__content">
+                        <div>
+                            <h1 style="font-size: 18px;">@sucursal.Nombre</h1>
+                            <div class="coor" style="font-size: 12px;">
+                                <div class="lat">
+                                    <p>Latitud: @sucursal.Latitud</p>
+                                </div>
+                                <div class="long">
+                                    <p>Longitud: @sucursal.Longitud</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <div style="width: 50%;">
+                                <a style="width: 100%;" href="@Url.Action("Form", "Sucursal", new { IdSucursal = sucursal.IdSucursal })" class="enter">
+                                    <i style="font-size: 16px;" class="bi bi-pencil-square"></i>
+                                </a>
+                            </div>
+                            <div style="width: 50%;">
+                                <a style="width: 100%;" href="@Url.Action("Form", "Sucursal", new { IdSucursal = sucursal.IdSucursal })" class="enter" onclick="return confirm('seguro que quieres borrarlo?')">
+                                    <i style="font-size: 16px;" class="bi bi-trash3-fill"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </section>
 
-<gmp-map center="37.4220656,-122.0840897" zoom="10" map-id="DEMO_MAP_ID" style="height: 400px"></gmp-map>
+    <!-- Mapa Section -->
+    <section class="map-section">
+        <div id="map" style="width:100%; height: 400px; border-radius: 15px;"></div>
+    </section>
 
-<div id="map">
-
-</div>
-
-
-@if (Model.Sucursales.Count > 0)
-{
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered">
-            <thead>
-                <tr class="table-danger">
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Latitud</th>
-                    <th scope="col">Longitud</th>
-                    <th scope="col">Editar</th>
-                    <th scope="col">Eliminar</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (ML.Sucursal sucursal in Model.Sucursales)
-                {
-                    <tr>
-                        <td>@sucursal.Nombre</td>
-                        <td>@sucursal.Latitud</td>
-                        <td>@sucursal.Longitud</td>
-                        <td>
-                            <a href="@Url.Action("Form", "Sucursal", new { IdSucursal = sucursal.IdSucursal })" class="btn btn-warning">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Form", "Sucursal", new { IdSucursal = sucursal.IdSucursal })" class="btn btn-danger" onclick="return confirm('seguro que quieres borrarlo?')">
-                                <i class="bi bi-trash3-fill"></i>
-                            </a>
-                        </td>
-
-                    </tr>
-                }
-
-            </tbody>
-        </table>
-    </div>
-
-}
-
+</article>
 
 <style>
-    #map {
-        height: 400px;
+    body {
+        background-color: #EFEEEA;
+        font-family: "Montserrat", sans-serif;
+    }
+
+    .content-container {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
         width: 100%;
     }
+
+    .cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        flex: 1;
+    }
+
+    .card {
+        width: 175px;
+        height: 200px;
+        margin: 0 auto;
+        background-color: #F8FBFE;
+        border-radius: 8px;
+        z-index: 1;
+        transition: .3s all ease;
+    }
+
+    .card:hover {
+        width: 178px;
+        height: 203px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+
+    .card__content {
+        margin: 8px;
+    }
+
+    .tools {
+        display: flex;
+        align-items: center;
+        padding: 4px;
+    }
+
+    .circle {
+        padding: 0 4px;
+    }
+
+    .box {
+        display: inline-block;
+        align-items: center;
+        width: 10px;
+        height: 10px;
+        padding: 1px;
+        border-radius: 50%;
+    }
+
+    .red {
+        background-color: #ff605c;
+    }
+
+    .yellow {
+        background-color: #ffbd44;
+    }
+
+    .green {
+        background-color: #00ca4e;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 5px;
+    }
+
+    .enter {
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        color: black;
+        height: 30px;
+        width: 150px;
+        border-radius: 5px;
+        border: 2px solid #000;
+        cursor: pointer;
+        background-color: transparent;
+        transition: 0.5s;
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 2px;
+        align-content: center;
+    }
+
+    .enter:hover {
+        background-color: rgb(0, 0, 0);
+        color: white;
+    }
+
+    /* Responsividad */
+    @@media (max-width: 768px) {
+        .content-container {
+            flex-direction: column; /* Pone el mapa encima de las tarjetas */
+        }
+
+        .map-section {
+            order: -1; /* Asegura que el mapa suba */
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .cards {
+            width: 100%;
+            justify-content: center;
+        }
+
+        #map {
+            height: 300px; /* Ajuste para pantallas más pequeñas */
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .cards {
+            width: 100%; /* Hace que las tarjetas ocupen toda la fila */
+        }
+
+        #map {
+            height: 250px; /* Ajuste final del mapa */
+        }
+    }
+
+    /* Para pantallas grandes, asegurar que el mapa tenga un width de 600px */
+    @@media (min-width: 1024px) {
+        .content-container {
+            flex-direction: row; /* Mantiene la fila en pantallas grandes */
+            justify-content: flex-start; /* Alinea las tarjetas y el mapa a la izquierda */
+        }
+
+        .map-section {
+            order: 0; /* El mapa en su lugar normal */
+            height: 400px; /* Mantener la altura del mapa consistente */
+            width: 600px; /* Ancho del mapa ajustado para pantallas grandes */
+            margin-top: 0; /* No mover el mapa hacia abajo */
+        }
+
+        .cards {
+            flex: 1;
+            justify-content: flex-start;
+        }
+    }
+
+
 </style>
+
+<script>
+    (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
+        key: "AIzaSyDCt5qUAX_luLPwkcfUOJutLLavQwVFgcA",
+        v: "weekly",
+    });
+
+    let map;
+
+    async function initMap() {
+        const position = { lat: 19.42847, lng: -99.12766 };
+        const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+        const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+        const { ColorScheme } = await google.maps.importLibrary("core");
+
+        map = new Map(document.getElementById("map"), {
+            zoom: 11.3,
+            center: position,
+            colorScheme: ColorScheme.DARK,
+            mapId: "DEMO_MAP_ID",
+        });
+
+        const sucursales = @Html.Raw(Json.Encode(Model.Sucursales));
+
+        sucursales.forEach(sucursal => {
+            const markerPosition = new google.maps.LatLng(sucursal.Latitud, sucursal.Longitud);
+
+            const contentString =
+                '<div id="content" style="font-family: -apple-system, BlinkMacSystemFont, ' +
+                '"Segoe UI", Roboto, ' +
+                '"Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: #333;">' +
+                `<h1 id="firstHeading" class="firstHeading" style="font-size: 22px; margin-bottom: 10px; font-weight: 600; color: #333; text-align: center;">${sucursal.Nombre}</h1>` +
+                '<div id="bodyContent" style="font-size: 16px; color: #666; text-align: center;">' +
+                `<p>Latitud: <span style="font-weight: 500; color: #333;">${sucursal.Latitud}</span></p>` +
+                `<p>Longitud: <span style="font-weight: 500; color: #333;">${sucursal.Longitud}</span></p>` +
+                '</div>' +
+                '</div>';
+
+            const infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                ariaLabel: "Sucursal Info",
+            });
+
+            const marker = new AdvancedMarkerElement({
+                map: map,
+                position: markerPosition,
+                title: sucursal.Nombre,
+            });
+
+            marker.addListener("click", () => {
+                infowindow.open({
+                    anchor: marker,
+                    map,
+                });
+            });
+        });
+    }
+
+    initMap();
+</script>
